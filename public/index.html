@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<base href="/">
+	<title>Maxi</title>
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+	<link rel="stylesheet" href="styles/sass/css/main.css" />
+</head>
+
+<body ng-app="maxiApp">
+	<div class="container">
+
+		<div ng-view></div>
+
+
+	</div>
+</body>
+
+<script src="bower_components/angular/angular.js" type="text/javascript"></script>
+<script src="bower_components/angular-route/angular-route.js" type="text/javascript"></script>
+
+<script src="scripts/routes.js" type="text/javascript"></script>
+<script src="scripts/app.js" type="text/javascript"></script>
+<script src="scripts/home/homeController.js" type="text/javascript"></script>
+<script src="scripts/weather/weatherTeaserDirective.js" type="text/javascript"></script>
+<script src="scripts/weather/weatherController.js" type="text/javascript"></script>
+<script src="scripts/geo/geoLocationService.js" type="text/javascript"></script>
+<script src="scripts/weather/weatherService.js" type="text/javascript"></script>
+<script src="scripts/backendCaller.js"></script>
+
+</html>

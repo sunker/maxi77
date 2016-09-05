@@ -1,0 +1,28 @@
+<div ng-if="!errorMessage">
+    <div class="row">
+        <div class="col-md-6">{{weatherDescription}}</div>
+        <div class="col-md-6 text-right">{{time}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6"><img src="images/weather/{{imageUrl}}.png"></div>
+        <div class="col-md-6" style="display: table; height: 125px; overflow: hidden;">
+            <div class="text-center" style="display: table-cell; vertical-align: middle;">
+                <div>
+                    <strong class="temp">{{temperature}}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {{windSpeed}}
+    </div>
+</div>
+<div ng-if="errorMessage">
+    <div style="display: table; height: 125px; overflow: hidden;">
+            <div class="text-center" style="display: table-cell; vertical-align: middle;">
+                <div>
+                    <strong class="temp">{{errorMessage}}</strong>
+                </div>
+            </div>
+        </div>    
+</div>

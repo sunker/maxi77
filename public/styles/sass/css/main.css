@@ -1,0 +1,39 @@
+.container {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px; }
+
+.logo {
+  background: url("../../../images/boat-drawing.png") no-repeat;
+  width: 100px;
+  height: 100px;
+  display: block;
+  text-indent: -9999px;
+  margin-left: auto;
+  margin-right: auto; }
+
+h1 {
+  margin-top: 25px;
+  font-size: 40px; }
+
+.vcenter strong {
+  vertical-align: middle;
+  display: inline-block; }
+
+.vcenter {
+  display: inline-block;
+  vertical-align: middle;
+  float: none; }
+
+.temp {
+  font-size: 1.5em; }
+
+.teaser-row {
+  border-bottom: 1px solid #eee; }
+  .teaser-row.first {
+    border-top: 1px solid #eee; }
+  .teaser-row .teaser {
+    padding: 10px; }
+  .teaser-row .teaser:first-child {
+    border-right: 1px solid #eee; }

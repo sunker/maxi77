@@ -1,0 +1,24 @@
+{
+  "name": "Maxi77",
+  "description": "",
+  "main": "server.js",
+  "directory": "public/bower_components",
+  "authors": [
+    "Erik Sundell <erik.sundell87@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "angular": "^1.5.8",
+    "underscore": "^1.8.3"
+  }
+}
