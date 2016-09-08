@@ -8,7 +8,7 @@ weatherService.getCurrentWeather = function (long, lat) {
     console.log('I received a GET request for getcurrentforecast');
     var deferred = Q.defer();
 
-    SMHI.getForecastForLatAndLong(lat.toString().split('.')[0], long.toString().split('.')[0]).then(
+    forecastsForLatAndLong(long, lat).then(
         function (response) {
             var forecasts = response.getForecasts();
             var nextHour = forecasts[0];
@@ -23,20 +23,22 @@ weatherService.getCurrentWeather = function (long, lat) {
             return deferred.resolve(buildJson(nextHour));
         },
         function (error) {
-            deferred.reject("Weather service down");
+            deferred.reject(error);
         });
 
     return deferred.promise;
 };
 
 weatherService.getForecasts = function (long, lat) {
-    console.log('I received a GET request for getcurrentforecast');
-    var deferred = Q.defer();
+    return forecastsForLatAndLong(long, lat);
+};
 
-    forecastForLatAndLong.then(
-        function (response) {
+var forecastsForLatAndLong = function(long, lat){
+    var deferred = Q.defer();
+    SMHI.getForecastForLatAndLong(lat.toString().split('.')[0], long.toString().split('.')[0]).then(
+       function (response) {
             var forecasts = response.getForecasts();            
-            var result = [forecast.length];
+            var result = [forecasts.length];
 
             for (i = 0; i <forecasts.length; i++) { 
                 result[i] = buildJson(forecasts[i]);
@@ -46,13 +48,10 @@ weatherService.getForecasts = function (long, lat) {
         },
         function (error) {
             deferred.reject("Weather service down");
-        });
+        } 
+    );
 
     return deferred.promise;
-};
-
-var forecastForLatAndLong = function(long, lat){
-    return SMHI.getForecastForLatAndLong(lat.toString().split('.')[0], long.toString().split('.')[0]);
 };
 
 module.exports = weatherService;

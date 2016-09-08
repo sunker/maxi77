@@ -11,7 +11,7 @@ router.get('/getcurrentforecast', function (req, res) {
   },
   function (error) {
     res.status(500).send('Weatherservice is down');
-  });
+  });     
 });
 
 router.get('/getforecasts', function (req, res) {
