@@ -29,4 +29,16 @@ weatherModule.service('weatherService', function (backendCaller, $q) {
 
         return deferred.promise;
     };
+
+    this.getCurrentForecastFromForecasts = function (forecasts) {        
+        var nextHour = forecasts[0];
+
+        for (var i = 0; i < forecasts.length; i++) {
+            if (new Date().getHours() === new Date(forecasts[i].validTime).getHours()) {
+                return forecasts[i];
+            }
+        }
+
+        return nextHour;       
+    };
 });

@@ -6,7 +6,7 @@ var weatherService = require("../../services/weatherService");
 	
 router.get('/getforecasts', function (req, res) {
   var params = JSON.parse(req.query.parameters);
-  weatherService.getForecasts(params.long, params.lat).then(function (response) {
+  weatherService.getForecasts().then(function (response) {
     res.json(response);
   },
   function (error) {

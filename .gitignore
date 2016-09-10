@@ -46,3 +46,5 @@ jspm_packages
 .ntvs_analysis.dat
 Maxi77.sln
 Maxi77.njsproj
+
+public/bower_components/

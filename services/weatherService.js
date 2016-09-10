@@ -4,13 +4,16 @@ var Q = require('q');
 
 var weatherService = {};
 
-weatherService.getForecasts = function (long, lat) {
-    return forecastsForLatAndLong(long, lat);
+weatherService.getForecasts = function () {
+    return forecastsForLatAndLong();
 };
 
-var forecastsForLatAndLong = function(long, lat){
+var forecastsForLatAndLong = function(){
     var deferred = Q.defer();
-    SMHI.getForecastForLatAndLong(lat.toString().split('.')[0], long.toString().split('.')[0]).then(
+    //stockholm coordinates
+    var lat = 59;
+    var long = 18;
+    SMHI.getForecastForLatAndLong(lat, long).then(
        function (response) {
             var forecasts = response.getForecasts();            
             var result = [forecasts.length];
