@@ -1,5 +1,5 @@
 // var SMHI = require("smhi-node");
-var SMHI = require("smhi-node/src/smhi");
+var SMHI = require("smhi-node");
 var Q = require('q');
 
 var weatherService = {};
