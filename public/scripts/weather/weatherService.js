@@ -3,11 +3,16 @@
 var weatherModule = angular.module("weatherModule");
 
 weatherModule.service('weatherService', function (backendCaller, $q) {
-    var baseUrl = 'weather/'
+    var baseUrl = 'weather/';
+	
+	
+	this.getForecasts = function (long, lat) {
+        return backendCaller.sendGet(baseUrl + 'getforecasts', { lat: lat, long: long });
+	};
 
-    this.getWeatherForecast = function (long, lat) {
+    this.getCurrentForecast = function (long, lat) {
         var deferred = $q.defer();
-        getForecasts(long, lat).then(function (response) {
+        this.getForecasts(long, lat).then(function (response) {
             var nextHour = response[0];
 
             for (var i = 0; i < response.length; i++) {
@@ -24,16 +29,4 @@ weatherModule.service('weatherService', function (backendCaller, $q) {
 
         return deferred.promise;
     };
-
-    var getForecasts = function (long, lat) {
-        return backendCaller.sendGet(baseUrl + 'getforecasts', { lat: lat, long: long });
-    };
-
-    function handleSuccess(res) {
-        return res.data;
-    }
-
-    function handleError(res) {
-        return $q.reject(res.data);
-    }
 });

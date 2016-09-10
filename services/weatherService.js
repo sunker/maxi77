@@ -4,31 +4,6 @@ var Q = require('q');
 
 var weatherService = {};
 
-weatherService.getCurrentWeather = function (long, lat) {
-    console.log('I received a GET request for getcurrentforecast');
-    var deferred = Q.defer();
-
-    forecastsForLatAndLong(long, lat).then(
-        function (response) {
-            var forecasts = response.getForecasts();
-            var nextHour = forecasts[0];
-            
-            for (i = 0; i <forecasts.length; i++) { 
-                if (new Date().getHours() === new Date(forecasts[i].getValidTime()).getHours()) {
-                    return deferred.resolve(buildJson(forecasts[i]));
-                    break;
-                }
-            }
-            
-            return deferred.resolve(buildJson(nextHour));
-        },
-        function (error) {
-            deferred.reject(error);
-        });
-
-    return deferred.promise;
-};
-
 weatherService.getForecasts = function (long, lat) {
     return forecastsForLatAndLong(long, lat);
 };
