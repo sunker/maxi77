@@ -1,5 +1,29 @@
 ﻿<div class="row teaser-row">
     <div class="teaser">
+
+        <div class="jumbotron" ng-if="!journey">
+            <div class="row">
+                <div class="border col-xs-6">
+                    <p>Du har ingen aktiv tripp.</p>
+                </div>
+                <div class="border col-xs-6">
+                    <button type="button" ng-click="createJourney()" class="btn btn-primary">Klicka här för att skapa en</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row teaser-row">
+    <div class="teaser">
         <chart-teaser></chart-teaser>
+    </div>
+</div>
+
+<div class="row teaser-row">
+    <div class="teaser">
+        {{coordinates.lat}}
+        {{coordinates.long}}
     </div>
 </div>
