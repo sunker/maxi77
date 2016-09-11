@@ -12,6 +12,11 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 			controller: 'WeatherController'
 		})
 
+		.when('/chart', {
+			templateUrl: 'scripta/chart/chartTemplate.html',
+			controller: 'chartController'
+		})
+
 	$locationProvider.html5Mode(true);
 
 }]);

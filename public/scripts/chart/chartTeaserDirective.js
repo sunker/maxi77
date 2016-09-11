@@ -1,31 +1,15 @@
 ﻿'use strict';
 var chartModule = angular.module("chartModule");
-chartModule.directive('chartTeaser', function ($location, $timeout) {
+chartModule.directive('chartTeaser', function ($location, $timeout, chartService) {
 
     var map, mark;
     var updateMap = function (coordinates) {
         var mapDiv = document.getElementsByClassName('chart-map')[0];
-        if (!map) {
-            map = new eniro.maps.Map(mapDiv, {
-                center: new eniro.maps.LatLng(coordinates.lat, coordinates.long),
-                zoom: 9,
-                mapTypeId: eniro.maps.MapTypeId.NAUTICAL,
-                mapTypeControl: false,
-                zoomControl: false,
-                focus: true
-            });
-        } else {
-            map.panTo(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
-        }
+        var map = chartService.getMap(mapDiv);
+        map.panTo(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
 
-        if (!mark) {
-            mark = new eniro.maps.Marker({
-                position: new eniro.maps.LatLng(coordinates.lat, coordinates.long),
-                map: map
-            });
-        } else {
-            mark.setPosition(new eniro.maps.LatLng(coordinates.lat, coordinates.long));            
-        }
+        var marker = chartService.getPositionMarker();
+        marker.setPosition(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
     };
 
     return {
@@ -36,6 +20,10 @@ chartModule.directive('chartTeaser', function ($location, $timeout) {
                     if(value) updateMap(value);                    
                 });
             });
+
+            elem.bind("click", function () {
+			    $location.url('/chart');
+			});
         },
         controller: function ($scope, $http, geoLocationService, socket) {
 
