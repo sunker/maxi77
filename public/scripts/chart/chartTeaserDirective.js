@@ -24,8 +24,7 @@ chartModule.directive('chartTeaser', function ($location, $timeout) {
                 map: map
             });
         } else {
-            mark.setPosition(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
-            map.setFocus(true);
+            mark.setPosition(new eniro.maps.LatLng(coordinates.lat, coordinates.long));            
         }
     };
 
