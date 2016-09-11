@@ -34,15 +34,24 @@
     font-size: 1.5em;
 }
 
+
 .teaser-row {
-    border-bottom: 1px solid #eee;;
+    border-bottom: 1px solid #eee;
     &.first {
-        border-top: 1px solid #eee;;
+        border-top: 1px solid #eee;
     }
     .teaser {
         padding: 10px;
     }
-    .teaser:first-child{
-        border-right: 1px solid #eee;;
+    .teaser:nth-child(2){
+        // border-left: 1px solid #eee;
     }
 }
+
+.chart-map {
+    height: 400px;
+    .e-mapheader {
+        // display: none;
+    }
+}
+ 
