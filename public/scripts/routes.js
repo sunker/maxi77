@@ -13,10 +13,10 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 		})
 
 		.when('/chart', {
-			templateUrl: 'scripta/chart/chartTemplate.html',
+			templateUrl: 'scripts/chart/chartTemplate.html',
 			controller: 'chartController'
 		})
 
-	$locationProvider.html5Mode(true);
+	$locationProvider.html5Mode(false);
 
 }]);

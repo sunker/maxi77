@@ -15,20 +15,20 @@ chartModule.directive('chartTeaser', function ($location, $timeout, chartService
     return {
         templateUrl: 'scripts/chart/chartTeaserTemplate.html',
         link: function (scope, elem, attr) {
-            scope.$watch('coordinates', function (value) {
-                $timeout(function () {
-                    if(value) updateMap(value);                    
-                });
-            });
 
-            elem.bind("click", function () {
-			    $location.url('/chart');
-			});
+            // elem.bind("click", function () {
+            //     $location.url('/chart');
+            // });
         },
         controller: function ($scope, $http, geoLocationService, socket) {
 
-            socket.on('coordinatesUpdates', function (data) {
-                $scope.coordinates = data.coordinates;
+            if ($scope.coordinates) {
+                chartService.resetMap();
+                updateMap($scope.coordinates);
+            };
+
+            $scope.$watch('coordinates', function (value) {
+                if (value) updateMap(value);
             });
         }
     }
