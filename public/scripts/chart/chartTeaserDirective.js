@@ -8,7 +8,7 @@ chartModule.directive('chartTeaser', function ($location, $timeout) {
         if (!map) {
             map = new eniro.maps.Map(mapDiv, {
                 center: new eniro.maps.LatLng(coordinates.lat, coordinates.long),
-                zoom: 8,
+                zoom: 9,
                 mapTypeId: eniro.maps.MapTypeId.NAUTICAL,
                 mapTypeControl: false,
                 zoomControl: false,
@@ -33,7 +33,7 @@ chartModule.directive('chartTeaser', function ($location, $timeout) {
         link: function (scope, elem, attr) {
             scope.$watch('coordinates', function (value) {
                 $timeout(function () {
-                    updateMap(value);
+                    if(value) updateMap(value);                    
                 });
             });
         },
