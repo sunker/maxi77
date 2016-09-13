@@ -17,7 +17,7 @@ chartModule.service("chartService", function (socket, $rootScope) {
 
     this.setPositionMarker = function (latlong) {
         if (journeyMode) {
-            addPointToLinepath(latlong);
+            linePath.push(latlong);
         } else {
             if (!marker && map) {
                 marker = new eniro.maps.Marker({
@@ -30,9 +30,15 @@ chartModule.service("chartService", function (socket, $rootScope) {
             marker.setPosition(latlong);
         }
     };
+    
+    this.zoomIn = function() {
+        var zoomLevel = map.getZoom();
+        map.setZoom(--zoomLevel);
+    };
 
-    var addPointToLinepath = function (latlong) {
-        linePath.push(latlong);
+    this.zoomOut = function() {
+        var zoomLevel = map.getZoom();
+        map.setZoom(++zoomLevel);
     };
 
     var getMap = function (htmlElement) {
@@ -56,9 +62,10 @@ chartModule.service("chartService", function (socket, $rootScope) {
     $rootScope.$on('journeyCreated', function (event, data) {
         journeyMode = true;
         marker.setVisible(false);
+        var map = getMap();
         linePath = new eniro.maps.MapArray([new eniro.maps.LatLng(data.startPosition.lat, data.startPosition.long)]);
         var line = new eniro.maps.Polyline({
-            map: getMap(),
+            map: map,
             path: linePath
         });
     });

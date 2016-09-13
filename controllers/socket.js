@@ -38,6 +38,6 @@ module.exports = function (socket) {
 
   setInterval(function(){      
       updateGPSCoordinates();
-  }, 5000);
+  }, 1500);
   
 };

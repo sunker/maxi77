@@ -7,4 +7,12 @@ chartModule.controller('chartController', function ($scope, chartService, journe
     $scope.createJourney = function() {
         $scope.journey = journeyService.createJourney();
     };
+
+    $scope.zoomIn = function() {
+        chartService.zoomIn();
+    };
+
+    $scope.zoomOut = function() {
+        chartService.zoomOut();
+    };
 }); 

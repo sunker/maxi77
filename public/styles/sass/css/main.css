@@ -33,7 +33,17 @@
     padding: 10px; }
 
 .chart-map {
-  height: 350px; }
+  height: 350px;
+  position: relative;
+  z-index: 9999; }
+  .chart-map .chart-buttons {
+    position: absolute;
+    right: 5px;
+    bottom: 15px; }
+    .chart-map .chart-buttons button {
+      background: none; }
+  .chart-map .e-map {
+    z-index: -1 !important; }
 
 .jumbotron {
   margin-bottom: 0;
@@ -41,3 +51,11 @@
   padding-bottom: 15px; }
   .jumbotron p {
     margin-bottom: 0; }
+
+.btn-xlarge {
+  padding: 16px 26px;
+  font-size: 22px;
+  line-height: normal;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px; }
