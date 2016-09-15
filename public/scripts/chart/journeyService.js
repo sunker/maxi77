@@ -9,13 +9,13 @@ chartModule.service("journeyService", function ($rootScope, socket) {
             createdTime: new Date(),
             startPosition: $rootScope.coordinates
         };
-
+        
         $rootScope.$broadcast('journeyCreated', journey);
 
         return journey;
     };
 
-    this.getJourney = function () {
-        return journey;
-    };
+    // this.getJourney = function () {
+    //     return journey;
+    // };
 });

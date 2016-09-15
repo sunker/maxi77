@@ -1,4 +1,5 @@
 var weatherService = require("../services/weatherService");
+var journeyService = require("../services/journeyService");
 var geoService = require("../services/geoService");
 
 module.exports = function (socket) {
@@ -27,9 +28,18 @@ module.exports = function (socket) {
     });    
   };
 
+  var getCurrentJourney = function() {
+    journeyService.getCurrentJourney().then(function(journey) {
+      socket.emit('currentJourneyLoaded', journey);
+    });    
+  };
+
+
   //Load on connect
+  
   updateWeatherForecasts();
   updateGPSCoordinates();
+  getCurrentJourney();
 
   //Shieldings
   setInterval(function(){      

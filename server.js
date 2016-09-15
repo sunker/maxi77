@@ -5,6 +5,8 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var socket = require('./controllers/socket.js');
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/Maxi77');
 
 app.use(express.static(path.join(__dirname, 'public'))); 
 app.use(bodyParser.json());
