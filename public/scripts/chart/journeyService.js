@@ -4,15 +4,10 @@ chartModule.service("journeyService", function ($rootScope, socket) {
     var journey;
 
     this.createJourney = function () {
-        //create on the server in the future
-        journey = {
-            createdTime: new Date(),
-            startPosition: $rootScope.coordinates
+        $scope.createJourney = function () {
+            socket.emit('createJourney', { coordinates: $scope.coordinates });
+            $scope.loadingJourney = true;
         };
-        
-        $rootScope.$broadcast('journeyCreated', journey);
-
-        return journey;
     };
 
     // this.getJourney = function () {
