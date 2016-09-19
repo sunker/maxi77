@@ -1,8 +1,7 @@
 ﻿'use strict';
 var chartModule = angular.module("chartModule");
-chartModule.directive('chartTeaser', function ($location, $timeout, chartService) {
+chartModule.directive('chartTeaser', function ($location, $timeout, chartService, $rootScope) {
 
-    var map, mark;
     var updateMap = function (coordinates) {
         var mapDiv = document.getElementsByClassName('chart-map')[0];
         chartService.mapPanTo(mapDiv, new eniro.maps.LatLng(coordinates.lat, coordinates.long))
@@ -14,7 +13,7 @@ chartModule.directive('chartTeaser', function ($location, $timeout, chartService
         link: function (scope, elem, attr) {
         },
         controller: function ($scope, $http, geoLocationService, socket) {
-            chartService.initializeMap(document.getElementsByClassName('chart-map')[0]);
+            chartService.initialize(document.getElementsByClassName('chart-map')[0]);
 
             if ($scope.coordinates) {
                 updateMap($scope.coordinates);
@@ -22,6 +21,26 @@ chartModule.directive('chartTeaser', function ($location, $timeout, chartService
 
             $scope.$watch('coordinates', function (value) {
                 if (value) updateMap(value);
+            });
+
+            socket.on('journeyStopped', function (data) {
+                chartService.stopJourney();
+            });
+
+            socket.on('journeyCreated', function (data) {
+                chartService.startJourney(data);
+            });
+
+            socket.on('currentJourneyLoaded', function (data) {
+                if (data.journey) {
+                    chartService.startJourney(data.journey);
+                } else {
+                    chartService.stopJourney();
+                }
+            });
+
+            socket.on('coordinatesUpdates', function (data) {
+                $rootScope.coordinates = data.coordinates;
             });
         }
     }

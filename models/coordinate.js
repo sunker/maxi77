@@ -8,6 +8,6 @@ var coordinateSchema = new Schema({
     timestamp: Date,
 });
 
-var Coordinate = mongoose.model('coordinate', journeySchema);
+var Coordinate = mongoose.model('coordinate', coordinateSchema);
 
 module.exports = Coordinate;

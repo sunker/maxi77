@@ -5,12 +5,7 @@ chartModule.service("chartService", function (socket, $rootScope) {
     var linePath;
     var journeyMode = false;
 
-    this.resetMap = function () {
-        map = undefined;
-        marker = undefined;
-    };
-
-    this.initializeMap = function (parentDiv) {
+    this.initialize = function (parentDiv) {
         map = new eniro.maps.Map(parentDiv, {
             zoom: 9,
             mapTypeId: eniro.maps.MapTypeId.NAUTICAL,
@@ -54,7 +49,7 @@ chartModule.service("chartService", function (socket, $rootScope) {
         map.setZoom(++zoomLevel);
     };
 
-    var stopJourney = function () {
+    this.stopJourney = function () {
         journeyMode = false;
         if (marker) {            
             marker.setVisible(true);
@@ -63,7 +58,7 @@ chartModule.service("chartService", function (socket, $rootScope) {
         if (line) line.setMap(null);
     };
 
-    var startJourney = function (data) {
+    this.startJourney = function (data) {
         journeyMode = true;
         marker.setVisible(false);
         linePath = new eniro.maps.MapArray([new eniro.maps.LatLng(data.startCoordinate.latitude, data.startCoordinate.longitude)]);
@@ -72,24 +67,4 @@ chartModule.service("chartService", function (socket, $rootScope) {
             path: linePath
         });
     };
-
-    socket.on('coordinatesUpdates', function (data) {
-        $rootScope.coordinates = data.coordinates;
-    });
-
-    socket.on('journeyStopped', function (data) {
-        stopJourney();
-    });
-
-    socket.on('journeyCreated', function (data) {
-        startJourney(data);
-    });
-
-    socket.on('currentJourneyLoaded', function (data) {
-        if (data.journey) {
-            startJourney(data.journey);
-        } else{
-            stopJourney();
-        }
-    });
 });
