@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var journeySchema = new Schema({
-    // id: { type: Schema.ObjectId, unique: true, index: true },
     id: { type: Schema.ObjectId},
     startCoordinate: { latitude: Number, longitude: Number },
     created_at: Date,

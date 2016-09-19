@@ -1,7 +1,8 @@
 'use strict';
 var chartModule = angular.module("chartModule");
 chartModule.controller('chartController', function ($scope, chartService, journeyService, socket) {
-
+      
+    
     $scope.loadingJourney = true;
     socket.emit('getCurrentJourney');
 

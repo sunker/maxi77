@@ -1,5 +1,6 @@
 var Q = require('q');
 var Journey = require('../models/journey');
+var Coordinate = require('../models/coordinate');
 
 var journeyService = {};
 
@@ -63,5 +64,27 @@ journeyService.createJourney = function (startCoordinates) {
     return defer.promise;
 };
 
+journeyService.addCoordinate = function (journeyId, coordinate) {
+    var defer = Q.defer();
+
+    var newCoordinate = Coordinate({
+        latitude: coordinate.lat,
+        longitude: coordinate.long,
+        timestamp: new Date(),
+        journeyId: journeyId
+    });
+
+    newCoordinate.save(function (err, coordinate, numAffected) {
+        if (err) {
+            console.log(err);
+            defer.reject(err);
+        } else {
+            defer.resolve(coordinate);
+            console.log("Coordinate added");
+        }
+    });
+
+    return defer.promise;
+};
 
 module.exports = journeyService;

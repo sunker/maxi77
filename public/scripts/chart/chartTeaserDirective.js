@@ -14,9 +14,9 @@ chartModule.directive('chartTeaser', function ($location, $timeout, chartService
         link: function (scope, elem, attr) {
         },
         controller: function ($scope, $http, geoLocationService, socket) {
+            chartService.initializeMap(document.getElementsByClassName('chart-map')[0]);
 
             if ($scope.coordinates) {
-                chartService.resetMap();
                 updateMap($scope.coordinates);
             };
 
