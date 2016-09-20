@@ -24,12 +24,12 @@ chartModule.controller('chartTeaserController', function ($scope, $rootScope, so
     });
 
     socket.on('journeyCreated', function (data) {
-        chartService.startJourney(data);
+        chartService.loadJourney(data);
     });
 
     socket.on('currentJourneyLoaded', function (data) {
         if (data.journey) {
-            chartService.startJourney(data.journey);
+            chartService.loadJourney(data.journey);
         } else {
             chartService.stopJourney();
         }
@@ -37,6 +37,9 @@ chartModule.controller('chartTeaserController', function ($scope, $rootScope, so
 
     socket.on('coordinatesUpdates', function (data) {
         $rootScope.coordinates = data.coordinates;
-        if (data.coordinates) updateMap(data.coordinates);
+        if (data.coordinates) {
+            updateMap(data.coordinates);
+            socket.emit('journeyUpdated', data.coordinates);
+        }
     });
 }); 

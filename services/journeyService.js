@@ -15,7 +15,20 @@ journeyService.getCurrentJourney = function () {
             console.log(err);
             defer.reject(err);
         } else {
-            defer.resolve(journey.length === 0 ? null : journey[0]);
+            if (journey.length !== 0) {
+                var currentJourney = journey[0];
+                Coordinate.find({ "journeyId": currentJourney._id }, function (err, coordinates) {
+                    if (err) {
+                        console.log(err);
+                        defer.reject(err);
+                    } else {
+                        currentJourney.coordinates = coordinates;
+                        defer.resolve(currentJourney);
+                    }
+                });
+            } else {
+                defer.resolve(journey.length === 0 ? null : journey[0]);
+            }
         }
     });
 
@@ -35,29 +48,7 @@ journeyService.stopJourney = function (journeyId) {
                 if (err) console.log(err);;
                 console.log('Journey successfully stopped!');
                 defer.resolve(journey);
-            });            
-        }
-    });
-
-    return defer.promise;
-};
-
-journeyService.createJourney = function (startCoordinates) {
-    var defer = Q.defer();
-
-    var newJourney = Journey({
-        startCoordinate: { latitude: startCoordinates.lat, longitude: startCoordinates.long },
-        created_at: new Date(),
-        stopped: false
-    });
-
-    newJourney.save(function (err, journey, numAffected) {
-        if (err) {
-            console.log(err);
-            defer.reject(err);
-        } else {
-            defer.resolve(journey);
-            console.log("Journey created");
+            });
         }
     });
 
@@ -81,6 +72,31 @@ journeyService.addCoordinate = function (journeyId, coordinate) {
         } else {
             defer.resolve(coordinate);
             console.log("Coordinate added");
+        }
+    });
+
+    return defer.promise;
+};
+
+journeyService.createJourney = function (startCoordinates) {
+    var defer = Q.defer();
+
+    var newJourney = Journey({
+        startCoordinate: { latitude: startCoordinates.lat, longitude: startCoordinates.long },
+        created_at: new Date(),
+        stopped: false
+    });
+
+    newJourney.save(function (err, journey, numAffected) {
+        if (err) {
+            console.log(err);
+            defer.reject(err);
+        } else {
+            journeyService.addCoordinate(journey._id, startCoordinates).then(function (coordinate) {
+                journey.coordinates[0] = coordinate;                        
+                defer.resolve(journey);
+                console.log("Journey created");
+            });
         }
     });
 

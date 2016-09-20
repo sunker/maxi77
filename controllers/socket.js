@@ -49,6 +49,14 @@ module.exports = function (socket) {
     });
   });
 
+  socket.on('journeyUpdated', function (newCoordinate) {
+    journeyService.getCurrentJourney().then(function (data) {
+      if (data) {
+        journeyService.addCoordinate(data._id, newCoordinate)
+      }
+    });
+  });
+
   socket.on('getCurrentJourney', function () {
     journeyService.getCurrentJourney().then(function (data) {
       socket.emit('currentJourneyLoaded', { journey: data });
@@ -57,7 +65,7 @@ module.exports = function (socket) {
 
   socket.on('stopJourney', function (journey) {
     journeyService.stopJourney(journey.id).then(function (data) {
-      socket.emit('journeyStopped', data);  
+      socket.emit('journeyStopped', data);
     });
   });
 };

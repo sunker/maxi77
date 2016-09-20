@@ -5,7 +5,8 @@ var journeySchema = new Schema({
     id: { type: Schema.ObjectId},
     startCoordinate: { latitude: Number, longitude: Number },
     created_at: Date,
-    stopped: Boolean, default: false
+    stopped: Boolean, default: false,
+    coordinates: [] //{ lat : Number, lng : Number }
 });
 
 // journeySchema.pre('save', true, function(next, done){

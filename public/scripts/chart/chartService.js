@@ -58,10 +58,14 @@ chartModule.service("chartService", function (socket, $rootScope) {
         if (line) line.setMap(null);
     };
 
-    this.startJourney = function (data) {
+    this.loadJourney = function (data) {
         journeyMode = true;
         marker.setVisible(false);
-        linePath = new eniro.maps.MapArray([new eniro.maps.LatLng(data.startCoordinate.latitude, data.startCoordinate.longitude)]);
+        linePath = new eniro.maps.MapArray();
+        data.coordinates.forEach(function(coordinate){
+            linePath.push(new eniro.maps.LatLng(coordinate.latitude, coordinate.longitude));
+        });
+        // linePath = new eniro.maps.MapArray([new eniro.maps.LatLng(data.startCoordinate.latitude, data.startCoordinate.longitude)]);
         line = new eniro.maps.Polyline({
             map: map,
             path: linePath
