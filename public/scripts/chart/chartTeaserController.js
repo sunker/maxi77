@@ -1,14 +1,10 @@
 'use strict';
 var chartModule = angular.module("chartModule");
-chartModule.controller('chartTeaserController', function ($scope, $rootScope, socket, chartService) {
+chartModule.controller('chartTeaserController', function ($scope, socket, chartService) {
     chartService.initialize(document.getElementsByClassName('chart-map')[0]);
     var updateMap = function (coordinates) {
         chartService.mapPanTo(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
         chartService.setPositionMarker(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
-    };
-
-    if ($scope.coordinates) {
-        updateMap($scope.coordinates);
     };
 
     $scope.zoomIn = function () {
@@ -36,7 +32,6 @@ chartModule.controller('chartTeaserController', function ($scope, $rootScope, so
     });
 
     socket.on('coordinatesUpdates', function (data) {
-        $rootScope.coordinates = data.coordinates;
         if (data.coordinates) {
             updateMap(data.coordinates);
             socket.emit('journeyUpdated', data.coordinates);

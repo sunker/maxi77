@@ -1,6 +1,6 @@
 'use strict';
 var chartModule = angular.module("chartModule");
-chartModule.service("chartService", function (socket, $rootScope) {
+chartModule.service("chartService", function () {
     var map, marker, line;
     var linePath;
     var journeyMode = false;
@@ -65,7 +65,6 @@ chartModule.service("chartService", function (socket, $rootScope) {
         data.coordinates.forEach(function(coordinate){
             linePath.push(new eniro.maps.LatLng(coordinate.latitude, coordinate.longitude));
         });
-        // linePath = new eniro.maps.MapArray([new eniro.maps.LatLng(data.startCoordinate.latitude, data.startCoordinate.longitude)]);
         line = new eniro.maps.Polyline({
             map: map,
             path: linePath
