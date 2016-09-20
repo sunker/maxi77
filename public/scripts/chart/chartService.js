@@ -27,7 +27,7 @@ chartModule.service("chartService", function (socket, $rootScope) {
         }
     };
 
-    this.mapPanTo = function (htmlElement, latlong) {
+    this.mapPanTo = function (latlong) {
         map.panTo(latlong);
     };
 
