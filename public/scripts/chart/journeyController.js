@@ -1,7 +1,7 @@
 'use strict';
 var chartModule = angular.module("chartModule");
-chartModule.controller('chartController', function ($scope, chartService, journeyService, socket) {
-    $scope.displayZoom = false;
+chartModule.controller('journeyController', function ($scope, chartService, journeyService, socket) {
+     $scope.displayZoom = false;
 
     $scope.loadingJourney = true;
     socket.emit('getCurrentJourney');

@@ -8,13 +8,13 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 		})
 
 		.when('/weather', {
-			templateUrl: 'scripta/weather/weatherTemplate.html',
+			templateUrl: 'scripts/weather/weatherTemplate.html',
 			controller: 'WeatherController'
 		})
 
 		.when('/chart', {
-			templateUrl: 'scripts/chart/chartTemplate.html',
-			controller: 'chartController'
+			templateUrl: 'scripts/chart/journeyTemplate.html',
+			controller: 'journeyController'
 		})
 
 	$locationProvider.html5Mode(false);
