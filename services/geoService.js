@@ -11,7 +11,7 @@ var coordinates;
 geoService.getCoordinates = function () {
   var defer = Q.defer();
   if (!coordinates) {
-    coordinates = JSON.parse(fs.readFileSync('./testcoordinates.json', 'utf8').toString());//, function (err, data) {
+    coordinates = JSON.parse(fs.readFileSync('./testcoordinates.json', 'utf8').toString());
   }
 
   if (counter == 472) counter = 0;

@@ -43,6 +43,10 @@ module.exports = function (socket) {
 
 
   //Client events
+  socket.on('getWeatherForecast', function (coordinates) {
+    updateWeatherForecasts();
+  });
+
   socket.on('createJourney', function (coordinates) {
     journeyService.createJourney(coordinates.coordinates).then(function (data) {
       socket.emit('journeyCreated', data);

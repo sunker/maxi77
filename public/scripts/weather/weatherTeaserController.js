@@ -1,6 +1,7 @@
 'use strict';
 var weatherModule = angular.module("weatherModule");
 weatherModule.controller('weatherTeaserController', function ($scope, geoLocationService, weatherService, socket) {
+	socket.emit('getWeatherForecast');
 
 	socket.on('forecastUpdated', function (data) {
 		$scope.errorMessage = undefined;
@@ -24,45 +25,45 @@ weatherModule.controller('weatherTeaserController', function ($scope, geoLocatio
 	var convertWindDirectionToText = function (windDirection) {
 		var val = Math.floor((windDirection / 22.5) + 0.5);
 		var arr = ["nordlig", "nord nordöstlig", "nordöst", "öst nordöstlig", "östlig", "öst sydöstlig", "sydöstlig", "syd sydöstlig", "sydlig", "syd sydvästlig", "sydvästlig", "väst sydvästlig", "västligt", "väst nordvästlig", "nordvästlig", "nord nordvästlig"];
-		return arr[(val % 16)];		
+		return arr[(val % 16)];
 	};
 
 	var convertWeatherTypeToText = function (value) {
-		var text = "";
+
 		switch (value) {
 			case 1:
-				text = "klart";
+				return "klart";
 			case 2:
-				text = "mestadels klart";
+				return "mestadels klart";
 			case 3:
-				text = "växlande molnighet";
+				return "växlande molnighet";
 			case 4:
-				text = "halvklart";
+				return "halvklart";
 			case 5:
-				text = "molnigt";
+				return "molnigt";
 			case 6:
-				text = "mulet";
+				return "mulet";
 			case 7:
-				text = "dimma";
+				return "dimma";
 			case 8:
-				text = "regnskurar";
+				return "regnskurar";
 			case 9:
-				text = "åskskurar";
+				return "åskskurar";
 			case 10:
-				text = "byar av snöblandat regn";
+				return "byar av snöblandat regn";
 			case 11:
-				text = "snöbyar";
+				return "snöbyar";
 			case 12:
-				text = "regn";
+				return "regn";
 			case 13:
-				text = "åska";
+				return "åska";
 			case 14:
-				text = "snöblandat regn";
+				return "snöblandat regn";
 			case 15:
-				text = "snöfall";		
+				return "snöfall";
+			default:
+				return "";
 		}
-
-		return text;
 	};
 
 });

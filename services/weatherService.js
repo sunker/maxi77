@@ -1,6 +1,7 @@
 // var SMHI = require("smhi-node");
 var SMHI = require("smhi-node");
 var Q = require('q');
+var fs = require('fs');
 
 var weatherService = {};
 
@@ -8,25 +9,32 @@ weatherService.getForecasts = function () {
     return forecastsForLatAndLong();
 };
 
-var forecastsForLatAndLong = function(){
+var forecastsForLatAndLong = function () {
     var deferred = Q.defer();
     //stockholm coordinates
     var lat = 59;
     var long = 18;
     SMHI.getForecastForLatAndLong(lat, long).then(
-       function (response) {
-            var forecasts = response.getForecasts();            
+        function (response) {
+
+            
+
+            var forecasts = response.getForecasts();
             var result = [forecasts.length];
 
-            for (i = 0; i <forecasts.length; i++) { 
+            for (i = 0; i < forecasts.length; i++) {
                 result[i] = buildJson(forecasts[i]);
             }
-            
+
             return deferred.resolve(result);
         },
         function (error) {
-            deferred.reject("Weather service down");
-        } 
+            // deferred.reject("Weather service down");
+            //While developing...use cached forecasts when SMHI/internet is down
+            var data = JSON.parse(fs.readFileSync('./SMHITestData.json', 'utf8').toString());            
+
+            return deferred.resolve(data);
+        }
     );
 
     return deferred.promise;
@@ -54,7 +62,7 @@ var buildJson = function (forecast) {
 };
 
 var getSwedishPrecipitationType = function (precipitationCategory) {
-    
+
     switch (precipitationCategory.values[0]) {
         case 1:
             return "snö";
