@@ -8,11 +8,10 @@ chartModule.directive('chartTeaser', function ($location, $timeout, chartService
         link: function (scope, elem, attr) {
         },
         scope: {
-            displayZoom: '&'
+            displayZoom: '=displayZoom'
         },
         controller: function ($scope, $http, geoLocationService, socket) {
             chartService.initialize(document.getElementsByClassName('chart-map')[0]);
-
             var updateMap = function (coordinates) {
                 chartService.mapPanTo(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
                 chartService.setPositionMarker(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
@@ -20,6 +19,14 @@ chartModule.directive('chartTeaser', function ($location, $timeout, chartService
 
             if ($scope.coordinates) {
                 updateMap($scope.coordinates);
+            };
+
+            $scope.zoomIn = function () {
+                chartService.zoomIn();
+            };
+
+            $scope.zoomOut = function () {
+                chartService.zoomOut();
             };
 
             socket.on('journeyStopped', function (data) {
@@ -41,7 +48,7 @@ chartModule.directive('chartTeaser', function ($location, $timeout, chartService
             socket.on('coordinatesUpdates', function (data) {
                 $rootScope.coordinates = data.coordinates;
                 if (data.coordinates) updateMap(data.coordinates);
-            });            
+            });
         }
     }
 });
