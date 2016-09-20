@@ -1,17 +1,34 @@
 'use strict';
 var chartModule = angular.module("chartModule");
 chartModule.controller('chartController', function ($scope, socket, chartService) {
+    var autoFocus = true;
+    var coordinates;
+
     chartService.initialize(document.getElementsByClassName('chart-map')[0]);
+
     var updateMap = function (coordinates) {
-        chartService.mapPanTo(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
+
+        if(autoFocus) chartService.mapPanTo(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
         chartService.setPositionMarker(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
     };
 
-    $scope.zoomIn = function () {
+    $scope.click = function ($event) {
+        autoFocus = false;
+    };
+
+    $scope.panToCenter = function ($event) {
+        $event.stopPropagation();
+        chartService.mapPanTo(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
+        autoFocus = true;
+    };
+
+    $scope.zoomIn = function ($event) {
+        $event.stopPropagation();
         chartService.zoomIn();
     };
 
-    $scope.zoomOut = function () {
+    $scope.zoomOut = function ($event) {
+        $event.stopPropagation();
         chartService.zoomOut();
     };
 
@@ -32,9 +49,12 @@ chartModule.controller('chartController', function ($scope, socket, chartService
     });
 
     socket.on('coordinatesUpdates', function (data) {
-        if (data.coordinates) {
-            updateMap(data.coordinates);
-            socket.emit('journeyUpdated', data.coordinates);
-        }
+        coordinates = data.coordinates;
+        updateMap(data.coordinates);
+        socket.emit('journeyUpdated', data.coordinates);
+        // if (data.coordinates) {
+        //     updateMap(data.coordinates);
+        //     socket.emit('journeyUpdated', data.coordinates);
+        // }
     });
 }); 

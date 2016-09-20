@@ -55,7 +55,9 @@ chartModule.service("chartService", function () {
             marker.setVisible(true);
             marker.setMap(map);
         };
+
         if (line) line.setMap(null);
+        if (linePath) linePath = [];
     };
 
     this.loadJourney = function (data) {

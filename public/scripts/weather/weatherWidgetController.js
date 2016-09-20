@@ -1,6 +1,6 @@
 'use strict';
 var weatherModule = angular.module("weatherModule");
-weatherModule.controller('weatherTeaserController', function ($scope, geoLocationService, weatherService, socket) {
+weatherModule.controller('weatherWidgetController', function ($scope, geoLocationService, weatherService, socket) {
 	socket.emit('getWeatherForecast');
 
 	socket.on('forecastUpdated', function (data) {

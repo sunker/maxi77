@@ -1,13 +1,20 @@
-﻿<div class="chart-map">
+﻿<div class="chart-map" ng-click="click($event)">
     <div ng-if="displayZoom">
-        <div class="chart-buttons pull-right">
-            <div class="btn-group-vertical">
-                <button ng-click="zoomOut()" type="button" class="btn btn-default btn-xlarge">
-                    <span class="glyphicon glyphicon-plus"></span>
+        <div class=" pull-right">
+            <div class="chart-center-buttons">
+                <button ng-click="panToCenter($event)" type="button" class="btn btn-default btn-xlarge-round">
+                    <span class="glyphicon glyphicon-map-marker"></span>
                 </button>
-                <button ng-click="zoomIn()" type="button" class="btn btn-default btn-xlarge">
-                    <span class="glyphicon glyphicon-minus"></span>
-                </button>
+            </div>
+            <div class="chart-zoom-buttons">
+                <div class="btn-group-vertical">
+                    <button ng-click="zoomOut($event)" type="button" class="btn btn-default btn-xlarge">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                    <button ng-click="zoomIn($event)" type="button" class="btn btn-default btn-xlarge">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

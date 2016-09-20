@@ -6,6 +6,12 @@ chartModule.directive('chart', function () {
         restrict: "E",
         templateUrl: 'scripts/chart/chartTemplate.html',
         link: function (scope, elem, attr) {
+            // document.getElementsByClassName('chart-map')[0].on('click', function(e) {
+
+            // });
+            // elem.on('click', function(e) {
+
+            // });
         },
         scope: {
             displayZoom: '=displayZoom'

@@ -1,15 +1,15 @@
 'use strict';
 var weatherModule = angular.module("weatherModule");
-weatherModule.directive('weatherTeaser', function ($location) {
+weatherModule.directive('weatherWidget', function ($location) {
 	
 	return {
-		templateUrl: 'scripts/weather/weatherTeaserTemplate.html',
+		templateUrl: 'scripts/weather/weatherWidgetTemplate.html',
 		link: function (scope, elem, attr) {
 			elem.bind("click", function () {
 			    $location.url('/weather');
 			});
 		},
-		controller: 'weatherTeaserController',
+		controller: 'weatherWidgetController',
 	};
 });
 

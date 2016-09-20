@@ -42,8 +42,22 @@
     bottom: 15px; }
     .chart-map .chart-buttons button {
       background: none; }
+  .chart-map .chart-zoom-buttons {
+    position: absolute;
+    right: 5px;
+    bottom: 5px; }
+    .chart-map .chart-zoom-buttons button {
+      background: none; }
+  .chart-map .chart-center-buttons {
+    position: absolute;
+    right: 5px;
+    top: 5px; }
+    .chart-map .chart-center-buttons button {
+      background: none; }
   .chart-map .e-map {
     z-index: -1 !important; }
+  .chart-map .e-logo, .chart-map .e-maptypes {
+    display: none; }
 
 .jumbotron {
   margin-bottom: 0;
@@ -59,3 +73,11 @@
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px; }
+
+.btn-xlarge-round {
+  padding: 18px 22px;
+  font-size: 26px;
+  line-height: normal;
+  -webkit-border-radius: 36px;
+  -moz-border-radius: 36px;
+  border-radius: 36px; }
