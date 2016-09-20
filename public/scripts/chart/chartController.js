@@ -1,6 +1,6 @@
 'use strict';
 var chartModule = angular.module("chartModule");
-chartModule.controller('chartTeaserController', function ($scope, socket, chartService) {
+chartModule.controller('chartController', function ($scope, socket, chartService) {
     chartService.initialize(document.getElementsByClassName('chart-map')[0]);
     var updateMap = function (coordinates) {
         chartService.mapPanTo(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
