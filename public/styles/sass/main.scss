@@ -42,15 +42,18 @@
     }
     .teaser {
         padding: 10px;
-        height: 180px;
+        // height: 180px;
+        &.first {
+            border-right: 1px solid #eee;
+        }
     }
     .teaser:nth-child(2){
-        border-left: 1px solid #eee;
+        // border-left: 1px solid #eee;
+        height: 100%;
     }
 }
 
 .chart-map {
-    height: 350px;
     position: relative; 
     z-index: 9999;
     

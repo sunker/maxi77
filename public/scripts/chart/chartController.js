@@ -4,6 +4,10 @@ chartModule.controller('chartController', function ($scope, socket, chartService
     var autoFocus = true;
     var coordinates;
 
+    $scope.mapStyle = {
+        "height" : $scope.mapHeight + "px"
+    }
+
     chartService.initialize(document.getElementsByClassName('chart-map')[0]);
 
     var updateMap = function (coordinates) {

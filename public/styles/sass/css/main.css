@@ -30,13 +30,13 @@
   .teaser-row.first {
     border-top: 1px solid #eee; }
   .teaser-row .teaser {
-    padding: 10px;
-    height: 180px; }
+    padding: 10px; }
+    .teaser-row .teaser.first {
+      border-right: 1px solid #eee; }
   .teaser-row .teaser:nth-child(2) {
-    border-left: 1px solid #eee; }
+    height: 100%; }
 
 .chart-map {
-  height: 350px;
   position: relative;
   z-index: 9999; }
   .chart-map .chart-buttons {

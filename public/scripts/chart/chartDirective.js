@@ -14,7 +14,8 @@ chartModule.directive('chart', function () {
             // });
         },
         scope: {
-            displayZoom: '=displayZoom'
+            displayZoom: '=displayZoom',
+            mapHeight: '@mapHeight'
         },
         controller: 'chartController',
     }
