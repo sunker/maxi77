@@ -18,7 +18,7 @@ weatherModule.controller('weatherWidgetController', function ($scope, geoLocatio
 		$scope.weatherDescription = convertWeatherTypeToText(data.swedishWeatherType.value);
 		$scope.time = "kl " + new Date(data.validTime).getHours();
 		$scope.temperature = data.temperature.value + "°";
-		$scope.windSpeed = data.windVelocity.value + " m/s " + convertWindDirectionToText(data.windDirection) + " (" + data.windGust.value + " m/s byvind)";
+		$scope.windSpeed = data.windVelocity.value + " m/s " + convertWindDirectionToText(data.windDirection.value) + " (" + data.windGust.value + " m/s byvind)";
 	};
 
 	//Move to service?

@@ -1,5 +1,5 @@
 .container {
-  max-width: 600px;
+  max-width: 480px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 10px; }
@@ -31,6 +31,8 @@
     border-top: 1px solid #eee; }
   .teaser-row .teaser {
     padding: 10px; }
+  .teaser-row .teaser:nth-child(2) {
+    border-left: 1px solid #eee; }
 
 .chart-map {
   height: 350px;

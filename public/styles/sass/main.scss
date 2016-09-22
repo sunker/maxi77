@@ -1,5 +1,5 @@
 .container {
-    max-width: 600px;
+    max-width: 480px; 
     margin-left: auto;
     margin-right: auto;
     margin-top: 10px;
@@ -44,7 +44,7 @@
         padding: 10px;
     }
     .teaser:nth-child(2){
-        // border-left: 1px solid #eee;
+        border-left: 1px solid #eee;
     }
 }
 
