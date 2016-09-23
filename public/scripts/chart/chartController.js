@@ -58,9 +58,5 @@ chartModule.controller('chartController', function ($scope, socket, chartService
         coordinates = data.coordinates;
         updateMap(data.coordinates);
         socket.emit('journeyUpdated', data.coordinates);
-        // if (data.coordinates) {
-        //     updateMap(data.coordinates);
-        //     socket.emit('journeyUpdated', data.coordinates);
-        // }
     });
 }); 

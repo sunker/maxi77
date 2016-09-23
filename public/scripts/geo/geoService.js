@@ -11,8 +11,8 @@ chartModule.service("geoService", function () {
         var currentCoordinate = coordinates[0];
         var totalSpeed = 0;
         for (var i = 1; i < coordinates.length; i++) {
-            var a = getSpeedBetweenTwoCoordinates(currentCoordinate, coordinates[i]);
-            totalSpeed = totalSpeed + a;
+            var speed = getSpeedBetweenTwoCoordinates(currentCoordinate, coordinates[i]);
+            totalSpeed = totalSpeed + speed;
             currentCoordinate = coordinates[i];
         }
 
