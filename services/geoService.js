@@ -17,7 +17,7 @@ geoService.getCoordinates = function () {
   if (counter == 472) counter = 0;
   var coords = coordinates.gpx.wpt[counter];
   counter++;
-  defer.resolve({ long: Number(coords.long), lat: Number(coords.lat) });
+  defer.resolve({ long: Number(coords.long), lat: Number(coords.lat), timestamp: new Date().getTime() });
 
   return defer.promise;
 };

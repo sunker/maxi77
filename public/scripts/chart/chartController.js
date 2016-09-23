@@ -5,14 +5,16 @@ chartModule.controller('chartController', function ($scope, socket, chartService
     var coordinates;
 
     $scope.mapStyle = {
-        "height" : $scope.mapHeight + "px"
+        "height": $scope.mapHeight + "px"
     }
 
     chartService.initialize(document.getElementsByClassName('chart-map')[0]);
 
     var updateMap = function (coordinates) {
 
-        if(autoFocus) chartService.mapPanTo(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
+        if (autoFocus) {
+            chartService.mapPanTo(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
+        }
         chartService.setPositionMarker(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
     };
 
