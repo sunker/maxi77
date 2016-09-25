@@ -5,6 +5,7 @@ chartModule.service("geoService", function () {
     var coordinates = [];
 
     this.getCurrentSpeed = function (newCoordinate) {
+        // console.log("New point " + newCoordinate.lat + " " +  newCoordinate.long);
         addCoordinate(newCoordinate);
         if (coordinates.length === 1) return 0.00;
 

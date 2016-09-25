@@ -6,6 +6,7 @@ var geoService = {};
 
 var counter = 0;
 var coordinates;
+var timestamp;
 
 //return the coordinates from the GPS module in the rpi. but for now...
 geoService.getCoordinates = function () {
@@ -17,7 +18,11 @@ geoService.getCoordinates = function () {
   if (counter == 472) counter = 0;
   var coords = coordinates.gpx.wpt[counter];
   counter++;
-  defer.resolve({ long: Number(coords.long), lat: Number(coords.lat), timestamp: new Date().getTime() });
+  if (!timestamp) {
+    timestamp = new Date();
+  }
+  timestamp.setSeconds(timestamp.getSeconds() + 15);
+  defer.resolve({ long: Number(coords.long), lat: Number(coords.lat), timestamp: timestamp.getTime() });
 
   return defer.promise;
 };

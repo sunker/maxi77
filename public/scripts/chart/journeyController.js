@@ -32,6 +32,6 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
     socket.on('coordinatesUpdates', function (data) {
         $scope.coordinates = data.coordinates;
         var a = geoService.getCurrentSpeed(data.coordinates);
-        console.log(a);
+        // console.log(a);
     });
 }); 
