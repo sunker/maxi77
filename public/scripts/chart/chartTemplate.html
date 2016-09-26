@@ -1,4 +1,10 @@
 ﻿<div class="chart-map" ng-click="click($event)" ng-style="mapStyle">
+    <div class="loading-feedback" ng-if="initialized === null">
+        <p class="text-center temp">Laddar sjökort...</p>
+    </div>
+    <div class="loading-feedback" ng-if="initialized === false">
+        <p class="text-center temp">Kan inte ansluta till Eniro</p>
+    </div>
     <div ng-if="displayZoom">
         <div class=" pull-right">
             <div class="chart-center-buttons">

@@ -6,24 +6,29 @@ chartModule.service("chartService", function () {
     var journeyMode = false;
 
     this.initialize = function (parentDiv) {
-        map = new eniro.maps.Map(parentDiv, {
-            zoom: 9,
-            mapTypeId: eniro.maps.MapTypeId.NAUTICAL,
-            mapTypeControl: false,
-            zoomControl: false,
-            focus: true
-        });
+        try {
+            map = new eniro.maps.Map(parentDiv, {
+                zoom: 9,
+                mapTypeId: eniro.maps.MapTypeId.NAUTICAL,
+                mapTypeControl: false,
+                zoomControl: false,
+                focus: true
+            });
 
-        if (journeyMode) {
-            line = new eniro.maps.Polyline({
-                map: map,
-                path: linePath
-            });
-        } else {
-            marker = new eniro.maps.Marker({
-                map: map,
-                position: new eniro.maps.LatLng(0, 0) //WAT?
-            });
+            if (journeyMode) {
+                line = new eniro.maps.Polyline({
+                    map: map,
+                    path: linePath
+                });
+            } else {
+                marker = new eniro.maps.Marker({
+                    map: map,
+                    position: new eniro.maps.LatLng(0, 0) //WAT?
+                });
+            }
+            return true;
+        } catch(ex) {
+            return false;
         }
     };
 
@@ -51,7 +56,7 @@ chartModule.service("chartService", function () {
 
     this.stopJourney = function () {
         journeyMode = false;
-        if (marker) {            
+        if (marker) {
             marker.setVisible(true);
             marker.setMap(map);
         };
@@ -64,7 +69,7 @@ chartModule.service("chartService", function () {
         journeyMode = true;
         marker.setVisible(false);
         linePath = new eniro.maps.MapArray();
-        data.coordinates.forEach(function(coordinate){
+        data.coordinates.forEach(function (coordinate) {
             linePath.push(new eniro.maps.LatLng(coordinate.latitude, coordinate.longitude));
         });
         line = new eniro.maps.Polyline({
