@@ -61,6 +61,14 @@ module.exports = function (socket) {
     });
   });
 
+  socket.on('journeyDistanceUpdated', function (meters) {
+    journeyService.getCurrentJourney().then(function (data) {
+      if (data) {
+        journeyService.updateDistance(data._id, meters)
+      }
+    });
+  });
+
   socket.on('getCurrentJourney', function () {
     journeyService.getCurrentJourney().then(function (data) {
       socket.emit('currentJourneyLoaded', { journey: data });

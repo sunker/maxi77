@@ -74,6 +74,24 @@ journeyService.addCoordinate = function (journeyId, coordinate) {
             console.log("Coordinate added");
         }
     });
+    return defer.promise;
+}
+
+journeyService.updateDistance = function (journeyId, meters) {
+    var defer = Q.defer();
+    Journey.findById(journeyId, function (err, journey) {
+        if (err) {
+            console.log(err);
+            defer.reject(err);
+        } else {
+            journey.distance = journey.distance + meters;
+            journey.save(function (err) {
+                if (err) console.log(err);
+                // console.log('Journey distance updated!');
+                defer.resolve(journey);
+            });
+        }
+    });
 
     return defer.promise;
 };
@@ -84,7 +102,8 @@ journeyService.createJourney = function (startCoordinates) {
     var newJourney = Journey({
         startCoordinate: { latitude: startCoordinates.lat, longitude: startCoordinates.long },
         created_at: new Date(),
-        stopped: false
+        stopped: false,
+        distance: 0.00
     });
 
     newJourney.save(function (err, journey, numAffected) {
@@ -93,7 +112,7 @@ journeyService.createJourney = function (startCoordinates) {
             defer.reject(err);
         } else {
             journeyService.addCoordinate(journey._id, startCoordinates).then(function (coordinate) {
-                journey.coordinates[0] = coordinate;                        
+                journey.coordinates[0] = coordinate;
                 defer.resolve(journey);
                 console.log("Journey created");
             });
