@@ -24,7 +24,7 @@ module.exports = function (socket) {
 
   var updateGPSCoordinates = function () {
     geoService.getCoordinates().then(function (coords) {
-      socket.emit('coordinatesUpdates', { coordinates: coords });
+      socket.emit('coordinatesUpdated', { coordinates: coords });
     });
   };
 
@@ -53,7 +53,7 @@ module.exports = function (socket) {
     });
   });
 
-  socket.on('journeyUpdated', function (newCoordinate) {
+  socket.on('journeyCoordinatesUpdated', function (newCoordinate) {
     journeyService.getCurrentJourney().then(function (data) {
       if (data) {
         journeyService.addCoordinate(data._id, newCoordinate)

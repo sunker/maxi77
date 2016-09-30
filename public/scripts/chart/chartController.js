@@ -70,9 +70,8 @@ chartModule.controller('chartController', function ($scope, socket, chartService
         }
     });
 
-    socket.on('coordinatesUpdates', function (data) {
+    socket.on('coordinatesUpdated', function (data) {
         coordinates = data.coordinates;
-        updateMap(data.coordinates);
-        socket.emit('journeyUpdated', data.coordinates);
+        updateMap(data.coordinates);        
     });
 }); 

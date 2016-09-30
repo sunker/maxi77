@@ -13,7 +13,7 @@ chartModule.service("geoService", function () {
         var totalSpeed = 0;
         for (var i = 1; i < coordinates.length; i++) {
             var speed = getSpeedBetweenTwoCoordinates(currentCoordinate, coordinates[i]);
-            console.log(speed);
+            // console.log(speed);
             totalSpeed = totalSpeed + speed;
             currentCoordinate = coordinates[i];
         }

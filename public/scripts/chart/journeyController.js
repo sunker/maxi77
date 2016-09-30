@@ -22,34 +22,31 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
         $scope.journey = data.journey;
         $scope.loadingJourney = false;
         if (data.journey) {
-            $scope.distanceMeters = data.journey.distance;
-            $scope.distanceSeamiles = geoService.metersToSeaMiles(data.journey.distance);
+            $scope.distanceMeters = (data.journey.distance).toFixed(2);
+            $scope.distanceSeamiles = geoService.metersToSeaMiles(data.journey.distance).toFixed(2);
         }
     });
 
     socket.on('journeyStopped', function (data) {
         $scope.journey = null;
+        $scope.distanceMeters = $scope.distanceSeamiles = 0;
     });
 
     socket.on('journeyCreated', function (data) {
         $scope.journey = data;
         $scope.loadingJourney = false;
-        if (data.journey) {
-            $scope.distanceMeters = data.journey.distance;
-            $scope.distanceSeamiles = geoService.metersToSeaMiles(data.journey.distance);
-        }
     });
 
-    socket.on('coordinatesUpdates', function (data) {
+    socket.on('coordinatesUpdated', function (data) {
         $scope.coordinates = data.coordinates;
         $scope.speed = geoService.getCurrentSpeed(data.coordinates).toFixed(2);
 
         if ($scope.journey) {
             var distanceInMeters = $scope.distance = geoService.getDistanceInMetersBetweenLastTwoCoordinates();
-            console.log(Number($scope.distanceSeamiles));
             $scope.distanceMeters = (Number($scope.distanceMeters) + distanceInMeters).toFixed(2);
             $scope.distanceSeamiles = (Number($scope.distanceSeamiles) + geoService.metersToSeaMiles(distanceInMeters)).toFixed(2);
+            socket.emit('journeyCoordinatesUpdate', data.coordinates);
             socket.emit('journeyDistanceUpdated', distanceInMeters);
-        }
+        }        
     });
 }); 
