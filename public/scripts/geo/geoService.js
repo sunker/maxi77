@@ -33,6 +33,10 @@ chartModule.service("geoService", function (socket) {
         return distance;
     };
 
+    this.getCurrentCoordinate = function () {
+        return coordinates[coordinates.length-1];
+    };
+
     this.metersToSeaMiles = function (meters) {
         return geolib.convertUnit('sm', meters, 10);
     };

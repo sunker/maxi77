@@ -26,10 +26,11 @@ module.exports = function (socket) {
     geoService.getCoordinates().then(function (coords) {
       socket.emit('coordinatesUpdated', { coordinates: coords });
       journeyRepository.getCurrentJourney().then(function (data) {
-      if (data) {
-        journeyRepository.addCoordinate(data._id, coords)
-      }
-    });
+        if (data) {
+          coords.isMob = false;
+          journeyRepository.addCoordinate(data._id, coords)
+        }
+      });
     });
   };
 
@@ -61,6 +62,16 @@ module.exports = function (socket) {
   socket.on('journeyCoordinatesUpdated', function (newCoordinate) {
     journeyRepository.getCurrentJourney().then(function (data) {
       if (data) {
+        newCoordinate.isMob = false;
+        journeyRepository.addCoordinate(data._id, newCoordinate)
+      }
+    });
+  });
+
+  socket.on('manOverBoard', function (newCoordinate) {
+    journeyRepository.getCurrentJourney().then(function (data) {
+      if (data) {
+        newCoordinate.isMob = true;
         journeyRepository.addCoordinate(data._id, newCoordinate)
       }
     });

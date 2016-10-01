@@ -3,6 +3,7 @@ var chartModule = angular.module("chartModule");
 chartModule.service("chartService", function () {
     var map, marker, line;
     var linePath;
+    var redMarkers = [];
     var journeyMode = false;
 
     this.initialize = function (parentDiv) {
@@ -27,7 +28,7 @@ chartModule.service("chartService", function () {
                 });
             }
             return true;
-        } catch(ex) {
+        } catch (ex) {
             return false;
         }
     };
@@ -73,11 +74,24 @@ chartModule.service("chartService", function () {
         map.setZoom(data.zoom_level);
         linePath = new eniro.maps.MapArray();
         data.coordinates.forEach(function (coordinate) {
+            if (coordinate.is_MOB) {
+                addRedMarker({ lat: coordinate.latitude, lng: coordinate.longitude })
+            }
             linePath.push(new eniro.maps.LatLng(coordinate.latitude, coordinate.longitude));
         });
         line = new eniro.maps.Polyline({
             map: map,
             path: linePath
         });
+    };
+
+    this.addRedMarker = function (coordinate) {
+        var redMarker = new eniro.maps.Marker({
+            map: map,
+            position: new eniro.maps.LatLng(0, 0), //WAT?
+            icon: new eniro.maps.MarkerImage('../../images/MOB.png', new eniro.maps.Size(24, 24), new eniro.maps.Point(0, 0), new eniro.maps.Point(11, 13), 0, 0)
+        });
+        redMarker.setPosition(new eniro.maps.LatLng(coordinate.lat, coordinate.lng));
+        redMarkers.push(redMarker);
     };
 });

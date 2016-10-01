@@ -18,7 +18,7 @@ journeyRepository.getCurrentJourney = function () {
             if (journey.length !== 0) {
                 var currentJourney = journey[0];
                 Coordinate.find({ "journeyId": currentJourney._id }, function (err, coordinates) {
-                    if (err) {
+                    if (err) {  
                         console.log(err);
                         defer.reject(err);
                     } else {
@@ -62,7 +62,8 @@ journeyRepository.addCoordinate = function (journeyId, coordinate) {
         latitude: coordinate.lat,
         longitude: coordinate.long,
         timestamp: coordinate.timestamp,
-        journeyId: journeyId
+        journeyId: journeyId,
+        is_MOB: coordinate.isMob
     });
 
     newCoordinate.save(function (err, coordinate, numAffected) {
@@ -71,7 +72,7 @@ journeyRepository.addCoordinate = function (journeyId, coordinate) {
             defer.reject(err);
         } else {
             defer.resolve(coordinate);
-            console.log("Coordinate added");
+            // console.log("Coordinate added");
         }
     });
     return defer.promise;

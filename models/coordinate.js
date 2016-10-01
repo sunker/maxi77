@@ -6,6 +6,7 @@ var coordinateSchema = new Schema({
     latitude: Number, 
     longitude: Number,
     timestamp: Date,
+    is_MOB: Boolean, default: false,
 });
 
 var Coordinate = mongoose.model('coordinate', coordinateSchema);

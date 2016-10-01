@@ -23,8 +23,11 @@
                 <table class="table-responsive table-sm table-journey">
                     <thead>
                         <tr>
-                            <th class="col-md-1 text-right">LAT: <strong>{{coordinates.lat}}</strong></th>
-                            <th class="col-md-2 text-left">LONG: <strong>{{coordinates.long}}</strong></th>
+                            <th class="col-md-1">LAT: <strong>{{coordinates.lat}}</strong></th>
+                            <th class="col-md-2">LONG: <strong>{{coordinates.long}}</strong></th>
+                            <th class="col-md-3">
+                                <man-overboard></man-overboard>
+                            </th>
                         </tr>
                     </thead>
                 </table>
@@ -35,7 +38,7 @@
                     <button type="button" ng-click="createJourney()" class="btn btn-success form-control">Skapa ny tripp</button>
                 </div>
                 <div class="" ng-if="journey">
-                    <button type="button" ng-click="stopJourney()" class="btn btn-danger  form-control">Avsluta tripp</button>
+                    <button type="button" ng-click="stopJourney()" class="btn btn-warning  form-control">Avsluta tripp</button>
                 </div>
             </div>
         </div>
