@@ -46,12 +46,14 @@ chartModule.controller('chartController', function ($scope, socket, chartService
 
     $scope.zoomIn = function ($event) {
         $event.stopPropagation();
-        chartService.zoomIn();
+        var newZoomLevel = chartService.zoomIn();
+        socket.emit('journeyZoomLevelChanged', newZoomLevel);
     };
 
     $scope.zoomOut = function ($event) {
         $event.stopPropagation();
-        chartService.zoomOut();
+        var newZoomLevel = chartService.zoomOut();
+        socket.emit('journeyZoomLevelChanged', newZoomLevel);
     };
 
     socket.on('journeyStopped', function (data) {
@@ -72,6 +74,6 @@ chartModule.controller('chartController', function ($scope, socket, chartService
 
     socket.on('coordinatesUpdated', function (data) {
         coordinates = data.coordinates;
-        updateMap(data.coordinates);        
+        updateMap(data.coordinates);
     });
 }); 

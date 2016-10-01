@@ -96,6 +96,25 @@ journeyService.updateDistance = function (journeyId, meters) {
     return defer.promise;
 };
 
+journeyService.updateZoomLevel = function (journeyId, zoomLevel) {
+    var defer = Q.defer();
+    Journey.findById(journeyId, function (err, journey) {
+        if (err) {
+            console.log(err);
+            defer.reject(err);
+        } else {
+            journey.zoom_level = zoomLevel;
+            journey.save(function (err) {
+                if (err) console.log(err);
+                // console.log('Journey distance updated!');
+                defer.resolve(journey);
+            });
+        }
+    });
+
+    return defer.promise;
+};
+
 journeyService.createJourney = function (startCoordinates) {
     var defer = Q.defer();
 
@@ -103,7 +122,8 @@ journeyService.createJourney = function (startCoordinates) {
         startCoordinate: { latitude: startCoordinates.lat, longitude: startCoordinates.long },
         created_at: new Date(),
         stopped: false,
-        distance: 0.00
+        distance: 0.00,
+        zoom_level: 10 //Should be arg from client?
     });
 
     newJourney.save(function (err, journey, numAffected) {

@@ -74,6 +74,14 @@ module.exports = function (socket) {
     });
   });
 
+  socket.on('journeyZoomLevelChanged', function (zoomLevel) {
+    journeyService.getCurrentJourney().then(function (data) {
+      if (data) {
+        journeyService.updateZoomLevel(data._id, zoomLevel)
+      }
+    });
+  });
+
   socket.on('getCurrentJourney', function () {
     journeyService.getCurrentJourney().then(function (data) {
       socket.emit('currentJourneyLoaded', { journey: data });

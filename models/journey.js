@@ -6,6 +6,7 @@ var journeySchema = new Schema({
     startCoordinate: { latitude: Number, longitude: Number },
     created_at: Date,
     distance: Number,
+    zoom_level: Number,
     stopped: Boolean, default: false,
     coordinates: [] //{ lat : Number, lng : Number }
 });

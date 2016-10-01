@@ -8,7 +8,7 @@ chartModule.service("chartService", function () {
     this.initialize = function (parentDiv) {
         try {
             map = new eniro.maps.Map(parentDiv, {
-                zoom: 9,
+                zoom: 10,
                 mapTypeId: eniro.maps.MapTypeId.NAUTICAL,
                 mapTypeControl: false,
                 zoomControl: false,
@@ -47,11 +47,13 @@ chartModule.service("chartService", function () {
     this.zoomIn = function () {
         var zoomLevel = map.getZoom();
         map.setZoom(--zoomLevel);
+        return map.getZoom();
     };
 
     this.zoomOut = function () {
         var zoomLevel = map.getZoom();
         map.setZoom(++zoomLevel);
+        return map.getZoom();
     };
 
     this.stopJourney = function () {
@@ -68,6 +70,7 @@ chartModule.service("chartService", function () {
     this.loadJourney = function (data) {
         journeyMode = true;
         marker.setVisible(false);
+        map.setZoom(data.zoom_level);
         linePath = new eniro.maps.MapArray();
         data.coordinates.forEach(function (coordinate) {
             linePath.push(new eniro.maps.LatLng(coordinate.latitude, coordinate.longitude));
