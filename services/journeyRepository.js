@@ -2,12 +2,12 @@ var Q = require('q');
 var Journey = require('../models/journey');
 var Coordinate = require('../models/coordinate');
 
-var journeyService = {};
+var journeyRepository = {};
 
 var counter = 0;
 var coordinates;
 
-journeyService.getCurrentJourney = function () {
+journeyRepository.getCurrentJourney = function () {
     var defer = Q.defer();
 
     Journey.find({ "stopped": false }, function (err, journey) {
@@ -35,7 +35,7 @@ journeyService.getCurrentJourney = function () {
     return defer.promise;
 };
 
-journeyService.stopJourney = function (journeyId) {
+journeyRepository.stopJourney = function (journeyId) {
     var defer = Q.defer();
 
     Journey.findById(journeyId, function (err, journey) {
@@ -55,7 +55,7 @@ journeyService.stopJourney = function (journeyId) {
     return defer.promise;
 };
 
-journeyService.addCoordinate = function (journeyId, coordinate) {
+journeyRepository.addCoordinate = function (journeyId, coordinate) {
     var defer = Q.defer();
 
     var newCoordinate = Coordinate({
@@ -77,7 +77,7 @@ journeyService.addCoordinate = function (journeyId, coordinate) {
     return defer.promise;
 }
 
-journeyService.updateDistance = function (journeyId, meters) {
+journeyRepository.updateDistance = function (journeyId, meters) {
     var defer = Q.defer();
     Journey.findById(journeyId, function (err, journey) {
         if (err) {
@@ -96,7 +96,7 @@ journeyService.updateDistance = function (journeyId, meters) {
     return defer.promise;
 };
 
-journeyService.updateZoomLevel = function (journeyId, zoomLevel) {
+journeyRepository.updateZoomLevel = function (journeyId, zoomLevel) {
     var defer = Q.defer();
     Journey.findById(journeyId, function (err, journey) {
         if (err) {
@@ -115,7 +115,7 @@ journeyService.updateZoomLevel = function (journeyId, zoomLevel) {
     return defer.promise;
 };
 
-journeyService.createJourney = function (startCoordinates) {
+journeyRepository.createJourney = function (startCoordinates) {
     var defer = Q.defer();
 
     var newJourney = Journey({
@@ -131,7 +131,7 @@ journeyService.createJourney = function (startCoordinates) {
             console.log(err);
             defer.reject(err);
         } else {
-            journeyService.addCoordinate(journey._id, startCoordinates).then(function (coordinate) {
+            journeyRepository.addCoordinate(journey._id, startCoordinates).then(function (coordinate) {
                 journey.coordinates[0] = coordinate;
                 defer.resolve(journey);
                 console.log("Journey created");
@@ -142,4 +142,4 @@ journeyService.createJourney = function (startCoordinates) {
     return defer.promise;
 };
 
-module.exports = journeyService;
+module.exports = journeyRepository;

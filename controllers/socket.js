@@ -1,5 +1,5 @@
 var weatherService = require("../services/weatherService");
-var journeyService = require("../services/journeyService");
+var journeyRepository = require("../services/journeyRepository");
 var geoService = require("../services/geoService");
 
 module.exports = function (socket) {
@@ -25,9 +25,9 @@ module.exports = function (socket) {
   var updateGPSCoordinates = function () {
     geoService.getCoordinates().then(function (coords) {
       socket.emit('coordinatesUpdated', { coordinates: coords });
-      journeyService.getCurrentJourney().then(function (data) {
+      journeyRepository.getCurrentJourney().then(function (data) {
       if (data) {
-        journeyService.addCoordinate(data._id, coords)
+        journeyRepository.addCoordinate(data._id, coords)
       }
     });
     });
@@ -53,43 +53,43 @@ module.exports = function (socket) {
   });
 
   socket.on('createJourney', function (coordinates) {
-    journeyService.createJourney(coordinates.coordinates).then(function (data) {
+    journeyRepository.createJourney(coordinates.coordinates).then(function (data) {
       socket.emit('journeyCreated', data);
     });
   });
 
   socket.on('journeyCoordinatesUpdated', function (newCoordinate) {
-    journeyService.getCurrentJourney().then(function (data) {
+    journeyRepository.getCurrentJourney().then(function (data) {
       if (data) {
-        journeyService.addCoordinate(data._id, newCoordinate)
+        journeyRepository.addCoordinate(data._id, newCoordinate)
       }
     });
   });
 
   socket.on('journeyDistanceUpdated', function (meters) {
-    journeyService.getCurrentJourney().then(function (data) {
+    journeyRepository.getCurrentJourney().then(function (data) {
       if (data) {
-        journeyService.updateDistance(data._id, meters)
+        journeyRepository.updateDistance(data._id, meters)
       }
     });
   });
 
   socket.on('journeyZoomLevelChanged', function (zoomLevel) {
-    journeyService.getCurrentJourney().then(function (data) {
+    journeyRepository.getCurrentJourney().then(function (data) {
       if (data) {
-        journeyService.updateZoomLevel(data._id, zoomLevel)
+        journeyRepository.updateZoomLevel(data._id, zoomLevel)
       }
     });
   });
 
   socket.on('getCurrentJourney', function () {
-    journeyService.getCurrentJourney().then(function (data) {
+    journeyRepository.getCurrentJourney().then(function (data) {
       socket.emit('currentJourneyLoaded', { journey: data });
     });
   });
 
   socket.on('stopJourney', function (journey) {
-    journeyService.stopJourney(journey.id).then(function (data) {
+    journeyRepository.stopJourney(journey.id).then(function (data) {
       socket.emit('journeyStopped', data);
     });
   });
