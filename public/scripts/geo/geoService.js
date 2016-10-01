@@ -1,12 +1,11 @@
 'use strict';
 var chartModule = angular.module("geoModule");
-chartModule.service("geoService", function () {
+chartModule.service("geoService", function (socket) {
     var noOfCoordinatesToBaseSpeedCalculationOn = 3; //Feel free to edit
     var coordinates = [];
 
-    this.getCurrentSpeed = function (newCoordinate) {
+    this.getCurrentSpeed = function () {
         // console.log("New point " + newCoordinate.lat + " " +  newCoordinate.long);
-        addCoordinate(newCoordinate);
         if (coordinates.length === 1) return 0.00;
 
         var currentCoordinate = coordinates[0];
@@ -46,14 +45,6 @@ chartModule.service("geoService", function () {
         );
     };
 
-    var addCoordinate = function (newCoordinate) {
-        coordinates.push(convertToGeoLibCoordinate(newCoordinate));
-
-        if (coordinates.length > (noOfCoordinatesToBaseSpeedCalculationOn)) {
-            coordinates.shift();
-        }
-    };
-
     var convertToGeoLibCoordinate = function (coordinate) {
         return {
             lat: coordinate.lat,
@@ -61,4 +52,12 @@ chartModule.service("geoService", function () {
             time: coordinate.timestamp
         };
     };    
+
+    socket.on('coordinatesUpdated', function (data) {
+        coordinates.push(convertToGeoLibCoordinate(data.coordinates));
+
+        if (coordinates.length > (noOfCoordinatesToBaseSpeedCalculationOn)) {
+            coordinates.shift();
+        }
+    });
 });

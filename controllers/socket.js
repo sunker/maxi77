@@ -25,6 +25,11 @@ module.exports = function (socket) {
   var updateGPSCoordinates = function () {
     geoService.getCoordinates().then(function (coords) {
       socket.emit('coordinatesUpdated', { coordinates: coords });
+      journeyService.getCurrentJourney().then(function (data) {
+      if (data) {
+        journeyService.addCoordinate(data._id, coords)
+      }
+    });
     });
   };
 

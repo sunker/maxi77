@@ -61,7 +61,7 @@ journeyService.addCoordinate = function (journeyId, coordinate) {
     var newCoordinate = Coordinate({
         latitude: coordinate.lat,
         longitude: coordinate.long,
-        timestamp: new Date(),
+        timestamp: coordinate.timestamp,
         journeyId: journeyId
     });
 

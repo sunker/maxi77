@@ -1,45 +1,49 @@
 ﻿<div class="row teaser-row">
     <div class="teaser">
-        <div class="jumbotron" ng-if="loadingJourney">
-            <div class="row">
-                <div class="border col-xs">
-                    <p>Laddar tripp...</p>
+        <chart display-zoom="true" map-height="{{400}}"></chart>
+        <!--{{coordinates.lat}} {{coordinates.long}}-->
+        <div class="row teaser-row">
+            <div class="teaser">
+                <div class="jumbotron" ng-if="loadingJourney">
+                    <div class="row">
+                        <div class="border col-xs">
+                            <p>Laddar tripp...</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="jumbotron" ng-if="!journey && !loadingJourney">
-            <div class="row">
-                <div class="border col-xs-6">
-                    <p>Du har ingen aktiv tripp.</p>
+                <table class="table-responsive table-sm table-journey">
+                        <thead>
+                            <tr>
+                                <th class="col-md-1">SPD KTS</th>
+                                <th class="col-md-1">TRIP NM</th>
+                                <th class="col-md-1">TRIP KM</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{speed}}</td>
+                                <td>{{distanceSeamiles}}</td>
+                                <td>{{distanceKm}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <div class="jumbotron" ng-if="!journey && !loadingJourney">
+                    <div class="row">
+                        <div class="border col-xs-6">
+                            <p>Du har ingen aktiv tripp.</p>
+                        </div>
+                        <div class="border col-xs-6">
+                            <button type="button" ng-click="createJourney()" class="btn btn-primary pull-right">Klicka här för att skapa en</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="border col-xs-6">
-                    <button type="button" ng-click="createJourney()" class="btn btn-primary pull-right">Klicka här för att skapa en</button>
-                </div>
-            </div>
-        </div>
-        <div class="jumbotron" ng-if="journey">
-            <div class="row">
-                <div class="border col-xs-6">
-                    <!--<p>Du HAR en aktiv tripp.</p>-->
-                    <dl class="dl-horizontal">
-                        <dt>Hastighet</dt>
-                        <dd>{{speed}} knop</dd>
-                        <dt>Distans</dt>
-                        <dd>{{distanceSeamiles}} sjömil</dd>
-                        <dd>{{distanceMeters}} meter</dd>
-                    </dl>
+                <div class="" ng-if="journey">
+                    
                 </div>
                 <div class="border col-xs-6">
                     <button type="button" ng-click="stopJourney()" class="btn btn-danger pull-right">Avsluta tripp</button>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="row teaser-row">
-    <div class="teaser">
-        <chart display-zoom="true" map-height="{{400}}"></chart>
-        {{coordinates.lat}} {{coordinates.long}}
     </div>
 </div>

@@ -2,8 +2,7 @@
 var chartModule = angular.module("chartModule");
 chartModule.controller('journeyController', function ($scope, chartService, journeyService, socket, geoService) {
     $scope.displayZoom = false;
-    $scope.distanceMeters = 0;
-    $scope.distanceSeamiles = 0;
+    $scope.distanceKm = $scope.distanceSeamiles = "-";
 
     $scope.loadingJourney = true;
     socket.emit('getCurrentJourney');
@@ -22,30 +21,31 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
         $scope.journey = data.journey;
         $scope.loadingJourney = false;
         if (data.journey) {
-            $scope.distanceMeters = (data.journey.distance).toFixed(2);
+            $scope.distanceKm = (data.journey.distance/1000).toFixed(2);
             $scope.distanceSeamiles = geoService.metersToSeaMiles(data.journey.distance).toFixed(2);
-        }
+        }   
     });
 
     socket.on('journeyStopped', function (data) {
         $scope.journey = null;
-        $scope.distanceMeters = $scope.distanceSeamiles = 0;
+        $scope.distanceKm = $scope.distanceSeamiles = "-";
     });
 
     socket.on('journeyCreated', function (data) {
+        $scope.distanceKm = $scope.distanceSeamiles = 0;
         $scope.journey = data;
         $scope.loadingJourney = false;
     });
 
     socket.on('coordinatesUpdated', function (data) {
         $scope.coordinates = data.coordinates;
-        $scope.speed = geoService.getCurrentSpeed(data.coordinates).toFixed(2);
+        $scope.speed = geoService.getCurrentSpeed().toFixed(2);
 
         if ($scope.journey) {
             var distanceInMeters = $scope.distance = geoService.getDistanceInMetersBetweenLastTwoCoordinates();
-            $scope.distanceMeters = (Number($scope.distanceMeters) + distanceInMeters).toFixed(2);
+            $scope.distanceKm = (Number($scope.distanceKm) + (distanceInMeters/1000)).toFixed(2);
             $scope.distanceSeamiles = (Number($scope.distanceSeamiles) + geoService.metersToSeaMiles(distanceInMeters)).toFixed(2);
-            socket.emit('journeyCoordinatesUpdate', data.coordinates);
+            // socket.emit('journeyCoordinatesUpdated', data.coordinates);
             socket.emit('journeyDistanceUpdated', distanceInMeters);
         }        
     });

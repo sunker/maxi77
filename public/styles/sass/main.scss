@@ -1,5 +1,9 @@
+body {
+  font-family: 'helvetica'
+}
+
 .container {
-    max-width: 480px; 
+    max-width: h80; 
     margin-left: auto;
     margin-right: auto;
     margin-top: 10px;
@@ -90,6 +94,21 @@
 
     .e-logo, .e-maptypes {
         display: none;
+    }
+}
+
+.table-journey {
+    border-style: none;
+    th {
+        font-weight: inherit;
+        font-size: 10px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+    td {
+        font-weight: bold;
+        font-size: 22px;
+        text-align: center;
     }
 }
 
