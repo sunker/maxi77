@@ -36,6 +36,9 @@ chartModule.controller('chartController', function ($scope, socket, chartService
 
     $scope.click = function ($event) {
         autoFocus = false;
+        if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+            $scope.$apply();
+        }
     };
 
     $scope.panToCenter = function ($event) {
