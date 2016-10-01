@@ -12,21 +12,29 @@
                     </div>
                 </div>
                 <table class="table-responsive table-sm table-journey">
-                        <thead>
-                            <tr>
-                                <th class="col-md-1">SPD KTS</th>
-                                <th class="col-md-1">TRIP NM</th>
-                                <th class="col-md-1">TRIP KM</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{{speed}}</td>
-                                <td>{{distanceSeamiles}}</td>
-                                <td>{{distanceKm}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <thead>
+                        <tr>
+                            <th class="col-md-1">SPD KTS</th>
+                            <th class="col-md-1">TRIP NM</th>
+                            <th class="col-md-1">TRIP KM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{speed}}</td>
+                            <td>{{distanceSeamiles}}</td>
+                            <td>{{distanceKm}}</td>
+                        </tr>
+                    </tbody>
+                </table>                
+                <table class="table-responsive table-sm table-journey">
+                    <thead>
+                        <tr>
+                            <th class="col-md-1 text-right">LAT: <strong>{{coordinates.lat}}</strong></th>
+                            <th class="col-md-2 text-left">LONG: <strong>{{coordinates.long}}</strong></th>
+                        </tr>
+                    </thead>
+                </table>
                 <div class="jumbotron" ng-if="!journey && !loadingJourney">
                     <div class="row">
                         <div class="border col-xs-6">
@@ -38,7 +46,7 @@
                     </div>
                 </div>
                 <div class="" ng-if="journey">
-                    
+
                 </div>
                 <div class="border col-xs-6">
                     <button type="button" ng-click="stopJourney()" class="btn btn-danger pull-right">Avsluta tripp</button>

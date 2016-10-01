@@ -37,6 +37,13 @@ chartModule.service("geoService", function (socket) {
         return geolib.convertUnit('sm', meters, 10);
     };
 
+    this.formatCoordinate = function (coordinate) {
+        return {
+            lat: coordinate.lat.toFixed(5).toString().replace(".", "°").insertAt(5, ".") + "N",
+            long: coordinate.long.toFixed(5).toString().replace(".", "°").insertAt(5, ".") + "E"
+        }
+    };
+
     var getSpeedBetweenTwoCoordinates = function (coord1, coord2) {
         return geolib.getSpeed(
             { lat: coord1.lat, lng: coord1.lng, time: coord1.time },

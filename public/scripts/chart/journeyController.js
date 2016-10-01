@@ -38,7 +38,7 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
     });
 
     socket.on('coordinatesUpdated', function (data) {
-        $scope.coordinates = data.coordinates;
+        $scope.coordinates = geoService.formatCoordinate(data.coordinates);
         $scope.speed = geoService.getCurrentSpeed().toFixed(2);
 
         if ($scope.journey) {
