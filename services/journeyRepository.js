@@ -60,7 +60,7 @@ journeyRepository.addCoordinate = function (journeyId, coordinate) {
 
     var newCoordinate = Coordinate({
         latitude: coordinate.lat,
-        longitude: coordinate.long,
+        longitude: coordinate.lng,
         timestamp: coordinate.timestamp,
         journeyId: journeyId,
         is_MOB: coordinate.isMob
@@ -120,7 +120,7 @@ journeyRepository.createJourney = function (startCoordinates) {
     var defer = Q.defer();
 
     var newJourney = Journey({
-        startCoordinate: { latitude: startCoordinates.lat, longitude: startCoordinates.long },
+        startCoordinate: { latitude: startCoordinates.lat, longitude: startCoordinates.lng },
         created_at: new Date(),
         stopped: false,
         distance: 0.00,

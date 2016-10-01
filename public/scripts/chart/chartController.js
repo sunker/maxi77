@@ -29,9 +29,9 @@ chartModule.controller('chartController', function ($scope, socket, chartService
     var updateMap = function (coordinates) {
 
         if (autoFocus) {
-            chartService.mapPanTo(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
+            chartService.mapPanTo(new eniro.maps.LatLng(coordinates.lat, coordinates.lng));
         }
-        chartService.setPositionMarker(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
+        chartService.setPositionMarker(new eniro.maps.LatLng(coordinates.lat, coordinates.lng));
     };
 
     $scope.click = function ($event) {
@@ -43,7 +43,7 @@ chartModule.controller('chartController', function ($scope, socket, chartService
 
     $scope.panToCenter = function ($event) {
         $event.stopPropagation();
-        chartService.mapPanTo(new eniro.maps.LatLng(coordinates.lat, coordinates.long));
+        chartService.mapPanTo(new eniro.maps.LatLng(coordinates.lat, coordinates.lng));
         autoFocus = true;
     };
 

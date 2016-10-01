@@ -22,7 +22,7 @@ geoService.getCoordinates = function () {
     timestamp = new Date();
   }
   timestamp.setSeconds(timestamp.getSeconds() + 15);
-  defer.resolve({ long: Number(coords.long), lat: Number(coords.lat), timestamp: timestamp.getTime() });
+  defer.resolve({ lng: Number(coords.long), lat: Number(coords.lat), timestamp: timestamp.getTime() });
 
   return defer.promise;
 };

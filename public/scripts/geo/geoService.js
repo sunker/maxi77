@@ -5,7 +5,7 @@ chartModule.service("geoService", function (socket) {
     var coordinates = [];
 
     this.getCurrentSpeed = function () {
-        // console.log("New point " + newCoordinate.lat + " " +  newCoordinate.long);
+        // console.log("New point " + newCoordinate.lat + " " +  newCoordinate.lng);
         if (coordinates.length === 1) return 0.00;
 
         var currentCoordinate = coordinates[0];
@@ -44,7 +44,7 @@ chartModule.service("geoService", function (socket) {
     this.formatCoordinate = function (coordinate) {
         return {
             lat: coordinate.lat.toFixed(5).toString().replace(".", "°").insertAt(5, ".") + "N",
-            long: coordinate.long   .toFixed(5).toString().replace(".", "°").insertAt(5, ".") + "E"
+            long: coordinate.lng   .toFixed(5).toString().replace(".", "°").insertAt(5, ".") + "E"
         }
     };
 
@@ -59,7 +59,7 @@ chartModule.service("geoService", function (socket) {
     var convertToGeoLibCoordinate = function (coordinate) {
         return {
             lat: coordinate.lat,
-            lng: coordinate.long,
+            lng: coordinate.lng,
             time: coordinate.timestamp
         };
     };    
