@@ -68,23 +68,6 @@ chartModule.service("chartService", function () {
         if (linePath) linePath = [];
     };
 
-    this.loadJourney = function (data) {
-        journeyMode = true;
-        marker.setVisible(false);
-        map.setZoom(data.zoom_level);
-        linePath = new eniro.maps.MapArray();
-        data.coordinates.forEach(function (coordinate) {
-            if (coordinate.is_MOB) {
-                addRedMarker({ lat: coordinate.latitude, lng: coordinate.longitude })
-            }
-            linePath.push(new eniro.maps.LatLng(coordinate.latitude, coordinate.longitude));
-        });
-        line = new eniro.maps.Polyline({
-            map: map,
-            path: linePath
-        });
-    };
-
     this.addRedMarker = function (coordinate) {
         var redMarker = new eniro.maps.Marker({
             map: map,
@@ -93,5 +76,23 @@ chartModule.service("chartService", function () {
         });
         redMarker.setPosition(new eniro.maps.LatLng(coordinate.lat, coordinate.lng));
         redMarkers.push(redMarker);
+    };
+
+    this.loadJourney = function (data) {
+        journeyMode = true;
+        marker.setVisible(false);
+        map.setZoom(data.zoom_level);
+        linePath = new eniro.maps.MapArray();
+        for (var i = 0; i < data.coordinates.length; i++) {
+            var coordinate = data.coordinates[i];
+            if (coordinate.is_MOB) {
+                this.addRedMarker({ lat: coordinate.latitude, lng: coordinate.longitude })
+            }
+            linePath.push(new eniro.maps.LatLng(coordinate.latitude, coordinate.longitude));
+        }
+        line = new eniro.maps.Polyline({
+            map: map,
+            path: linePath
+        });
     };
 });
