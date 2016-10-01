@@ -3,12 +3,13 @@ var chartModule = angular.module("chartModule");
 chartModule.controller('journeyController', function ($scope, chartService, journeyService, socket, geoService) {
     $scope.displayZoom = false;
     $scope.distanceKm = $scope.distanceSeamiles = "-";
+    var currentCoordinate;
 
     $scope.loadingJourney = true;
     socket.emit('getCurrentJourney');
 
     $scope.createJourney = function () {
-        socket.emit('createJourney', { coordinates: $scope.coordinates });
+        socket.emit('createJourney', { coordinates: currentCoordinate });
         $scope.loadingJourney = true;
     };
 
@@ -39,6 +40,7 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
 
     socket.on('coordinatesUpdated', function (data) {
         $scope.coordinates = geoService.formatCoordinate(data.coordinates);
+        currentCoordinate = data.coordinates;
         $scope.speed = geoService.getCurrentSpeed().toFixed(2);
 
         if ($scope.journey) {

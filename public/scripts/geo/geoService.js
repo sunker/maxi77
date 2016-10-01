@@ -40,7 +40,7 @@ chartModule.service("geoService", function (socket) {
     this.formatCoordinate = function (coordinate) {
         return {
             lat: coordinate.lat.toFixed(5).toString().replace(".", "°").insertAt(5, ".") + "N",
-            long: coordinate.long.toFixed(5).toString().replace(".", "°").insertAt(5, ".") + "E"
+            long: coordinate.long   .toFixed(5).toString().replace(".", "°").insertAt(5, ".") + "E"
         }
     };
 
