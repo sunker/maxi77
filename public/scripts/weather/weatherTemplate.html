@@ -1,0 +1,53 @@
+<div ng-if="!errorMessage">
+    <table class="table-responsive table-sm table-journey">
+        <thead>
+            <tr>
+                <th class="col-md-1">Tid</th>
+                <th class="col-md-2">Väder</th>
+                <th class="col-md-3">Nederbörd</th>
+                <th class="col-md-4">Vind(Byvind)</th>
+                <th class="col-md-5">Luftfuktighet</th>
+                <th class="col-md-6">Lufttryck</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="forecast in forecasts">
+                <td>{{forecast.time}}</td>
+                <td><img src="images/weather/{{forecast.imageUrl}}.png"></td>
+                <td>hej</td>
+                <td>hej</td>
+                <td>hej</td>
+                <td>hej</td>
+            </tr>
+        </tbody>
+    </table>
+    <!--
+
+    <div class="row">
+        <div class="col-xs-6">{{weatherDescription}}</div>
+        <div class="col-xs-6 text-right">{{time}}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6"><img src="images/weather/{{imageUrl}}.png"></div>
+        <div class="col-xs-6" style="display: table; height: 125px; overflow: hidden;">
+            <div class="text-center" style="display: table-cell; vertical-align: middle;">
+                <div>
+                    <p class="temp">{{temperature}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">{{windSpeed}}</div>
+    </div>-->
+</div>
+<div ng-if="errorMessage">
+    <div style="display: table; height: 125px; overflow: hidden;">
+        <div class="text-center" style="display: table-cell; vertical-align: middle;">
+            <div>
+                <strong class="temp">{{errorMessage}}</strong>
+            </div>
+        </div>
+    </div>
+</div>

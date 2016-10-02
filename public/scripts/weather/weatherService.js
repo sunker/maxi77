@@ -4,11 +4,11 @@ var weatherModule = angular.module("weatherModule");
 
 weatherModule.service('weatherService', function (backendCaller, $q) {
     var baseUrl = 'weather/';
-	
-	
-	this.getForecasts = function (long, lat) {
+
+
+    this.getForecasts = function (long, lat) {
         return backendCaller.sendGet(baseUrl + 'getforecasts', { lat: lat, long: long });
-	};
+    };
 
     this.getCurrentForecast = function (long, lat) {
         var deferred = $q.defer();
@@ -30,7 +30,7 @@ weatherModule.service('weatherService', function (backendCaller, $q) {
         return deferred.promise;
     };
 
-    this.getCurrentForecastFromForecasts = function (forecasts) {        
+    this.getCurrentForecastFromForecasts = function (forecasts) {
         var nextHour = forecasts[0];
 
         for (var i = 0; i < forecasts.length; i++) {
@@ -39,6 +39,63 @@ weatherModule.service('weatherService', function (backendCaller, $q) {
             }
         }
 
-        return nextHour;       
+        return nextHour;
+    };
+
+    this.getUpcomingForecastByForecasts = function (forecasts) {
+        var result = [];
+
+        for (var i = 0; i < forecasts.length; i++) {
+            var forecastDate = new Date(forecasts[i].validTime);
+            if (forecastDate.getHours() >= new Date().getHours() ) { 
+                result.push(forecasts[i]);
+            }
+        }
+
+        return result;
+    };
+
+    this.convertWindDirectionToText = function (windDirection) {
+        var val = Math.floor((windDirection / 22.5) + 0.5);
+        var arr = ["nordlig", "nord nordöstlig", "nordöst", "öst nordöstlig", "östlig", "öst sydöstlig", "sydöstlig", "syd sydöstlig", "sydlig", "syd sydvästlig", "sydvästlig", "väst sydvästlig", "västligt", "väst nordvästlig", "nordvästlig", "nord nordvästlig"];
+        return arr[(val % 16)];
+    };
+
+    this.convertWeatherTypeToText = function (value) {
+
+        switch (value) {
+            case 1:
+                return "klart";
+            case 2:
+                return "mestadels klart";
+            case 3:
+                return "växlande molnighet";
+            case 4:
+                return "halvklart";
+            case 5:
+                return "molnigt";
+            case 6:
+                return "mulet";
+            case 7:
+                return "dimma";
+            case 8:
+                return "regnskurar";
+            case 9:
+                return "åskskurar";
+            case 10:
+                return "byar av snöblandat regn";
+            case 11:
+                return "snöbyar";
+            case 12:
+                return "regn";
+            case 13:
+                return "åska";
+            case 14:
+                return "snöblandat regn";
+            case 15:
+                return "snöfall";
+            default:
+                return "";
+        }
     };
 });
