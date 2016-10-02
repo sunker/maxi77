@@ -26,6 +26,7 @@ chartModule.service("chartService", function () {
                     map: map,
                     position: new eniro.maps.LatLng(0, 0) //WAT?
                 });
+                
             }
             return true;
         } catch (ex) {
@@ -66,6 +67,10 @@ chartModule.service("chartService", function () {
 
         if (line) line.setMap(null);
         if (linePath) linePath = [];
+        redMarkers.forEach(function(redMarker){
+            redMarker.setVisible(false);
+        });
+        redMarkers = [];        
     };
 
     this.addRedMarker = function (coordinate) {
