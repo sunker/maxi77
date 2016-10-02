@@ -3,8 +3,8 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 	$routeProvider
 		// home page
 		.when('/', {
-			templateUrl: 'scripts/home/homeTemplate.html',
-			controller: 'HomeController'
+			templateUrl: 'scripts/dashboard/dashboardTemplate.html',
+			controller: 'DashboardController'
 		})
 
 		.when('/weather', {
