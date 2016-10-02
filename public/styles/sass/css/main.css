@@ -28,15 +28,15 @@ body {
 .temp {
   font-size: 1.5em; }
 
-.teaser-row {
+.widget-row {
   border-bottom: 1px solid #eee; }
-  .teaser-row.first {
+  .widget-row.first {
     border-top: 1px solid #eee; }
-  .teaser-row .teaser {
+  .widget-row .widget {
     padding: 10px; }
-    .teaser-row .teaser.first {
+    .widget-row .widget.first {
       border-right: 1px solid #eee; }
-  .teaser-row .teaser:nth-child(2) {
+  .widget-row .widget:nth-child(2) {
     height: 100%; }
 
 .chart-map {
