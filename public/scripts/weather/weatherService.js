@@ -57,8 +57,14 @@ weatherModule.service('weatherService', function (backendCaller, $q) {
 
     this.convertWindDirectionToText = function (windDirection) {
         var val = Math.floor((windDirection / 22.5) + 0.5);
-        var arr = ["nordlig", "nord nordöstlig", "nordöst", "öst nordöstlig", "östlig", "öst sydöstlig", "sydöstlig", "syd sydöstlig", "sydlig", "syd sydvästlig", "sydvästlig", "väst sydvästlig", "västligt", "väst nordvästlig", "nordvästlig", "nord nordvästlig"];
+        var arr = ["nordlig", "nord nordöstlig", "nordöst", "öst nordöstlig", "östlig", "öst sydöstlig", "sydöstlig", "syd sydöstlig", "sydlig", "syd sydvästlig", "sydvästlig", "väst sydvästlig", "västlig", "väst nordvästlig", "nordvästlig", "nord nordvästlig"];
         return arr[(val % 16)];
+    };
+
+    this.getPrecipitation = function (forecast) {
+        var mean = (forecast.minimumPrecipitationIntensity.value ? forecast.minimumPrecipitationIntensity.value : forecast.minimumPrecipitationIntensity.values[0]);
+        var high = (forecast.maximumPrecipitationIntensity.value ? forecast.maximumPrecipitationIntensity.value : forecast.maximumPrecipitationIntensity.values[0]);
+        return mean + " (" + high + ") mm";
     };
 
     this.convertWeatherTypeToText = function (value) {

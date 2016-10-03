@@ -19,7 +19,7 @@ var forecastsForLatAndLong = function () {
 
             
 
-            var forecasts = response.getForecasts();
+            var forecasts = response.getForecasts();    
             var result = [forecasts.length];
 
             for (i = 0; i < forecasts.length; i++) {
