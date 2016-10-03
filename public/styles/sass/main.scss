@@ -115,7 +115,6 @@ body {
 .table-forecasts {
     border-style: none;
     th {
-        // font-weight: inherit;
         font-size: 10px;
         padding-left: 0;
         text-align: left;
@@ -156,5 +155,8 @@ body {
             border-radius: 36px;
 }
 
+.dashboard-link, .dashboard-link:hover {
+    color: inherit;
+}
 
  

@@ -1,5 +1,5 @@
-angular.module('HomeCtrl', []).controller('DashboardController', function($scope) {
+angular.module('HomeCtrl', []).controller('DashboardController', function($scope, $rootScope) {
 
-	$scope.dayText = 'fredagen den 2 september';	
+	// $rootScope.dayText = new Date().toSwedishDay();	
 
 }); 

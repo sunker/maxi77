@@ -21,7 +21,7 @@ weatherModule.controller('WeatherController', function ($scope, weatherService, 
         return {
             imageUrl: forecast.swedishWeatherType.value,
             weatherDescription: weatherService.convertWeatherTypeToText(forecast.swedishWeatherType.value),
-            time: "kl. " + new Date(forecast.validTime).getHours(),
+            time: weatherService.getTime(new Date(forecast.validTime)), //"kl. " + new Date(forecast.validTime).getHours()
             temperature: forecast.temperature.value + "°",
             windSpeed: forecast.windVelocity.value + " (" + forecast.windGust.value + ") m/s " + weatherService.convertWindDirectionToText(forecast.windDirection.value),
             humidity: forecast.relativeHumidity.value + "%",

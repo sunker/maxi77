@@ -47,12 +47,22 @@ weatherModule.service('weatherService', function (backendCaller, $q) {
 
         for (var i = 0; i < forecasts.length; i++) {
             var forecastDate = new Date(forecasts[i].validTime);
-            if (forecastDate.getHours() >= new Date().getHours() ) { 
+            if (forecastDate.getHours() >= new Date().getHours()) {
                 result.push(forecasts[i]);
             }
         }
 
         return result;
+    };
+
+    this.getTime = function (date) {
+        if (date.getDay() === new Date().getDay()) {
+            return "kl " + date.getHours();
+        } else if (date.getDay() === (new Date().getDay() + 1)) {
+            return "imorgon kl " + date.getHours();
+        } else {
+            return date.toSwedishDay() + " kl " + date.getHours();//this.getSwedishWeekday(date.getDay()) + " kl " + date.getHours();
+        }
     };
 
     this.convertWindDirectionToText = function (windDirection) {
