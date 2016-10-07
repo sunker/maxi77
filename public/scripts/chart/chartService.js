@@ -81,7 +81,7 @@ chartModule.service("chartService", function (geoService) {
             position: new eniro.maps.LatLng(0, 0), //WAT?
             icon: new eniro.maps.MarkerImage('../../images/MOB.png', new eniro.maps.Size(24, 24), new eniro.maps.Point(0, 0), new eniro.maps.Point(11, 13), 0, 0)
         });
-        redMarker.setPosition(coordinate.lat, coordinate.lng);
+        redMarker.setPosition(new eniro.maps.LatLng(coordinate.lat, coordinate.lng));
         redMarkers.push(redMarker);
     };
 

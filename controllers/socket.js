@@ -21,31 +21,38 @@ module.exports = function (socket) {
       }
     )
   };
-
-  var updateGPSCoordinates = function () {
-    geoService.getCoordinates().then(function (coords) {
-      socket.emit('coordinatesUpdated', { coordinates: coords });
-      journeyRepository.getCurrentJourney().then(function (data) {
-        if (data) {
-          coords.isMob = false;
-          journeyRepository.addCoordinate(data._id, coords)
-        }
-      });
+  
+  var updateGPSCoordinates = function (coords) {
+    console.log(socket);
+    socket.emit('coordinatesUpdated', { coordinates: coords });    
+    console.log(coords);
+    journeyRepository.getCurrentJourney().then(function (data) {
+      if (data) {
+        coords.isMob = false;
+        journeyRepository.addCoordinate(data._id, coords)
+      }
     });
   };
 
   //Load on connect
+  var coordinate = geoService.getCurrentCoordinate();
+  if(coordinate !== null){
+    console.log("Sending currentcoord");
+    socket.emit('coordinatesUpdated', { coordinates: coordinate });
+  };
   updateWeatherForecasts();
-  updateGPSCoordinates();
+  geoService.startListener(updateGPSCoordinates);
 
   //Shieldings
   setInterval(function () {
     updateWeatherForecasts();
   }, 30000);
 
-  setInterval(function () {
-    updateGPSCoordinates();
-  }, 1500);
+  // setInterval(function () {
+  //   updateGPSCoordinates();
+  // }, 1500);
+
+
 
 
   //Client events
