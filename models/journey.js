@@ -3,7 +3,6 @@ var Schema = mongoose.Schema;
 
 var journeySchema = new Schema({
     id: { type: Schema.ObjectId},
-    startCoordinate: { latitude: Number, longitude: Number },
     created_at: Date,
     distance: Number,
     zoom_level: Number,

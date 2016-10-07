@@ -17,15 +17,7 @@ journeyRepository.getCurrentJourney = function () {
         } else {
             if (journey.length !== 0) {
                 var currentJourney = journey[0];
-                Coordinate.find({ "journeyId": currentJourney._id }, function (err, coordinates) {
-                    if (err) {  
-                        console.log(err);
-                        defer.reject(err);
-                    } else {
-                        currentJourney.coordinates = coordinates;
-                        defer.resolve(currentJourney);
-                    }
-                });
+                defer.resolve(currentJourney);
             } else {
                 defer.resolve(journey.length === 0 ? null : journey[0]);
             }
@@ -66,13 +58,17 @@ journeyRepository.addCoordinate = function (journeyId, coordinate) {
         is_MOB: coordinate.isMob
     });
 
-    newCoordinate.save(function (err, coordinate, numAffected) {
+    Journey.findById(journeyId, function (err, journey) {
         if (err) {
             console.log(err);
             defer.reject(err);
         } else {
-            defer.resolve(coordinate);
-            // console.log("Coordinate added");
+            journey.coordinates.push(newCoordinate);
+            journey.save(function (err) {
+                if (err) console.log(err);;
+                // console.log('Journey successfully stopped!');
+                defer.resolve(journey);
+            });
         }
     });
     return defer.promise;
@@ -119,12 +115,19 @@ journeyRepository.updateZoomLevel = function (journeyId, zoomLevel) {
 journeyRepository.createJourney = function (startCoordinates) {
     var defer = Q.defer();
 
+    var startCoordinate = Coordinate({
+        latitude: startCoordinates.lat,
+        longitude: startCoordinates.lng,
+        timestamp: startCoordinates.timestamp,
+        is_MOB: false
+    });
+
     var newJourney = Journey({
-        startCoordinate: { latitude: startCoordinates.lat, longitude: startCoordinates.lng },
         created_at: new Date(),
         stopped: false,
         distance: 0.00,
-        zoom_level: 10 //Should be arg from client?
+        zoom_level: 10, //Should be arg from client?,
+        coordinates: [startCoordinate]
     });
 
     newJourney.save(function (err, journey, numAffected) {
@@ -132,11 +135,8 @@ journeyRepository.createJourney = function (startCoordinates) {
             console.log(err);
             defer.reject(err);
         } else {
-            journeyRepository.addCoordinate(journey._id, startCoordinates).then(function (coordinate) {
-                journey.coordinates[0] = coordinate;
-                defer.resolve(journey);
-                console.log("Journey created");
-            });
+            defer.resolve(journey);
+            console.log("Journey created"); 
         }
     });
 
