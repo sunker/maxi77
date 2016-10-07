@@ -1,6 +1,6 @@
 'use strict';
 var chartModule = angular.module("chartModule");
-chartModule.service("chartService", function () {
+chartModule.service("chartService", function (geoService) {
     var map, marker, line;
     var linePath;
     var redMarkers = [];
@@ -15,6 +15,8 @@ chartModule.service("chartService", function () {
                 zoomControl: false,
                 focus: true
             });
+            var coord = geoService.getCurrentCoordinate();
+            this.mapPanTo(coord.lat, coord.lng);
 
             if (journeyMode) {
                 line = new eniro.maps.Polyline({
