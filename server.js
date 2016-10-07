@@ -20,14 +20,4 @@ app.use('/api/weather', require('./controllers/api/weatherController'));
 http.listen(8000);
 console.log('Server running at port 8000');
 
-// mongoose.model('hello', {firstName: String});
-
-// mongoose.model('hello').find({}, function(err, j){
-
-// });
-
 io.sockets.on('connection', socket);
-
-var gps = require('./services/gps').create();
-
-  require('./services/connectNow').connect(gps);
