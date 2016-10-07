@@ -2,7 +2,6 @@
 var chartModule = angular.module("chartModule");
 chartModule.controller('journeyController', function ($scope, chartService, journeyService, socket, geoService) {
     $scope.displayZoom = false;
-    $scope.distanceKm = $scope.distanceSeamiles = "-";
     var currentCoordinate;
 
     $scope.loadingJourney = true;
@@ -22,18 +21,15 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
         $scope.journey = data.journey;
         $scope.loadingJourney = false;
         if (data.journey) {
-            $scope.distanceKm = (data.journey.distance / 1000).toFixed(2);
             $scope.distanceSeamiles = geoService.metersToSeaMiles(data.journey.distance).toFixed(2);
         }
     });
 
     socket.on('journeyStopped', function (data) {
         $scope.journey = null;
-        $scope.distanceKm = $scope.distanceSeamiles = "-";
     });
 
     socket.on('journeyCreated', function (data) {
-        $scope.distanceKm = $scope.distanceSeamiles = 0;
         $scope.journey = data;
         $scope.loadingJourney = false;
     });
@@ -47,7 +43,6 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
 
         if ($scope.journey) {
             var distanceInMeters = $scope.distance = geoService.getDistanceInMetersBetweenLastTwoCoordinates();
-            $scope.distanceKm = (Number($scope.distanceKm) + (distanceInMeters / 1000)).toFixed(2);
             $scope.distanceSeamiles = (Number($scope.distanceSeamiles) + geoService.metersToSeaMiles(distanceInMeters)).toFixed(2);
             socket.emit('journeyDistanceUpdated', distanceInMeters);
         }
