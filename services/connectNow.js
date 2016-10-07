@@ -15,24 +15,24 @@
 			});
 		};
 
-		io.sockets.on('connection', function(socket) {
-			gps.on('fix', function(data) {
-				socket.emit('gps', data);
-			});
+		// io.sockets.on('connection', function(socket) {
+		// 	gps.on('fix', function(data) {
+		// 		socket.emit('gps', data);
+		// 	});
 
-			gps.on('nav-info', function(data) {
-				socket.emit('gps', data);
-			});
+		// 	gps.on('nav-info', function(data) {
+		// 		socket.emit('gps', data);
+		// 	});
 
-			socket.on('gps.connect', function() {
-				gps_connect();
-			});
+		// 	socket.on('gps.connect', function() {
+		// 		gps_connect();
+		// 	});
 
 
-			socket.on('foo', function(bar) {
-				console.log('foo' + bar);
-			});
-		});
+		// 	socket.on('foo', function(bar) {
+		// 		console.log('foo' + bar);
+		// 	});
+		// });
 
 		// auto connect the gps
 		// //gps_connect();
