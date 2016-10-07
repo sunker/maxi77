@@ -43,7 +43,7 @@ geoService.startListener = function (updateCallback) {
     console.log('disconnected');
     //If disconnected, for now we consider it being debug mode. so just use looped test data coordinates
     setInterval(function () {
-      geoService.getNextCoordinateFromTestData().then(function (data) {
+      getNextCoordinateFromTestData().then(function (data) {
         updateCallback(data);
       });
     }, 1500);

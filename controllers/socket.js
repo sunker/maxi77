@@ -23,7 +23,6 @@ module.exports = function (socket) {
   };
   
   var updateGPSCoordinates = function (coords) {
-    console.log(socket);
     socket.emit('coordinatesUpdated', { coordinates: coords });    
     console.log(coords);
     journeyRepository.getCurrentJourney().then(function (data) {
