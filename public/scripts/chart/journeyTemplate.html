@@ -5,34 +5,54 @@
         <div class="row widget-row">
             <div class="widget">
                 <table class="table-responsive table-sm table-journey">
-                    <thead>
-                        <tr>
-                            <th class="col-md-1">SPD KTS</th>
-                            <th class="col-md-1">TRIP NM</th>
-                            <th class="col-md-1">TRIP KM</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{speed}}</td>
-                            <td>{{distanceSeamiles}}</td>
-                            <td>{{distanceKm}}</td>
-                        </tr>
-                    </tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <dl>
+                                <dt>Knop</dt>
+                                <dd>{{speed}}</dd>
+                            </dl>
+                        </td>
+                        <td class="col-md-4">
+                            <dl>
+                                <dt>NM</dt>
+                                <dd>{{distanceSeamiles}}</dd>
+                            </dl>
+                        </td>
+                        <td class="col-md-4">
+                            <dl>
+                                <dt>Bäring</dt>
+                                <dd>{{bearing}}</dd>
+                            </dl>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <dl>
+                                <dt>Kompassriktning</dt>
+                                <dd class="dd-small">{{compassDirection}}</dd>
+                            </dl>
+                        </td>
+                        <td class="col-md-4">
+                            <dl>
+                                <dt>Latitud</dt>
+                                <dd class="dd-small">{{coordinates.lat}}</dd>
+                            </dl>
+                        </td>
+                        <td class="col-md-4">
+                            <dl>
+                                <dt>Longitud</dt>
+                                <dd class="dd-small">{{coordinates.lng}}</dd>
+                            </dl>
+                        </td>
+                    </tr>
                 </table>
-                <table class="table-responsive table-sm table-journey">
-                    <thead>
-                        <tr>
-                            <th class="col-md-1">LAT: <strong>{{coordinates.lat}}</strong></th>
-                            <th class="col-md-2">LONG: <strong>{{coordinates.lng}}</strong></th>
-                            <th class="col-md-3">
-                                <man-overboard></man-overboard>
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
+                
+                <div class="man-overboard-wrapper">
+                    <man-overboard></man-overboard>
+                </div>
+                
                 <div class="row text-center" ng-if="loadingJourney">
-                        <p>Laddar tripp...</p>
+                    <p>Laddar tripp...</p>
                 </div>
                 <div class="" ng-if="!journey && !loadingJourney">
                     <button type="button" ng-click="createJourney()" class="btn btn-success form-control">Skapa ny tripp</button>

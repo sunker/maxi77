@@ -2,7 +2,7 @@ body {
   font-family: 'helvetica'; }
 
 .container {
-  max-width: 480px;
+  max-width: 600px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 10px; }
@@ -66,16 +66,20 @@ body {
     display: none; }
 
 .table-journey {
-  border-style: none; }
-  .table-journey th {
+  border-style: none;
+  margin-bottom: 0; }
+  .table-journey dt {
     font-weight: inherit;
     font-size: 10px;
     text-align: center;
     text-transform: uppercase; }
-  .table-journey td {
+  .table-journey dd {
     font-weight: bold;
     font-size: 22px;
     text-align: center; }
+    .table-journey dd.dd-small {
+      font-size: 14px;
+      margin-top: 3px; }
 
 .table-forecasts {
   border-style: none; }
@@ -88,6 +92,9 @@ body {
     font-size: 10px;
     text-align: left;
     border-bottom: 1px solid #eee; }
+
+.man-overboard-wrapper {
+  margin-bottom: 10px; }
 
 .jumbotron {
   margin-bottom: 0;
