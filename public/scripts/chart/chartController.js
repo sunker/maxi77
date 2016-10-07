@@ -2,7 +2,7 @@
 var chartModule = angular.module("chartModule");
 chartModule.controller('chartController', function ($scope, socket, chartService) {
     var autoFocus = true;
-    var coordinates;
+    var coordinates;    
     $scope.initialized = null;
 
     $scope.mapStyle = {
