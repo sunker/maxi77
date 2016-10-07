@@ -27,3 +27,7 @@ console.log('Server running at port 8000');
 // });
 
 io.sockets.on('connection', socket);
+
+var gps = require('./services/gps').create();
+
+  require('./services/connectNow').connect(gps);
