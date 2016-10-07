@@ -60,7 +60,9 @@ body {
 .chart-map {
     position: relative; 
     z-index: 9999;
-    
+    .btn:focus {
+        outline: none;
+    }
     .chart-buttons {
         position: absolute;
         right: 5px;

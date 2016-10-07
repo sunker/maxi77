@@ -42,6 +42,8 @@ body {
 .chart-map {
   position: relative;
   z-index: 9999; }
+  .chart-map .btn:focus {
+    outline: none; }
   .chart-map .chart-buttons {
     position: absolute;
     right: 5px;
