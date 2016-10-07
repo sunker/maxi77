@@ -49,7 +49,7 @@ chartModule.service("geoService", function (socket) {
     };
 
     this.getCurrentCoordinate = function () {
-        return coordinates[coordinates.length - 1];
+        return coordinates.length === 0 ? { lat: 0, lng: 0, timestamp: new Date().getTime() } : coordinates[coordinates.length - 1];
     };
 
     this.metersToSeaMiles = function (meters) {

@@ -11,10 +11,12 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
     $scope.createJourney = function () {
         socket.emit('createJourney', { coordinates: currentCoordinate });
         $scope.loadingJourney = true;
+        $scope.distanceSeamiles = 0;
     };
 
     $scope.stopJourney = function () {
         socket.emit('stopJourney', { id: $scope.journey._id });
+        $scope.distanceSeamiles = "-"
         $scope.journey = undefined;
     };
 
