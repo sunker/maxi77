@@ -15,6 +15,15 @@
 			});
 		};
 
+        	gps.on('fix', function(data) {
+				console.log('gps', data);
+			});
+
+			gps.on('nav-info', function(data) {
+				console.log('gps', data);
+			});
+
+            gps_connect();
 		// io.sockets.on('connection', function(socket) {
 		// 	gps.on('fix', function(data) {
 		// 		socket.emit('gps', data);
