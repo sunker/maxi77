@@ -34,15 +34,15 @@ chartModule.service("chartService", function () {
         }
     };
 
-    this.mapPanTo = function (latlong) {
-        map.panTo(latlong);
+    this.mapPanTo = function (lat, lng) {
+        map.panTo(new eniro.maps.LatLng(lat, lng));
     };
 
-    this.setPositionMarker = function (latlong) {
+    this.setPositionMarker = function (lat, lng) {
         if (journeyMode) {
-            linePath.push(latlong);
+            linePath.push(new eniro.maps.LatLng(lat, lng));
         } else {
-            marker.setPosition(latlong);
+            marker.setPosition(new eniro.maps.LatLng(lat, lng));
         }
     };
 

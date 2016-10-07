@@ -2,6 +2,7 @@
 var chartModule = angular.module("chartModule");
 chartModule.controller('journeyController', function ($scope, chartService, journeyService, socket, geoService) {
     $scope.displayZoom = false;
+    $scope.distanceSeamiles = "-";
     var currentCoordinate;
 
     $scope.loadingJourney = true;
