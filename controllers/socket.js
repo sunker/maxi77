@@ -1,11 +1,10 @@
 var weatherService = require("../services/weatherService");
 var journeyRepository = require("../services/journeyRepository");
 var geoService = require("../services/geoService");
-var Bancroft = require('bancroft');
 
 module.exports = function (io) {
   io.on('connection', function (socket) {
-    
+
     var updateWeatherForecasts = function () {
       var updateWeatherAttempts = 0;
 
@@ -22,33 +21,6 @@ module.exports = function (io) {
           }
         }
       )
-    };
-
-    var startGPIOListener = function () {
-      var bancroft = new Bancroft();
-
-      bancroft.on('connect', function () {
-        console.log('GPIO connected');
-      });
-
-      bancroft.on('location', function (location) {
-        if (geoService.isRealMovement(location)) {
-          updateGPSCoordinates({ lat: location.latitude, lng: location.longitude, timestamp: location.timestamp });
-        }
-      });
-
-      bancroft.on('satellite', function (satellite) {
-      });
-
-      bancroft.on('disconnect', function (err) {
-        console.log('GPIO disconnected');
-        //If disconnected, for now we consider it being debug mode. so just use looped test data coordinates
-        setInterval(function () {
-          geoService.getNextCoordinateFromTestData().then(function (data) {
-            updateGPSCoordinates(data);
-          });
-        }, 1500);
-      });
     };
 
     var updateGPSCoordinates = function (coords) {
@@ -71,8 +43,8 @@ module.exports = function (io) {
         socket.emit('coordinatesUpdated', { coordinates: coordinate });
       };
       updateWeatherForecasts();
-      // geoService.startListener(updateGPSCoordinates, socket);
-      startGPIOListener(updateGPSCoordinates);
+      geoService.startGPSDListener(updateGPSCoordinates);
+      // startGPIOListener(updateGPSCoordinates);
     };
 
     initialize();
