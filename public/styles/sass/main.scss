@@ -1,4 +1,4 @@
-body {
+fbody {
   font-family: 'helvetica'
 }
 
@@ -102,6 +102,9 @@ body {
 .table-journey {
     border-style: none;
     margin-bottom: 0;
+    td {
+        border-style: none;
+    }
     dt {
         font-weight: inherit;
         font-size: 10px;

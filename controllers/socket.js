@@ -81,6 +81,7 @@ module.exports = function (io) {
     socket.on('manOverBoard', function (newCoordinate) {
       journeyRepository.getCurrentJourney().then(function (data) {
         if (data) {
+          socket.broadcast.emit('manOverBoard', newCoordinate);
           newCoordinate.isMob = true;
           journeyRepository.addCoordinate(data._id, newCoordinate)
         }

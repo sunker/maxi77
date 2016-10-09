@@ -80,4 +80,9 @@ chartModule.controller('chartController', function ($scope, socket, chartService
         coordinates = data.coordinates;
         updateMap(data.coordinates);
     });
+
+    socket.on('manOverBoard', function (coordinate) {
+        chartService.addRedMarker(coordinate);
+        chartService.addRedMarker(coordinate);
+    });
 }); 

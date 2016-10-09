@@ -42,7 +42,7 @@ geoService.startGPSDListener = function (updateCallback) {
   })
 };
 
-geoService.getNextCoordinateFromTestData = function () {
+getNextCoordinateFromTestData = function () {
   var defer = Q.defer();
   if (!coordinates) {
     coordinates = JSON.parse(fs.readFileSync('./testcoordinates.json', 'utf8').toString());
