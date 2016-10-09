@@ -102,8 +102,10 @@ fbody {
 .table-journey {
     border-style: none;
     margin-bottom: 0;
+    table-layout: fixed;
     td {
-        border-style: none;
+        border-style: none !important;
+        max-width: 33%;
     }
     dt {
         font-weight: inherit;
