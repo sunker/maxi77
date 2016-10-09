@@ -15,42 +15,48 @@ geoService.getCurrentCoordinate = function() {
   return currentCoord.lat === 0 && currentCoord.lng === 0 ? null : currentCoord;
 };
 
-geoService.startListener = function (updateCallback) {
-  var bancroft = new Bancroft();
-
-  bancroft.on('connect', function () {
-    console.log('connected');
-  });
-
-  bancroft.on('location', function (location) {
-    if (location.latitude && location.longitude && location.speed) {
+geoService.isRealMovement = function(location) {
+  if (location.latitude && location.longitude && location.speed) {
       var distance = geolib.getDistance({ latitude: currentCoord.lat, longitude: currentCoord.lng },
         { latitude: location.latitude, longitude: location.longitude }, 1, 3);
 
       //Only bother if the movement was larger than one meter
       if (distance > 1) { 
         var newCoord = { lng: location.longitude, lat: location.latitude, timestamp: location.timestamp };
-        updateCallback(newCoord);
         currentCoord = newCoord;
+        return true;
       }
     }
-  });
-
-  bancroft.on('satellite', function (satellite) {
-  });
-
-  bancroft.on('disconnect', function (err) {
-    console.log('disconnected');
-    //If disconnected, for now we consider it being debug mode. so just use looped test data coordinates
-    setInterval(function () {
-      getNextCoordinateFromTestData().then(function (data) {
-        updateCallback(data);
-      });
-    }, 1500);
-  })
+    
+    return false;
 };
 
-var getNextCoordinateFromTestData = function () {
+// geoService.startListener = function (updateCallback, socket) {
+//   var bancroft = new Bancroft();
+
+//   bancroft.on('connect', function () {
+//     console.log('connected');
+//   });
+
+//   bancroft.on('location', function (location) {
+    
+//   });
+
+//   bancroft.on('satellite', function (satellite) {
+//   });
+
+//   bancroft.on('disconnect', function (err) {
+//     console.log('disconnected');
+//     //If disconnected, for now we consider it being debug mode. so just use looped test data coordinates
+//     setInterval(function () {
+//       getNextCoordinateFromTestData().then(function (data) {
+//         updateCallback(data);
+//       });
+//     }, 1500);
+//   })
+// };
+
+geoService.getNextCoordinateFromTestData = function () {
   var defer = Q.defer();
   if (!coordinates) {
     coordinates = JSON.parse(fs.readFileSync('./testcoordinates.json', 'utf8').toString());
