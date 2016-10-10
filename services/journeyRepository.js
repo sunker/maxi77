@@ -81,7 +81,7 @@ journeyRepository.updateDistance = function (journeyId, meters) {
             console.log(err);
             defer.reject(err);
         } else {
-            journey.distance = journey.distance + meters;
+            journey.distance = meters;//journey.distance + meters;
             journey.save(function (err) {
                 if (err) console.log(err);
                 // console.log('Journey distance updated!');

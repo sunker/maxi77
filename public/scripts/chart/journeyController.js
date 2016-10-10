@@ -35,6 +35,11 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
     socket.on('journeyCreated', function (data) {
         $scope.journey = data;
         $scope.loadingJourney = false;
+        $scope.distanceSeamiles = geoService.metersToSeaMiles(data.journey.distance).toFixed(2);
+    });
+
+    socket.on('journeyDistanceUpdated', function (data) {
+        $scope.distanceSeamiles = geoService.metersToSeaMiles(data.journey.distance).toFixed(2);
     });
 
     socket.on('coordinatesUpdated', function (data) {
@@ -43,11 +48,5 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
         $scope.speed = geoService.getCurrentSpeed().toFixed(2);
         $scope.bearing = geoService.getBearing().toFixed(0) + "°";
         $scope.compassDirection = geoService.getCompassDirection();
-
-        if ($scope.journey) {
-            var distanceInMeters = $scope.distance = geoService.getDistanceInMetersBetweenLastTwoCoordinates();
-            $scope.distanceSeamiles = (Number($scope.distanceSeamiles) + geoService.metersToSeaMiles(distanceInMeters)).toFixed(2);
-            socket.emit('journeyDistanceUpdated', distanceInMeters);
-        }
     });
 }); 

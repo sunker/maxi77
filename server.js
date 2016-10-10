@@ -11,8 +11,11 @@ mongoose.connect('mongodb://127.0.0.1/Maxi77', function(err){
      else console.log('Connected to database');
     });
 
+
+console.log(process.argv.slice(2)[0]);
+
 app.use(express.static(path.join(__dirname, 'public'))); 
-app.use(bodyParser.json());
+app.use(bodyParser.json(    ));
 
 app.use('/api/weather', require('./controllers/api/weatherController'));    
 

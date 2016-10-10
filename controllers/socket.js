@@ -29,7 +29,12 @@ module.exports = function (io) {
       journeyRepository.getCurrentJourney().then(function (data) {
         if (data) {
           coords.isMob = false;
-          journeyRepository.addCoordinate(data._id, coords)
+          journeyRepository.addCoordinate(data._id, coords).then(function (journey) {
+            var distance = geoService.getJourneyDistance(journey.coordinates);
+            journeyRepository.updateDistance(data._id, distance).then(function (journey) {
+              io.sockets.emit('journeyDistanceUpdated', { journey });
+            });
+          });
         }
       });
     };
@@ -43,8 +48,15 @@ module.exports = function (io) {
         socket.emit('coordinatesUpdated', { coordinates: coordinate });
       };
       updateWeatherForecasts();
-      geoService.startGPSDListener(updateGPSCoordinates);
-      // startGPIOListener(updateGPSCoordinates);
+      if (process.argv.slice(2)[0] === "test") {
+        setInterval(function () {
+          geoService.getNextCoordinateFromTestData().then(function (data) {
+            updateGPSCoordinates(data);
+          });
+        }, 5000);
+      } else {
+        geoService.startGPSDListener(updateGPSCoordinates);
+      }
     };
 
     initialize();
@@ -73,7 +85,7 @@ module.exports = function (io) {
       journeyRepository.getCurrentJourney().then(function (data) {
         if (data) {
           newCoordinate.isMob = false;
-          journeyRepository.addCoordinate(data._id, newCoordinate)
+          journeyRepository.addCoordinate(data._id, newCoordinate);
         }
       });
     });
@@ -84,14 +96,6 @@ module.exports = function (io) {
           socket.broadcast.emit('manOverBoard', newCoordinate);
           newCoordinate.isMob = true;
           journeyRepository.addCoordinate(data._id, newCoordinate)
-        }
-      });
-    });
-
-    socket.on('journeyDistanceUpdated', function (meters) {
-      journeyRepository.getCurrentJourney().then(function (data) {
-        if (data) {
-          journeyRepository.updateDistance(data._id, meters)
         }
       });
     });
