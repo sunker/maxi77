@@ -4,7 +4,7 @@ var path = require('path');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var socket = require('./controllers/socket.js')(io);
+var socket = require('./controllers/socketIncoming.js')(io);
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://127.0.0.1/Maxi77', function(err){ 
      if(err) console.log(err); 
@@ -22,5 +22,9 @@ app.use('/api/weather', require('./controllers/api/weatherController'));
 // app.listen(8000);
 http.listen(8000);
 console.log('Server running at port 8000');
+
+require('./services/bootstrapper.js')();
+require('./services/socketOutgoing.js')(io);
+// io.sockets.on('connection', socket);
 
 // io.sockets.on('connection', socket);

@@ -1,9 +1,11 @@
 var weatherService = require("../services/weatherService");
 var journeyRepository = require("../services/journeyRepository");
-var geoService = require("../services/geoService");
+var GeoService = require("../services/geoService");
 
 module.exports = function (io) {
   io.on('connection', function (socket) {
+
+   var geoService = GeoService.getInstance();
 
     var updateWeatherForecasts = function () {
       var updateWeatherAttempts = 0;
@@ -23,21 +25,21 @@ module.exports = function (io) {
       )
     };
 
-    var updateGPSCoordinates = function (coords) {
-      io.sockets.emit('coordinatesUpdated', { coordinates: coords });
-      console.log(coords);
-      journeyRepository.getCurrentJourney().then(function (data) {
-        if (data) {
-          coords.isMob = false;
-          journeyRepository.addCoordinate(data._id, coords).then(function (journey) {
-            var distance = geoService.getJourneyDistance(journey.coordinates);
-            journeyRepository.updateDistance(data._id, distance).then(function (journey) {
-              io.sockets.emit('journeyDistanceUpdated', { journey });
-            });
-          });
-        }
-      });
-    };
+    // var updateGPSCoordinates = function (coords) {
+    //   io.sockets.emit('coordinatesUpdated', { coordinates: coords });
+    //   console.log(coords);
+    //   journeyRepository.getCurrentJourney().then(function (data) {
+    //     if (data) {
+    //       coords.isMob = false;
+    //       journeyRepository.addCoordinate(data._id, coords).then(function (journey) {
+    //         var distance = geoService.getJourneyDistance(journey.coordinates);
+    //         journeyRepository.updateDistance(data._id, distance).then(function (journey) {
+    //           io.sockets.emit('journeyDistanceUpdated', { journey });
+    //         });
+    //       });
+    //     }
+    //   });
+    // };
 
     //Load on connect
     var initialize = function () {
@@ -48,15 +50,15 @@ module.exports = function (io) {
         socket.emit('coordinatesUpdated', { coordinates: coordinate });
       };
       updateWeatherForecasts();
-      if (process.argv.slice(2)[0] === "test") {
-        setInterval(function () {
-          geoService.getNextCoordinateFromTestData().then(function (data) {
-            updateGPSCoordinates(data);
-          });
-        }, 5000);
-      } else {
-        geoService.startGPSDListener(updateGPSCoordinates);
-      }
+      // if (process.argv.slice(2)[0] === "test") {
+      //   setInterval(function () {
+      //     geoService.getNextCoordinateFromTestData().then(function (data) {
+      //       updateGPSCoordinates(data);
+      //     });
+      //   }, 5000);
+      // } else {
+      //   geoService.startGPSDListener(updateGPSCoordinates);
+      // }
     };
 
     initialize();
