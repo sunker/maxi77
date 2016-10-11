@@ -51,6 +51,7 @@ var WeatherService = function () {
             function (fail) {
                 //Replace this with error when in production...
                 self.emit('weatherForecastUpdated', fail);
+                console.log("Could not load SMHI data. Sending cashed data");
                 // self.emit('weatherForecastUpdateFailed', fail);
             });
     };

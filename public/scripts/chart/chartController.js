@@ -25,6 +25,7 @@ chartModule.controller('chartController', function ($scope, socket, chartService
     };
 
     initializeMap();
+    socket.emit('getCurrentJourney');
 
     var updateMap = function (coordinates) {
 
