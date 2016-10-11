@@ -4,6 +4,7 @@ weatherModule.controller('weatherWidgetController', function ($scope, geoLocatio
 	socket.emit('getWeatherForecast');
 
 	socket.on('forecastUpdated', function (data) {
+		console.log("forecastUpdated");
 		$scope.errorMessage = undefined;
 		refresh(weatherService.getCurrentForecastFromForecasts(data));
 	});

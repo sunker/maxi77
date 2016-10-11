@@ -1,8 +1,10 @@
 var journeyRepository = require("../services/journeyRepository");
 var GeoService = require("../services/geoService");
+var WeatherService = require("../services/weatherService");
 
 module.exports = function (io) {
     var geoService = GeoService.getInstance();
+    var weatherService = WeatherService.getInstance();
 
     //Server events
     geoService.on('gpsChanged', function (coords) {
@@ -19,5 +21,13 @@ module.exports = function (io) {
                 });
             }
         });
+    });
+
+    weatherService.on('weatherForecastUpdated', function (forecast) {
+        io.sockets.emit('forecastUpdated', forecast);
+    });
+
+    weatherService.on('weatherForecastUpdateFailed', function (forecast) {
+        io.sockets.emit('forecastUpdatedFailed', forecast);
     });
 };
