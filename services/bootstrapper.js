@@ -9,7 +9,7 @@ module.exports = function () {
             geoService.getNextCoordinateFromTestData();
         }, 1500);
     } else {
-        geoService.startGPSDListener(updateGPSCoordinates);
+        geoService.startGPSDListener();
     }
 
     geoService.once('gpsChanged', function (coordinate) {

@@ -14,7 +14,7 @@ var GeoService = function () {
   var coordinates;
   var timestamp;
 
-  this.startGPSDListener = function (updateCallback) {
+  this.startGPSDListener = function () {
     var bancroft = new Bancroft();
 
     bancroft.on('connect', function () {
@@ -23,7 +23,6 @@ var GeoService = function () {
 
     bancroft.on('location', function (location) {
       if (isRealMovement(location)) {
-        updateCallback({ lng: location.longitude, lat: location.latitude, timestamp: location.timestamp });
         self.emit('gpsChanged', { lng: location.longitude, lat: location.latitude, timestamp: location.timestamp });
       }
     });
