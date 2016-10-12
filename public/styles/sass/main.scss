@@ -46,7 +46,6 @@ fbody {
     display: inline-block; vertical-align: middle;
 }
 
-
 .widget-row {
 
     .widget-wrapper {
@@ -188,4 +187,9 @@ fbody {
     color: inherit;
 }
 
- 
+  @media only screen and (max-device-width:500px) {
+    .weather-image {
+        width: 130px;
+        height: 100px;
+    }
+}

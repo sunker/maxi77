@@ -16,7 +16,6 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
 
     $scope.stopJourney = function () {
         socket.emit('stopJourney', { id: $scope.journey._id });
-        $scope.distanceSeamiles = "-"
         $scope.journey = undefined;
     };
 
@@ -30,6 +29,7 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
 
     socket.on('journeyStopped', function (data) {
         $scope.journey = null;
+        $scope.distanceSeamiles = "-";
     });
 
     socket.on('journeyCreated', function (data) {

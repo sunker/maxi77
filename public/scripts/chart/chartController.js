@@ -44,6 +44,7 @@ chartModule.controller('chartController', function ($scope, socket, chartService
         $event.stopPropagation();
         var newZoomLevel = chartService.zoomIn();
         socket.emit('journeyZoomLevelChanged', newZoomLevel);
+        console.log($event);
     };
 
     $scope.zoomOut = function ($event) {

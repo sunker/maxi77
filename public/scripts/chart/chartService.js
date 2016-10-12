@@ -16,6 +16,11 @@ chartModule.service("chartService", function (geoService) {
                 zoomControl: false,
                 focus: true
             });
+
+           eniro.maps.event.addListener(map, 'click', function(event){
+                alert(event);
+            });
+
             var coord = geoService.getCurrentCoordinate();
             map.panTo(new eniro.maps.LatLng(coord.lat, coord.lng));
 

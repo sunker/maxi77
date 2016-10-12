@@ -136,3 +136,8 @@ fbody {
 
 .dashboard-link, .dashboard-link:hover {
   color: inherit; }
+
+@media only screen and (max-device-width: 500px) {
+  .weather-image {
+    width: 130px;
+    height: 100px; } }
