@@ -1,4 +1,4 @@
-var weatherService = require("../services/weatherService");
+var WeatherService = require("../services/weatherService");
 var journeyRepository = require("../services/journeyRepository");
 var GeoService = require("../services/geoService");
 
@@ -6,6 +6,7 @@ module.exports = function (io) {
   io.on('connection', function (socket) {
     console.log('a user connected');
     var geoService = GeoService.getInstance();
+    var weahterService = WeatherService.getInstance();
 
 
     //Load on connect
@@ -25,8 +26,12 @@ module.exports = function (io) {
       console.log('user disconnected');
     });
 
-    socket.on('getWeatherForecast', function (coordinates) {
-      // updateWeatherForecasts();
+    socket.on('getWeatherForecast', function (coordinate) {
+      weahterService.getForecasts(coordinate).then(function (forecasts) {
+        io.sockets.emit('forecastUpdated', forecast);
+      }, function (error) {
+        io.sockets.emit('forecastUpdatedFailed', error);
+      });
     });
 
     socket.on('createJourney', function (coordinates) {

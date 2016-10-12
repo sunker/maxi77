@@ -1,16 +1,17 @@
 'use strict';
 var weatherModule = angular.module("weatherModule");
-weatherModule.controller('weatherWidgetController', function ($scope, geoLocationService, weatherService, socket) {
-	socket.emit('getWeatherForecast');
+weatherModule.controller('weatherWidgetController', function ($scope, geoService, weatherService, socket) {
+	var coord = geoService.getCurrentCoordinate();
+	socket.emit('getWeatherForecast', coord.lat === 0 && coord.lng === 0 ? null : coord);
+	$scope.errorMessage = null;
 
-	socket.on('forecastUpdated', function (data) {
-		console.log("forecastUpdated");
-		$scope.errorMessage = undefined;
-		refresh(weatherService.getCurrentForecastFromForecasts(data));
-	});
+	// socket.on('forecastUpdated', function (data) {
+	// 	$scope.errorMessage = undefined;
+	// 	refresh(weatherService.getCurrentForecastFromForecasts(data));
+	// });
 
 	socket.on('forecastUpdatedFailed', function (data) {
-		$scope.errorMessage = "Kan inte ansluta till SMHI";
+		$scope.errorMessage = false;
 	});
 
 	var refresh = function (data) {

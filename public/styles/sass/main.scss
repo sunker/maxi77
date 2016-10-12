@@ -34,12 +34,25 @@ fbody {
     float: none;
 }
 
-.temp {
+.text-large {
     font-size: 1.5em;
+}
+
+.vertical-align-container {
+    line-height:125px;
+}
+
+.vertical-align-inner {
+    display: inline-block; vertical-align: middle;
 }
 
 
 .widget-row {
+
+    .widget-wrapper {
+        height: 125px;
+    }
+
     border-bottom: 1px solid #eee;
     &.first {
         border-top: 1px solid #eee;

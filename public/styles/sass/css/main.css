@@ -25,11 +25,20 @@ fbody {
   vertical-align: middle;
   float: none; }
 
-.temp {
+.text-large {
   font-size: 1.5em; }
+
+.vertical-align-container {
+  line-height: 125px; }
+
+.vertical-align-inner {
+  display: inline-block;
+  vertical-align: middle; }
 
 .widget-row {
   border-bottom: 1px solid #eee; }
+  .widget-row .widget-wrapper {
+    height: 125px; }
   .widget-row.first {
     border-top: 1px solid #eee; }
   .widget-row .widget {

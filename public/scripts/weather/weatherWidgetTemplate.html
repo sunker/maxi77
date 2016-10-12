@@ -1,29 +1,28 @@
-<div ng-if="!errorMessage">
-    <div class="row">
-        <div class="col-xs-6">{{weatherDescription}}</div>
-        <div class="col-xs-6 text-right">{{time}}</div>
-    </div>
-    
-    <div class="row">
-        <div class="col-xs-6"><img src="images/weather/{{imageUrl}}.png"></div>
-        <div class="col-xs-6" style="display: table; height: 125px; overflow: hidden;">
-            <div class="text-right" style="display: table-cell; vertical-align: middle;">
-                <div>
-                    <p class="temp">{{temperature}}</p>
+<div class="vertical-align-container widget-wrapper">
+    <div ng-if="!errorMessage">
+        <div class="row">
+            <div class="col-xs-6">{{weatherDescription}}</div>
+            <div class="col-xs-6 text-right">{{time}}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6"><img src="images/weather/{{imageUrl}}.png"></div>
+            <div class="col-xs-6">
+                <div class="text-right" style="display: table-cell; vertical-align: middle;">
+                    <div>
+                        <p class="temp">{{temperature}}</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">{{windSpeed}}</div>
-    </div>
-</div>
-<div ng-if="errorMessage">
-    <div style="display: table; height: 125px; overflow: hidden;">
-        <div class="text-center" style="display: table-cell; vertical-align: middle;">
-            <div>
-                <strong class="temp">{{errorMessage}}</strong>
-            </div>
+        <div class="row">
+            <div class="col-xs-12">{{windSpeed}}</div>
         </div>
+    </div>
+    <div ng-if="errorMessage === false" class="text-center">
+        <strong class="vertical-align-inner text-large">Kan inte ansluta till SMHI</strong>
+    </div>
+    <div ng-if="errorMessage === null" class="text-center">
+        <strong class="vertical-align-inner text-large">Hämtar väderdata...</strong>
     </div>
 </div>

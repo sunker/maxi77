@@ -77,7 +77,6 @@ chartModule.controller('chartController', function ($scope, socket, chartService
     });
 
     socket.on('coordinatesUpdated', function (data) {
-        console.log('GPS Update');
         coordinates = data.coordinates;
         updateMap(data.coordinates);
     });
