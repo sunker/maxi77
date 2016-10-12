@@ -1,5 +1,5 @@
 angular.module('maxiApp', 
-    ['ngRoute', 'appRoutes', 'HomeCtrl', 'weatherModule', 'geoModule', 'chartModule', 'socketModule',]);
+    ['ngRoute', 'appRoutes', 'ngTouch', 'HomeCtrl', 'weatherModule', 'geoModule', 'chartModule', 'socketModule',]);
 
 angular.module("weatherModule", []);
 angular.module("chartModule", []);

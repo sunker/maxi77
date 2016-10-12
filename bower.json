@@ -22,6 +22,7 @@
     "underscore": "^1.8.3",
     "socket.io-client": "^1.4.8",
     "Geolib": "geolib#^2.0.21",
-    "angular-promisify": "*"
+    "angular-promisify": "*",
+    "ngtouch": "^1.0.1"
   }
 }
