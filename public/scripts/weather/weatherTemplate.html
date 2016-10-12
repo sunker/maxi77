@@ -30,12 +30,11 @@
         </tbody>
     </table>
 </div>
-<div ng-if="errorMessage">
-    <div style="display: table; height: 125px; overflow: hidden;">
-        <div class="text-center" style="display: table-cell; vertical-align: middle;">
-            <div>
-                <strong class="temp">{{errorMessage}}</strong>
-            </div>
-        </div>
+<div class="vertical-align-container">
+    <div ng-if="errorMessage === false" class="text-center vertical-align-outer">
+        <strong class="vertical-align-inner text-large">Kan inte ansluta till SMHI</strong>
+    </div>
+    <div ng-if="errorMessage === null" class="text-center vertical-align-outer">
+        <strong class="vertical-align-inner text-large">Hämtar väderdata...</strong>
     </div>
 </div>

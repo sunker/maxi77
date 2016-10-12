@@ -1,8 +1,7 @@
 'use strict';
 var chartModule = angular.module("chartModule");
 chartModule.controller('chartController', function ($scope, socket, chartService) {
-    var autoFocus = true;
-    var coordinates;    
+    var coordinates;
     $scope.initialized = null;
 
     $scope.mapStyle = {
@@ -28,24 +27,17 @@ chartModule.controller('chartController', function ($scope, socket, chartService
     socket.emit('getCurrentJourney');
 
     var updateMap = function (coordinates) {
-
-        if (autoFocus) {
-            chartService.mapPanTo(coordinates.lat, coordinates.lng);
-        }
         chartService.setPositionMarker(coordinates.lat, coordinates.lng);
     };
 
     $scope.click = function ($event) {
-        autoFocus = false;
-        if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
-            $scope.$apply();
-        }
+        chartService.setAutoFocus(false);
     };
 
     $scope.panToCenter = function ($event) {
         $event.stopPropagation();
-        chartService.mapPanTo(coordinates.lat, coordinates.lng);
-        autoFocus = true;
+        chartService.panTo(coordinates.lat, coordinates.lng);
+        chartService.setAutoFocus(true);
     };
 
     $scope.zoomIn = function ($event) {

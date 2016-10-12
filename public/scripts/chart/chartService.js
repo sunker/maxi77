@@ -5,6 +5,7 @@ chartModule.service("chartService", function (geoService) {
     var linePath;
     var redMarkers = [];
     var journeyMode = false;
+    var autoFocus = true;
 
     this.initialize = function (parentDiv) {
         try {
@@ -16,7 +17,7 @@ chartModule.service("chartService", function (geoService) {
                 focus: true
             });
             var coord = geoService.getCurrentCoordinate();
-            this.mapPanTo(coord.lat, coord.lng);
+            map.panTo(new eniro.maps.LatLng(coord.lat, coord.lng));
 
             if (journeyMode) {
                 line = new eniro.maps.Polyline({
@@ -36,17 +37,21 @@ chartModule.service("chartService", function (geoService) {
         }
     };
 
-    this.mapPanTo = function (lat, lng) {
-        map.panTo(new eniro.maps.LatLng(lat, lng));
-    };
-
     this.setPositionMarker = function (lat, lng) {
         if (journeyMode) {
             linePath.push(new eniro.maps.LatLng(lat, lng));
         } else {
             marker.setPosition(new eniro.maps.LatLng(lat, lng));
         }
+
+        if (autoFocus){
+            map.panTo(new eniro.maps.LatLng(lat, lng));
+        }
     };
+
+    this.panTo = function(lat, lng) {
+        map.panTo(new eniro.maps.LatLng(lat, lng));
+    }
 
     this.zoomIn = function () {
         var zoomLevel = map.getZoom();
@@ -69,20 +74,11 @@ chartModule.service("chartService", function (geoService) {
 
         if (line) line.setMap(null);
         if (linePath) linePath = [];
+        
         redMarkers.forEach(function(redMarker){
             redMarker.setVisible(false);
         });
         redMarkers = [];        
-    };
-
-    this.addRedMarker = function (coordinate) {
-        var redMarker = new eniro.maps.Marker({
-            map: map,
-            position: new eniro.maps.LatLng(0, 0), //WAT?
-            icon: new eniro.maps.MarkerImage('../../images/MOB.png', new eniro.maps.Size(24, 24), new eniro.maps.Point(0, 0), new eniro.maps.Point(11, 13), 0, 0)
-        });
-        redMarker.setPosition(new eniro.maps.LatLng(coordinate.lat, coordinate.lng));
-        redMarkers.push(redMarker);
     };
 
     this.loadJourney = function (data) {
@@ -101,5 +97,20 @@ chartModule.service("chartService", function (geoService) {
             map: map,
             path: linePath
         });
+    };
+    
+    this.setAutoFocus = function(focus) {
+        autoFocus = focus;
+        console.log("Autofocus: " + focus);
+    }
+
+    this.addRedMarker = function (coordinate) {
+        var redMarker = new eniro.maps.Marker({
+            map: map,
+            position: new eniro.maps.LatLng(0, 0), //WAT?
+            icon: new eniro.maps.MarkerImage('../../images/MOB.png', new eniro.maps.Size(24, 24), new eniro.maps.Point(0, 0), new eniro.maps.Point(11, 13), 0, 0)
+        });
+        redMarker.setPosition(new eniro.maps.LatLng(coordinate.lat, coordinate.lng));
+        redMarkers.push(redMarker);
     };
 });

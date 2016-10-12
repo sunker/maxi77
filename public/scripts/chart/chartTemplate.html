@@ -1,4 +1,4 @@
-﻿<div class="chart-map" ng-click="click($event)" ng-style="mapStyle">
+﻿<div class="chart-map" ng-click="click($event)" ng-touchmove="click($event)" ng-style="mapStyle">
     <div class="loading-feedback" ng-if="initialized === null">
         <p class="text-center temp">Laddar sjökort...</p>
     </div>
@@ -9,17 +9,17 @@
         <div class=" pull-right">
             <div class="btn-group-vertical">
                 <div class="chart-center-buttons">
-                    <button ng-click="panToCenter($event)" type="button" class="btn btn-default btn-xlarge-round">
+                    <button ng-click="panToCenter($event)" ng-touchstart="panToCenter($event)" type="button" class="btn btn-default btn-xlarge-round">
                     <span class="glyphicon glyphicon-map-marker"></span>
                 </button>
                 </div>
             </div>
             <div class="chart-zoom-buttons">
                 <div class="btn-group-vertical">
-                    <button ng-click="zoomOut($event)" type="button" class="btn btn-default btn-xlarge">
+                    <button ng-click="zoomOut($event)" ng-touchstart="zoomOut($event)" type="button" class="btn btn-default btn-xlarge">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
-                    <button ng-click="zoomIn($event)" type="button" class="btn btn-default btn-xlarge">
+                    <button ng-click="zoomIn($event)" ng-touchstart="zoomIn($event)" type="button" class="btn btn-default btn-xlarge">
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
                 </div>
