@@ -94,6 +94,8 @@ fbody {
     .table-journey dd.dd-small {
       font-size: 14px;
       margin-top: 3px; }
+  .table-journey dl.dl-tight {
+    margin-bottom: 15px; }
 
 .table-forecasts {
   border-style: none; }
@@ -139,4 +141,6 @@ fbody {
 @media only screen and (max-device-width: 500px) {
   .weather-image {
     width: 100px;
-    height: 100px; } }
+    height: 100px; }
+  .responsive-text {
+    font-size: 0.8em !important; } }
