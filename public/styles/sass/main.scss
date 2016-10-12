@@ -43,7 +43,8 @@ fbody {
 }
 
 .vertical-align-inner {
-    display: inline-block; vertical-align: middle;
+    // display: inline-block; 
+    vertical-align: middle;
 }
 
 .widget-row {
@@ -189,7 +190,7 @@ fbody {
 
   @media only screen and (max-device-width:500px) {
     .weather-image {
-        width: 130px;
+        width: 100px;
         height: 100px;
     }
 }

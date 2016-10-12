@@ -6,7 +6,17 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
     var currentCoordinate;
 
     $scope.loadingJourney = true;
-    
+
+    $scope.$on('mapInitialized', function () {
+        chartService.onClick(function (e) {
+            chartService.setAutoFocus(false);
+        });
+
+        chartService.onZoomChange(function (e) {
+            socket.emit('journeyZoomLevelChanged', e.zoomLevel);
+        });
+    });
+
     socket.emit('getCurrentJourney');
 
     $scope.createJourney = function () {

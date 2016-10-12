@@ -18,11 +18,6 @@ chartModule.controller('chartController', function ($scope, socket, chartService
         $scope.initialized = chartService.initialize(document.getElementsByClassName('chart-map')[0]);
         if ($scope.initialized) {
             clearTimeout(timer);
-            if ($scope.displayZoom) {
-                chartService.addEvent('click', function () {
-                    chartService.setAutoFocus(false);
-                });
-            }
         } else {
             timer();
         }
@@ -36,10 +31,6 @@ chartModule.controller('chartController', function ($scope, socket, chartService
         chartService.setPositionMarker(coordinates.lat, coordinates.lng);
     };
 
-    $scope.click = function ($event) {
-        chartService.setAutoFocus(false);
-    };
-
     $scope.panToCenter = function ($event) {
         $event.stopPropagation();
         chartService.panTo(coordinates.lat, coordinates.lng);
@@ -48,15 +39,12 @@ chartModule.controller('chartController', function ($scope, socket, chartService
 
     $scope.zoomIn = function ($event) {
         $event.stopPropagation();
-        var newZoomLevel = chartService.zoomIn();
-        socket.emit('journeyZoomLevelChanged', newZoomLevel);
-        console.log($event);
+        chartService.zoomIn();
     };
 
     $scope.zoomOut = function ($event) {
         $event.stopPropagation();
-        var newZoomLevel = chartService.zoomOut();
-        socket.emit('journeyZoomLevelChanged', newZoomLevel);
+        chartService.zoomOut();
     };
 
     socket.on('journeyStopped', function (data) {

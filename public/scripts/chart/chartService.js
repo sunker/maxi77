@@ -1,6 +1,6 @@
 'use strict';
 var chartModule = angular.module("chartModule");
-chartModule.service("chartService", function (geoService) {
+chartModule.service("chartService", function ($rootScope, geoService) {
     var map, marker, line;
     var linePath;
     var redMarkers = [];
@@ -9,6 +9,11 @@ chartModule.service("chartService", function (geoService) {
 
     this.initialize = function (parentDiv) {
         try {
+            if (map) {
+                eniro.maps.event.clearListeners(map, 'click');
+                eniro.maps.event.clearListeners(map, 'zoom_changed');
+            }
+
             map = new eniro.maps.Map(parentDiv, {
                 zoom: 10,
                 mapTypeId: eniro.maps.MapTypeId.NAUTICAL,
@@ -16,6 +21,8 @@ chartModule.service("chartService", function (geoService) {
                 zoomControl: false,
                 focus: true
             });
+
+            $rootScope.$broadcast('mapInitialized');
 
             var coord = geoService.getCurrentCoordinate();
             map.panTo(new eniro.maps.LatLng(coord.lat, coord.lng));
@@ -57,13 +64,11 @@ chartModule.service("chartService", function (geoService) {
     this.zoomIn = function () {
         var zoomLevel = map.getZoom();
         map.setZoom(--zoomLevel);
-        return map.getZoom();
     };
 
     this.zoomOut = function () {
         var zoomLevel = map.getZoom();
         map.setZoom(++zoomLevel);
-        return map.getZoom();
     };
 
     this.stopJourney = function () {
@@ -115,7 +120,13 @@ chartModule.service("chartService", function (geoService) {
         redMarkers.push(redMarker);
     };
 
-    this.addEvent = function (event, callback) {
-        eniro.maps.event.addListener(map, event, callback);
+    this.onClick = function (callback) {
+        eniro.maps.event.addListener(map, 'click', callback);
+    };
+
+    this.onZoomChange = function (callback) {
+        eniro.maps.event.addListener(map, 'zoom_changed', function(){
+            callback({zoomLevel: map.getZoom()});
+        });
     };
 });

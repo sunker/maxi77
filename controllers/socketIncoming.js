@@ -8,20 +8,6 @@ module.exports = function (io) {
     var geoService = GeoService.getInstance();
     var weahterService = WeatherService.getInstance();
 
-
-    //Load on connect
-    // var initialize = function () {
-    //   console.log('a user connected');
-    //   var coordinate = geoService.getCurrentCoordinate();
-    //   if (coordinate !== null) {
-    //     console.log("Sending currentcoord");
-    //     socket.emit('coordinatesUpdated', { coordinates: coordinate });
-    //   };
-    // };
-
-    // initialize();
-
-    //Client events
     socket.on('disconnect', function () {
       console.log('user disconnected');
     });
