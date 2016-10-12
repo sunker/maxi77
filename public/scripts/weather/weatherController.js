@@ -1,7 +1,9 @@
 'use strict';
 var weatherModule = angular.module("weatherModule");
 weatherModule.controller('WeatherController', function ($scope, weatherService, socket) {
-    socket.emit('getWeatherForecast');
+    var coord = geoService.getCurrentCoordinate();
+	socket.emit('getWeatherForecast', coord.lat === 0 && coord.lng === 0 ? null : coord);
+	$scope.errorMessage = null;
 
     socket.on('forecastUpdated', function (data) {
         $scope.errorMessage = undefined;

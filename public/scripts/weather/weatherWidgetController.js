@@ -5,10 +5,10 @@ weatherModule.controller('weatherWidgetController', function ($scope, geoService
 	socket.emit('getWeatherForecast', coord.lat === 0 && coord.lng === 0 ? null : coord);
 	$scope.errorMessage = null;
 
-	// socket.on('forecastUpdated', function (data) {
-	// 	$scope.errorMessage = undefined;
-	// 	refresh(weatherService.getCurrentForecastFromForecasts(data));
-	// });
+	socket.on('forecastUpdated', function (data) {
+		$scope.errorMessage = undefined;
+		refresh(weatherService.getCurrentForecastFromForecasts(data));
+	});
 
 	socket.on('forecastUpdatedFailed', function (data) {
 		$scope.errorMessage = false;

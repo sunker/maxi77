@@ -28,7 +28,7 @@ fbody {
 .text-large {
   font-size: 1.5em; }
 
-.vertical-align-container {
+.vertical-align-outer {
   line-height: 125px; }
 
 .vertical-align-inner {
