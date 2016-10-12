@@ -17,10 +17,6 @@ chartModule.service("chartService", function (geoService) {
                 focus: true
             });
 
-           eniro.maps.event.addListener(map, 'click', function(event){
-                alert(event);
-            });
-
             var coord = geoService.getCurrentCoordinate();
             map.panTo(new eniro.maps.LatLng(coord.lat, coord.lng));
 
@@ -34,7 +30,7 @@ chartModule.service("chartService", function (geoService) {
                     map: map,
                     position: new eniro.maps.LatLng(0, 0) //WAT?
                 });
-                
+
             }
             return true;
         } catch (ex) {
@@ -49,12 +45,12 @@ chartModule.service("chartService", function (geoService) {
             marker.setPosition(new eniro.maps.LatLng(lat, lng));
         }
 
-        if (autoFocus){
+        if (autoFocus) {
             map.panTo(new eniro.maps.LatLng(lat, lng));
         }
     };
 
-    this.panTo = function(lat, lng) {
+    this.panTo = function (lat, lng) {
         map.panTo(new eniro.maps.LatLng(lat, lng));
     }
 
@@ -79,11 +75,11 @@ chartModule.service("chartService", function (geoService) {
 
         if (line) line.setMap(null);
         if (linePath) linePath = [];
-        
-        redMarkers.forEach(function(redMarker){
+
+        redMarkers.forEach(function (redMarker) {
             redMarker.setVisible(false);
         });
-        redMarkers = [];        
+        redMarkers = [];
     };
 
     this.loadJourney = function (data) {
@@ -103,8 +99,8 @@ chartModule.service("chartService", function (geoService) {
             path: linePath
         });
     };
-    
-    this.setAutoFocus = function(focus) {
+
+    this.setAutoFocus = function (focus) {
         autoFocus = focus;
         console.log("Autofocus: " + focus);
     }
@@ -117,5 +113,9 @@ chartModule.service("chartService", function (geoService) {
         });
         redMarker.setPosition(new eniro.maps.LatLng(coordinate.lat, coordinate.lng));
         redMarkers.push(redMarker);
+    };
+
+    this.addEvent = function (event, callback) {
+        eniro.maps.event.addListener(map, event, callback);
     };
 });

@@ -6,6 +6,7 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
     var currentCoordinate;
 
     $scope.loadingJourney = true;
+    
     socket.emit('getCurrentJourney');
 
     $scope.createJourney = function () {

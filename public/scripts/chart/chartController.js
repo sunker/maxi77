@@ -18,12 +18,18 @@ chartModule.controller('chartController', function ($scope, socket, chartService
         $scope.initialized = chartService.initialize(document.getElementsByClassName('chart-map')[0]);
         if ($scope.initialized) {
             clearTimeout(timer);
+            if ($scope.displayZoom) {
+                chartService.addEvent('click', function () {
+                    chartService.setAutoFocus(false);
+                });
+            }
         } else {
             timer();
         }
     };
 
     initializeMap();
+
     socket.emit('getCurrentJourney');
 
     var updateMap = function (coordinates) {
