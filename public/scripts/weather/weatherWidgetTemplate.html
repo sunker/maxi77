@@ -1,5 +1,5 @@
 <div class="vertical-align-container widget-wrapper">
-    <div ng-if="!errorMessage">
+    <div ng-if="errorMessage === undefined">
         <div class="row">
             <div class="col-xs-6">{{weatherDescription}}</div>
             <div class="col-xs-6 text-right">{{time}}</div>
@@ -20,9 +20,9 @@
         </div>
     </div>
     <div ng-if="errorMessage === false" class="text-center vertical-align-outer">
-        <strong class="vertical-align-inner text-large  responsive-text">Kan inte ansluta till SMHI</strong>
+        <strong class="vertical-align-inner responsive-text">Kan inte ansluta till SMHI</strong>
     </div>
     <div ng-if="errorMessage === null" class="text-center vertical-align-outer">
-        <strong class="vertical-align-inner text-large  responsive-text">Hämtar väderdata...</strong>
+        <strong class="vertical-align-inner responsive-text">Hämtar väderdata...</strong>
     </div>
 </div>
