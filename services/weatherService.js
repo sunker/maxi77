@@ -8,11 +8,22 @@ var instance;
 var WeatherService = function () {
     var self = this;
 
-    this.startPollingForForecasts = function (coordinate) {
-        updateAndEmit(coordinate);
+    this.startPollingForForecasts = function (coordinate, allowFakeForecasts) {
+        updateAndEmit(coordinate, allowFakeForecasts);
         setInterval(function () {
             updateAndEmit(coordinate);
         }, 15000);
+    };
+
+    this.getFakeForecasts = function () {
+        var deferred = Q.defer();
+
+        fs.readFile('./SMHITestData.json', 'utf8', function (data1, data2, data3) {
+            var file = JSON.parse(data2.toString());
+            return deferred.resolve(file);
+        });
+
+        return deferred.promise;
     };
 
     this.getForecasts = function (coordinate) {
@@ -43,17 +54,29 @@ var WeatherService = function () {
         return deferred.promise;
     };
 
-    var updateAndEmit = function (coordinate) {
-        self.getForecasts(coordinate).then(
-            function (success) {
-                self.emit('weatherForecastUpdated', success);
-            },
-            function (fail) {
-                //Replace this with error when in production...
-                self.emit('weatherForecastUpdated', fail);
-                console.log("Could not load SMHI data. Sending cashed data");
-                // self.emit('weatherForecastUpdateFailed', fail);
-            });
+    var updateAndEmit = function (coordinate, allowFakeForecasts) {
+
+        var isConnected = false; //Ask some service if we have internet
+        if (!isConnected && allowFakeForecasts) {
+            self.getFakeForecasts().then(
+                function (success) {
+                    self.emit('weatherForecastUpdated', success);
+                },
+                function (fail) {
+                    //Replace this with error when in production...
+                    self.emit('forecastUpdatedFailed', fail);
+                    console.log("Could not load SMHI data. Sending cashed data");
+                });
+        } else {
+            self.getForecasts(coordinate).then(
+                function (success) {
+                    self.emit('weatherForecastUpdated', success);
+                },
+                function (fail) {
+                    self.emit('forecastUpdatedFailed', fail);
+                    console.log("Could not load SMHI data. Sending cashed data");
+                });
+        }
     };
 
     var forecastsForLatAndLong = function () {

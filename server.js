@@ -6,25 +6,27 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var socket = require('./controllers/socketIncoming.js')(io);
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1/Maxi77', function(err){ 
-     if(err) console.log(err); 
-     else console.log('Connected to database');
-    });
+mongoose.connect('mongodb://127.0.0.1/Maxi77', function (err) {
+    if (err) console.log(err);
+    else console.log('Connected to database');
+});
 
+var testMode = process.argv.slice(2)[0] === "test";
+if (testMode) {
+    console.log("Running app in testmode");
+} else {
+    console.log("Running app in pi mode");
+}
 
-console.log(process.argv.slice(2)[0]);
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, 'public'))); 
-app.use(bodyParser.json(    ));
-
-app.use('/api/weather', require('./controllers/api/weatherController'));    
+app.use('/api/weather', require('./controllers/api/weatherController'));
 
 // app.listen(8000);
 http.listen(8000);
 console.log('Server running at port 8000');
 
-require('./services/bootstrapper.js')();
-require('./services/socketOutgoing.js')(io);
-// io.sockets.on('connection', socket);
 
-// io.sockets.on('connection', socket);
+require('./services/bootstrapper.js')(testMode);
+require('./services/socketOutgoing.js')(io);
