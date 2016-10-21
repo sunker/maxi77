@@ -3,6 +3,7 @@ var Q = require('q');
 var fs = require('fs');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
+var connection = require('./connectivityService');
 var instance;
 
 var WeatherService = function () {
@@ -29,7 +30,10 @@ var WeatherService = function () {
     this.getForecasts = function (coordinate) {
         var deferred = Q.defer();
         if (coordinate === null) {
-            coordinate = { lat: 59, lng: 18 }; // Sthml coordinate
+            coordinate = {
+                lat: 59,
+                lng: 18
+            }; // Sthml coordinate
         }
         SMHI.getForecastForLatAndLong(coordinate.lat.toFixed(6), coordinate.lng.toFixed(6)).then(
             function (response) {
@@ -54,29 +58,32 @@ var WeatherService = function () {
         return deferred.promise;
     };
 
+    var fakeForecasts;
     var updateAndEmit = function (coordinate, allowFakeForecasts) {
+        fakeForecasts = allowFakeForecasts;
+        connection.checkInternetConnection().then(function (isConnected) {
+            if (!isConnected && fakeForecasts) {
+                self.getFakeForecasts().then(
+                    function (success) {
+                        self.emit('weatherForecastUpdated', success);
+                    },
+                    function (fail) {
+                        //Replace this with error when in production...
+                        self.emit('forecastUpdatedFailed', fail);
+                        console.log("Could not load SMHI data. Sending cashed data");
+                    });
+            } else {
+                self.getForecasts(coordinate).then(
+                    function (success) {
+                        self.emit('weatherForecastUpdated', success);
+                    },
+                    function (fail) {
+                        self.emit('forecastUpdatedFailed', fail);
+                        console.log("Could not load SMHI data. Sending cashed data");
+                    });
+            }
+        });
 
-        var isConnected = false; //Ask some service if we have internet
-        if (!isConnected && allowFakeForecasts) {
-            self.getFakeForecasts().then(
-                function (success) {
-                    self.emit('weatherForecastUpdated', success);
-                },
-                function (fail) {
-                    //Replace this with error when in production...
-                    self.emit('forecastUpdatedFailed', fail);
-                    console.log("Could not load SMHI data. Sending cashed data");
-                });
-        } else {
-            self.getForecasts(coordinate).then(
-                function (success) {
-                    self.emit('weatherForecastUpdated', success);
-                },
-                function (fail) {
-                    self.emit('forecastUpdatedFailed', fail);
-                    console.log("Could not load SMHI data. Sending cashed data");
-                });
-        }
     };
 
     var forecastsForLatAndLong = function () {

@@ -1,7 +1,6 @@
 'use strict';
 var gulp = require('gulp');
-var include = require("gulp-include");
-var jslint = require('gulp-jslint');
+require("gulp-include");
 
 var sass = require('gulp-sass');
 gulp.task('sass', function () {
@@ -13,13 +12,6 @@ gulp.task('sass', function () {
 gulp.task('sass:watch', function () {
   console.log("-- gulp is running task 'sass:watch'");
   gulp.watch('./public/styles/sass/**/*.scss', ['sass']);
-});
- 
-gulp.task('jslint', function () {
-    return gulp.src(['*.js'])
-            .pipe(jslint())
-            .pipe(jslint.reporter('default'))
-            .pipe(jslint.reporter('stylish'));
 });
 
 gulp.task("scripts", function() {
@@ -38,4 +30,4 @@ gulp.task("scripts", function() {
 
 });
 
-gulp.task("develop", ["scripts", "sass:watch", "jslint"]);
+gulp.task("develop", ["scripts", "sass:watch"]);
