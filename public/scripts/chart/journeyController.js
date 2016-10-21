@@ -50,7 +50,7 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
     });
 
     socket.on('journeyDistanceUpdated', function (data) {
-        $scope.distanceSeamiles = geoService.metersToSeaMiles(data.journey.distance).toFixed(2);
+        $scope.distanceSeamiles = geoService.metersToSeaMiles(data.distance).toFixed(2);
     });
 
     socket.on('coordinatesUpdated', function (data) {

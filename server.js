@@ -25,6 +25,7 @@ app.use('/api/weather', require('./controllers/api/weatherController'));
 http.listen(8000);
 console.log('Server running at port 8000');
 
+require('./models/journey');
 require('./services/bootstrapper.js')(testMode);
 require('./socket/socketIncoming.js')(io);
 require('./socket/socketOutgoing.js')(io);

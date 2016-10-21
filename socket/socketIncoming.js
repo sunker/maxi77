@@ -1,11 +1,10 @@
 var WeatherService = require("../services/weatherService");
-var journeyRepository = require("../services/journeyRepository");
-var GeoService = require("../services/geoService");
+const mongoose = require('mongoose');
+var Journey = mongoose.model('trip');
 
 module.exports = function (io) {
   io.on('connection', function (socket) {
     console.log('a user connected');
-    var geoService = GeoService.getInstance();
     var weahterService = WeatherService.getInstance();
 
     socket.on('disconnect', function () {
@@ -21,47 +20,51 @@ module.exports = function (io) {
     });
 
     socket.on('createJourney', function (coordinates) {
-      journeyRepository.createJourney(coordinates.coordinates).then(function (data) {
+      Journey.create(coordinates.coordinates).then(function (data) {
         io.sockets.emit('journeyCreated', data);
       });
     });
 
     socket.on('journeyCoordinatesUpdated', function (newCoordinate) {
-      journeyRepository.getCurrentJourney().then(function (data) {
+      Journey.getCurrentJourney().then(function (data) {
         if (data) {
           newCoordinate.isMob = false;
-          journeyRepository.addCoordinate(data._id, newCoordinate);
+          data.addCoordinate(newCoordinate);
         }
       });
     });
 
     socket.on('manOverBoard', function (newCoordinate) {
-      journeyRepository.getCurrentJourney().then(function (data) {
-        if (data) {
+      Journey.getCurrentJourney().then(function (journey) {
+        if (journey) {
           socket.broadcast.emit('manOverBoard', newCoordinate);
           newCoordinate.isMob = true;
-          journeyRepository.addCoordinate(data._id, newCoordinate)
+          journey.addCoordinate(newCoordinate);
         }
       });
     });
 
     socket.on('journeyZoomLevelChanged', function (zoomLevel) {
-      journeyRepository.getCurrentJourney().then(function (data) {
-        if (data) {
-          journeyRepository.updateZoomLevel(data._id, zoomLevel)
+      Journey.getCurrentJourney().then(function (journey) {
+        if (journey) {
+          journey.updateZoomLevel(zoomLevel)
         }
       });
     });
 
     socket.on('getCurrentJourney', function () {
-      journeyRepository.getCurrentJourney().then(function (data) {
-        socket.emit('currentJourneyLoaded', { journey: data });
+      Journey.getCurrentJourney().then(function (data) {
+        socket.emit('currentJourneyLoaded', {
+          journey: data
+        });
       });
     });
 
     socket.on('stopJourney', function (journey) {
-      journeyRepository.stopJourney(journey.id).then(function (data) {
-        io.sockets.emit('journeyStopped', data);
+      Journey.getById(journey.id).then(function (journeyModel) {
+        journeyModel.stop().then(function (data) {
+          io.sockets.emit('journeyStopped', data);
+        });
       });
     });
   });

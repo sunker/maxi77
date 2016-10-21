@@ -1,6 +1,7 @@
-var journeyRepository = require("../services/journeyRepository");
 var GeoService = require("../services/geoService");
 var WeatherService = require("../services/weatherService");
+const mongoose = require('mongoose');
+var Journey = mongoose.model('trip');
 
 module.exports = function (io) {
     var geoService = GeoService.getInstance();
@@ -10,13 +11,13 @@ module.exports = function (io) {
     geoService.on('gpsChanged', function (coords) {
         io.sockets.emit('coordinatesUpdated', { coordinates: coords });
         console.log(coords);
-        journeyRepository.getCurrentJourney().then(function (data) {
-            if (data) {
+        Journey.getCurrentJourney().then(function (journey) {
+            if (journey) {
                 coords.isMob = false;
-                journeyRepository.addCoordinate(data._id, coords).then(function (journey) {
-                    var distance = geoService.getJourneyDistance(journey.coordinates);
-                    journeyRepository.updateDistance(data._id, distance).then(function (journey) {
-                        io.sockets.emit('journeyDistanceUpdated', { journey });
+                journey.addCoordinate(coords).then(function (journey2) {
+                    var distance = geoService.getJourneyDistance(journey2.coordinates);
+                    journey2.updateDistance(distance).then(function (journey3) {
+                        io.sockets.emit('journeyDistanceUpdated', { distance: journey3.distance });
                     });
                 });
             }
