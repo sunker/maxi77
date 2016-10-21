@@ -1,11 +1,12 @@
-'use strict';
-var chartModule = angular.module("chartModule");
-chartModule.service("chartService", function ($rootScope, geoService) {
-    var map, marker, line;
-    var linePath;
-    var redMarkers = [];
-    var journeyMode = false;
-    var autoFocus = true;
+var chartModule = angular.module('chartModule');
+chartModule.service('chartService', function ($rootScope, geoService) {
+    var map,
+        marker,
+        line,
+        linePath,
+        redMarkers = [],
+        journeyMode = false,
+        autoFocus = true;
 
     this.initialize = function (parentDiv) {
         try {
@@ -59,7 +60,7 @@ chartModule.service("chartService", function ($rootScope, geoService) {
 
     this.panTo = function (lat, lng) {
         map.panTo(new eniro.maps.LatLng(lat, lng));
-    }
+    };
 
     this.zoomIn = function () {
         var zoomLevel = map.getZoom();
@@ -95,7 +96,10 @@ chartModule.service("chartService", function ($rootScope, geoService) {
         for (var i = 0; i < data.coordinates.length; i++) {
             var coordinate = data.coordinates[i];
             if (coordinate.is_MOB) {
-                this.addRedMarker({ lat: coordinate.latitude, lng: coordinate.longitude })
+                this.addRedMarker({
+                    lat: coordinate.latitude,
+                    lng: coordinate.longitude
+                });
             }
             linePath.push(new eniro.maps.LatLng(coordinate.latitude, coordinate.longitude));
         }
@@ -107,8 +111,8 @@ chartModule.service("chartService", function ($rootScope, geoService) {
 
     this.setAutoFocus = function (focus) {
         autoFocus = focus;
-        console.log("Autofocus: " + focus);
-    }
+        console.log('Autofocus: ' + focus);
+    };
 
     this.addRedMarker = function (coordinate) {
         var redMarker = new eniro.maps.Marker({
@@ -125,8 +129,10 @@ chartModule.service("chartService", function ($rootScope, geoService) {
     };
 
     this.onZoomChange = function (callback) {
-        eniro.maps.event.addListener(map, 'zoom_changed', function(){
-            callback({zoomLevel: map.getZoom()});
+        eniro.maps.event.addListener(map, 'zoom_changed', function () {
+            callback({
+                zoomLevel: map.getZoom()
+            });
         });
     };
 });

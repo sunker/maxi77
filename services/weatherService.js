@@ -1,10 +1,10 @@
-var SMHI = require('smhi-node');
-var Q = require('q');
-var fs = require('fs');
-var util = require('util');
-var EventEmitter = require('events').EventEmitter;
-var connection = require('./connectivityService');
-var instance;
+var SMHI = require('smhi-node'),
+    Q = require('q'),
+    fs = require('fs'),
+    util = require('util'),
+    EventEmitter = require('events').EventEmitter,
+    connection = require('./connectivityService'),
+    instance;
 
 var WeatherService = function () {
     var self = this;

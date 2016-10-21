@@ -1,11 +1,11 @@
-var GeoService = require('../services/geoService');
-var WeatherService = require('../services/weatherService');
-const mongoose = require('mongoose');
-var Journey = mongoose.model('trip');
+var GeoService = require('../services/geoService'),
+    WeatherService = require('../services/weatherService'),
+    mongoose = require('mongoose'),
+    Journey = mongoose.model('trip');
 
 module.exports = function (io) {
-    var geoService = GeoService.getInstance();
-    var weatherService = WeatherService.getInstance();
+    var geoService = GeoService.getInstance(),
+        weatherService = WeatherService.getInstance();
 
     //Server events
     geoService.on('gpsChanged', function (coords) {

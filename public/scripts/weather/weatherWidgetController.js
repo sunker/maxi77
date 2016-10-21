@@ -1,4 +1,3 @@
-'use strict';
 var weatherModule = angular.module('weatherModule');
 weatherModule.controller('weatherWidgetController', function ($scope, geoService, weatherService, socket) {
 	var coord = geoService.getCurrentCoordinate();
@@ -10,7 +9,7 @@ weatherModule.controller('weatherWidgetController', function ($scope, geoService
 		refresh(weatherService.getCurrentForecastFromForecasts(data));
 	});
 
-	socket.on('forecastUpdatedFailed', function (data) {
+	socket.on('forecastUpdatedFailed', function () {
 		$scope.errorMessage = false;
 	});
 
@@ -23,5 +22,3 @@ weatherModule.controller('weatherWidgetController', function ($scope, geoService
 		$scope.windSpeed = data.windVelocity.value + ' (' + data.windGust.value + ') m/s ' + weatherService.convertWindDirectionToText(data.windDirection.value);
 	};
 });
-
-

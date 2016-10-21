@@ -1,4 +1,3 @@
-'use strict';
 var weatherModule = angular.module('weatherModule');
 weatherModule.controller('WeatherController', function ($scope, weatherService, socket, geoService) {
     var coord = geoService.getCurrentCoordinate();

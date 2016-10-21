@@ -1,17 +1,21 @@
-var Q = require('q');
-var geolib = require('geolib');
-var fs = require('fs');
-var Bancroft = require('bancroft');
-var util = require('util');
-var EventEmitter = require('events').EventEmitter;
-var instance;
+var Q = require('q'),
+  geolib = require('geolib'),
+  fs = require('fs'),
+  Bancroft = require('bancroft'),
+  util = require('util'),
+  EventEmitter = require('events').EventEmitter,
+  instance;
 
 var GeoService = function () {
-  var self = this;
-  var currentCoord = { lat: 0, lng: 0, timestamp: 0 };
-  var counter = 0;
-  var coordinates;
-  var timestamp;
+  var self = this,
+    currentCoord = {
+      lat: 0,
+      lng: 0,
+      timestamp: 0
+    },
+    counter = 0,
+    coordinates,
+    timestamp;
 
   this.startGPSDListener = function () {
     var bancroft = new Bancroft();
@@ -22,12 +26,15 @@ var GeoService = function () {
 
     bancroft.on('location', function (location) {
       if (isRealMovement(location)) {
-        self.emit('gpsChanged', { lng: location.longitude, lat: location.latitude, timestamp: location.timestamp });
+        self.emit('gpsChanged', {
+          lng: location.longitude,
+          lat: location.latitude,
+          timestamp: location.timestamp
+        });
       }
     });
 
-    bancroft.on('satellite', function () {
-    });
+    bancroft.on('satellite', function () {});
 
     bancroft.on('disconnect', function () {
       console.log('GPIO disconnected');
@@ -47,7 +54,11 @@ var GeoService = function () {
       timestamp = new Date();
     }
     timestamp.setSeconds(timestamp.getSeconds() + 15);
-    currentCoord = { lng: Number(coords.long), lat: Number(coords.lat), timestamp: timestamp.getTime() };
+    currentCoord = {
+      lng: Number(coords.long),
+      lat: Number(coords.lat),
+      timestamp: timestamp.getTime()
+    };
     self.emit('gpsChanged', currentCoord);
     defer.resolve(currentCoord);
 
@@ -63,19 +74,31 @@ var GeoService = function () {
 
     return geolib.getPathLength(
       array.map(function (x) {
-        return { 'latitude': x.latitude, 'longitude': x.longitude };
+        return {
+          'latitude': x.latitude,
+          'longitude': x.longitude
+        };
       })
     );
   };
 
   var isRealMovement = function (location) {
     if (location.latitude && location.longitude && location.speed) {
-      var distance = geolib.getDistance({ latitude: currentCoord.lat, longitude: currentCoord.lng },
-        { latitude: location.latitude, longitude: location.longitude }, 1, 3);
+      var distance = geolib.getDistance({
+        latitude: currentCoord.lat,
+        longitude: currentCoord.lng
+      }, {
+        latitude: location.latitude,
+        longitude: location.longitude
+      }, 1, 3);
 
       //Only bother if the movement was larger than one meter
       if (distance > 1) {
-        var newCoord = { lng: location.longitude, lat: location.latitude, timestamp: location.timestamp };
+        var newCoord = {
+          lng: location.longitude,
+          lat: location.latitude,
+          timestamp: location.timestamp
+        };
         currentCoord = newCoord;
         return true;
       }
@@ -88,7 +111,7 @@ var GeoService = function () {
 util.inherits(GeoService, EventEmitter);
 
 module.exports = {
-  getInstance: function(){
+  getInstance: function () {
     return instance || (instance = new GeoService());
   }
 };

@@ -1,4 +1,3 @@
-'use strict';
 var chartModule = angular.module('chartModule');
 chartModule.controller('chartController', function ($scope, socket, chartService) {
     var coordinates;

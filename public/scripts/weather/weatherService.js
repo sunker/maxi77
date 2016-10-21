@@ -1,7 +1,4 @@
-'use strict';
-
 var weatherModule = angular.module('weatherModule');
-
 weatherModule.service('weatherService', function () {
 
     this.getCurrentForecastFromForecasts = function (forecasts) {

@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var Q = require('q');
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema,
+    Q = require('q');
 
 var journeySchema = new Schema({
     id: {

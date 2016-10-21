@@ -1,5 +1,5 @@
-var dns = require('dns');
-var q = require('q');
+var dns = require('dns'),
+    q = require('q');
 
 var connectivityService = {};
 

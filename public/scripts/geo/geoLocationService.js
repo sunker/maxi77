@@ -1,7 +1,4 @@
 angular.module('geoModule', []).factory('geoLocationService', ['$q', '$window', function ($q, $window) {
-
-    'use strict';
-
     function getCurrentPosition() {
         var deferred = $q.defer();
 

@@ -1,6 +1,6 @@
-var WeatherService = require('../services/weatherService');
-const mongoose = require('mongoose');
-var Journey = mongoose.model('trip');
+var WeatherService = require('../services/weatherService'),
+  mongoose = require('mongoose'),
+  Journey = mongoose.model('trip');
 
 module.exports = function (io) {
   io.on('connection', function (socket) {
