@@ -13,7 +13,7 @@ module.exports = function (io) {
 
     socket.on('getWeatherForecast', function (coordinate) {
       weahterService.getForecasts(coordinate).then(function (forecasts) {
-        io.sockets.emit('forecastUpdated', forecast);
+        io.sockets.emit('forecastUpdated', forecasts);
       }, function (error) {
         io.sockets.emit('forecastUpdatedFailed', error);
       });

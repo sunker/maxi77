@@ -49,7 +49,7 @@ fbody {
 
 .chart-map {
   position: relative;
-  z-index: 9999; }
+  z-index: 9998; }
   .chart-map .btn:focus {
     outline: none; }
   .chart-map .chart-buttons {
