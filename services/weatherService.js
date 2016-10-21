@@ -1,4 +1,4 @@
-var SMHI = require("smhi-node");
+var SMHI = require('smhi-node');
 var Q = require('q');
 var fs = require('fs');
 var util = require('util');
@@ -47,7 +47,7 @@ var WeatherService = function () {
                 return deferred.resolve(result);
             },
             function () {
-                deferred.reject("Weather service down");
+                deferred.reject('Weather service down');
             }
         );
 
@@ -66,7 +66,7 @@ var WeatherService = function () {
                     function (fail) {
                         //Replace this with error when in production...
                         self.emit('forecastUpdatedFailed', fail);
-                        console.log("Could not load SMHI data. Sending cashed data");
+                        console.log('Could not load SMHI data. Sending cashed data');
                     });
             } else {
                 self.getForecasts(coordinate).then(
@@ -75,7 +75,7 @@ var WeatherService = function () {
                     },
                     function (fail) {
                         self.emit('forecastUpdatedFailed', fail);
-                        console.log("Could not load SMHI data. Sending cashed data");
+                        console.log('Could not load SMHI data. Sending cashed data');
                     });
             }
         });
@@ -98,24 +98,24 @@ var WeatherService = function () {
             minimumPrecipitationIntensity: forecast.getMinimumPrecipitationIntensity(),
             precipitationType: getSwedishPrecipitationType(forecast.getPrecipitationCategory()),
             swedishWeatherType: forecast.getWeatherSymbol()
-        }
+        };
     };
 
     var getSwedishPrecipitationType = function (precipitationCategory) {
 
         switch (precipitationCategory.values[0]) {
             case 1:
-                return "snö";
+                return 'snö';
             case 2:
-                return "snöblandat regn";
+                return 'snöblandat regn';
             case 3:
-                return "regn";
+                return 'regn';
             case 4:
-                return "duggregn";
+                return 'duggregn';
             case 5:
-                return "underkylt regn";
+                return 'underkylt regn';
             case 6:
-                return "underkylt duggregn";
+                return 'underkylt duggregn';
             default:
                 return null;
         }
@@ -126,6 +126,6 @@ util.inherits(WeatherService, EventEmitter);
 
 module.exports = {
     getInstance: function () {
-        return instance || (instance = new WeatherService())
+        return instance || (instance = new WeatherService());
     }
 };

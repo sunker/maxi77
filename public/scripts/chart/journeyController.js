@@ -1,8 +1,8 @@
 'use strict';
-var chartModule = angular.module("chartModule");
-chartModule.controller('journeyController', function ($scope, chartService, journeyService, socket, geoService) {
+var chartModule = angular.module('chartModule');
+chartModule.controller('journeyController', function ($scope, chartService, socket, geoService) {
     $scope.displayZoom = false;
-    $scope.distanceSeamiles = "-";
+    $scope.distanceSeamiles = '-';
     var currentCoordinate;
 
     $scope.loadingJourney = true;
@@ -40,7 +40,7 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
 
     socket.on('journeyStopped', function (data) {
         $scope.journey = null;
-        $scope.distanceSeamiles = "-";
+        $scope.distanceSeamiles = '-';
     });
 
     socket.on('journeyCreated', function (data) {
@@ -57,7 +57,7 @@ chartModule.controller('journeyController', function ($scope, chartService, jour
         $scope.coordinates = geoService.formatCoordinate(data.coordinates);
         currentCoordinate = data.coordinates;
         $scope.speed = geoService.getCurrentSpeed().toFixed(2);
-        $scope.bearing = geoService.getBearing().toFixed(0) + "°";
+        $scope.bearing = geoService.getBearing().toFixed(0) + '°';
         $scope.compassDirection = geoService.getCompassDirection();
     });
 }); 
