@@ -1,4 +1,4 @@
-var socketModule = angular.module("socketModule");
+var socketModule = angular.module('socketModule');
 
 socketModule.factory('socket', function ($rootScope) {
   var socket = io.connect();
@@ -19,7 +19,7 @@ socketModule.factory('socket', function ($rootScope) {
             callback.apply(socket, args);
           }
         });
-      })
+      });
     }
   };
 });

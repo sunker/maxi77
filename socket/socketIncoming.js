@@ -1,4 +1,4 @@
-var WeatherService = require("../services/weatherService");
+var WeatherService = require('../services/weatherService');
 const mongoose = require('mongoose');
 var Journey = mongoose.model('trip');
 
@@ -47,7 +47,7 @@ module.exports = function (io) {
     socket.on('journeyZoomLevelChanged', function (zoomLevel) {
       Journey.getCurrentJourney().then(function (journey) {
         if (journey) {
-          journey.updateZoomLevel(zoomLevel)
+          journey.updateZoomLevel(zoomLevel);
         }
       });
     });

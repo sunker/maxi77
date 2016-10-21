@@ -1,6 +1,6 @@
 'use strict';
-var chartModule = angular.module("geoModule");
-chartModule.service("geoService", function (socket) {
+var chartModule = angular.module('geoModule');
+chartModule.service('geoService', function (socket) {
     var noOfCoordinatesToBaseSpeedCalculationOn = 3; //Feel free to edit
     var coordinates = [];
 
@@ -44,7 +44,7 @@ chartModule.service("geoService", function (socket) {
     this.getCompassDirection = function () {
         var bearing = this.getBearing();
         var val = Math.floor((bearing / 22.5) + 0.5);
-        var arr = ["N", "NNÖ", "NÖ", "ÖNÖ", "Ö", "ÖSÖ", "SÖ", "SSÖ", "S", "SSV", "SV", "VSV", "V", "VNV", "NV", "NNV"];
+        var arr = ['N', 'NNÖ', 'NÖ', 'ÖNÖ', 'Ö', 'ÖSÖ', 'SÖ', 'SSÖ', 'S', 'SSV', 'SV', 'VSV', 'V', 'VNV', 'NV', 'NNV'];
         return arr[(val % 16)];
     };
 
@@ -58,9 +58,9 @@ chartModule.service("geoService", function (socket) {
 
     this.formatCoordinate = function (coordinate) {
         return {
-            lat: coordinate.lat.toFixed(5).toString().replace(".", "°").insertAt(5, ".") + "N",
-            lng: coordinate.lng.toFixed(5).toString().replace(".", "°").insertAt(5, ".") + "E"
-        }
+            lat: coordinate.lat.toFixed(5).toString().replace('.', '°').insertAt(5, '.') + 'N',
+            lng: coordinate.lng.toFixed(5).toString().replace('.', '°').insertAt(5, '.') + 'E'
+        };
     };
 
     var getSpeedBetweenTwoCoordinates = function (coord1, coord2) {

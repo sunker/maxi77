@@ -2,9 +2,9 @@
 var chartModule = angular.module('chartModule');
 chartModule.directive('manOverboard', function () {
     return {
-        restrict: "E",
+        restrict: 'E',
         templateUrl: 'scripts/chart/manOverboardTemplate.html',
-        link: function (scope, elem, attr) {
+        link: function () {
         },
         scope: {            
         },
@@ -13,8 +13,8 @@ chartModule.directive('manOverboard', function () {
                 var coordinate = geoService.getCurrentCoordinate();
                 chartService.addRedMarker(coordinate);
                 socket.emit('manOverBoard', coordinate);
-            }
+            };
         }   
-    }
+    };
 
 });

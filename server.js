@@ -1,4 +1,4 @@
-var express = require("express");
+var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var app = express();
@@ -10,11 +10,11 @@ mongoose.connect('mongodb://127.0.0.1/Maxi77', function (err) {
     else console.log('Connected to database');
 });
 
-var testMode = process.argv.slice(2)[0] === "test";
+var testMode = process.argv.slice(2)[0] === 'test';
 if (testMode) {
-    console.log("Running app in testmode");
+    console.log('Running app in testmode');
 } else {
-    console.log("Running app in pi mode");
+    console.log('Running app in pi mode');
 }
 
 app.use(express.static(path.join(__dirname, 'public')));

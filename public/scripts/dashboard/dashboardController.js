@@ -1,7 +1,7 @@
 angular.module('HomeCtrl', []).controller('DashboardController', function ($scope, geoService, $location, chartService) {
 
 	$scope.$on('mapInitialized', function () {
-		chartService.onClick(function (e) {
+		chartService.onClick(function () {
 			$location.url('/chart');
 		});
 	});
@@ -10,5 +10,5 @@ angular.module('HomeCtrl', []).controller('DashboardController', function ($scop
 
 	$scope.click = function (url) {
 		$location.url(url);
-	}
+	};
 });

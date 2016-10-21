@@ -15,7 +15,7 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 		.when('/chart', {
 			templateUrl: 'scripts/chart/journeyTemplate.html',
 			controller: 'journeyController'
-		})
+		});
 
 	$locationProvider.html5Mode(false);
 

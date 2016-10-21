@@ -5,6 +5,13 @@
         "es6": true,
         "node": true
     },
+    "globals": {
+        "angular": true,
+        "_": true,
+        "eniro": true,
+        "geolib": true,
+        "io": true
+    },
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -18,6 +25,8 @@
         "no-unreachable": "warn",
         "no-unused-vars": "warn",
         "constructor-super": "warn",
-        "valid-typeof": "warn"
+        "valid-typeof": "warn",
+        "semi": [1],
+        "quotes": [1, "single"]
     }
 }

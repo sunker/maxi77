@@ -1,5 +1,5 @@
-var GeoService = require("./geoService");
-var WeatherService = require("./weatherService");
+var GeoService = require('./geoService');
+var WeatherService = require('./weatherService');
 module.exports = function (testMode) {
     var geoService = GeoService.getInstance();
     var weatherService = WeatherService.getInstance();

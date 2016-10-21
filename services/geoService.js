@@ -31,7 +31,7 @@ var GeoService = function () {
 
     bancroft.on('disconnect', function () {
       console.log('GPIO disconnected');
-    })
+    });
   };
 
   this.getNextCoordinateFromTestData = function () {
@@ -63,7 +63,7 @@ var GeoService = function () {
 
     return geolib.getPathLength(
       array.map(function (x) {
-        return { 'latitude': x.latitude, 'longitude': x.longitude }
+        return { 'latitude': x.latitude, 'longitude': x.longitude };
       })
     );
   };
@@ -83,12 +83,12 @@ var GeoService = function () {
 
     return false;
   };
-}
+};
 
 util.inherits(GeoService, EventEmitter);
 
 module.exports = {
   getInstance: function(){
-    return instance || (instance = new GeoService())
+    return instance || (instance = new GeoService());
   }
 };

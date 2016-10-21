@@ -1,11 +1,11 @@
 'use strict';
-var chartModule = angular.module("chartModule");
+var chartModule = angular.module('chartModule');
 chartModule.directive('miscChartWidget', function () {
 
     return {
-        restrict: "E",
+        restrict: 'E',
         templateUrl: 'scripts/chart/miscChartWidgetTemplate.html',
-        link: function (scope, elem, attr) {
+        link: function () {
             // document.getElementsByClassName('chart-map')[0].on('click', function(e) {
 
             // });
@@ -16,5 +16,5 @@ chartModule.directive('miscChartWidget', function () {
         scope: {
         },
         controller: 'miscChartWidgetController',
-    }
+    };
 });

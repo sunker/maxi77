@@ -1,6 +1,6 @@
 'use strict';
 
-var weatherModule = angular.module("weatherModule");
+var weatherModule = angular.module('weatherModule');
 
 weatherModule.service('backendCaller', function ($http, $q) {
 

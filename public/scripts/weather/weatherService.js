@@ -1,9 +1,8 @@
 'use strict';
 
-var weatherModule = angular.module("weatherModule");
+var weatherModule = angular.module('weatherModule');
 
-weatherModule.service('weatherService', function (backendCaller, $q) {
-    var baseUrl = 'weather/';
+weatherModule.service('weatherService', function () {
 
     this.getCurrentForecastFromForecasts = function (forecasts) {
         var nextHour = forecasts[0];
@@ -32,61 +31,61 @@ weatherModule.service('weatherService', function (backendCaller, $q) {
 
     this.getTime = function (date) {
         if (date.getDay() === new Date().getDay()) {
-            return "kl " + date.getHours();
+            return 'kl ' + date.getHours();
         } else if (date.getDay() === (new Date().getDay() + 1)) {
-            return "imorgon kl " + date.getHours();
+            return 'imorgon kl ' + date.getHours();
         } else {
-            return date.toSwedishDay() + " kl " + date.getHours();//this.getSwedishWeekday(date.getDay()) + " kl " + date.getHours();
+            return date.toSwedishDay() + ' kl ' + date.getHours(); //this.getSwedishWeekday(date.getDay()) + " kl " + date.getHours();
         }
     };
 
     this.convertWindDirectionToText = function (windDirection) {
         var val = Math.floor((windDirection / 22.5) + 0.5);
-        var arr = ["nordlig", "nord nordöstlig", "nordöst", "öst nordöstlig", "östlig", "öst sydöstlig", "sydöstlig", "syd sydöstlig", "sydlig", "syd sydvästlig", "sydvästlig", "väst sydvästlig", "västlig", "väst nordvästlig", "nordvästlig", "nord nordvästlig"];
+        var arr = ['nordlig', 'nord nordöstlig', 'nordöst', 'öst nordöstlig', 'östlig', 'öst sydöstlig', 'sydöstlig', 'syd sydöstlig', 'sydlig', 'syd sydvästlig', 'sydvästlig', 'väst sydvästlig', 'västlig', 'väst nordvästlig', 'nordvästlig', 'nord nordvästlig'];
         return arr[(val % 16)];
     };
 
     this.getPrecipitation = function (forecast) {
         var mean = (forecast.minimumPrecipitationIntensity.value ? forecast.minimumPrecipitationIntensity.value : forecast.minimumPrecipitationIntensity.values[0]);
         var high = (forecast.maximumPrecipitationIntensity.value ? forecast.maximumPrecipitationIntensity.value : forecast.maximumPrecipitationIntensity.values[0]);
-        return mean + " (" + high + ") mm";
+        return mean + ' (' + high + ') mm';
     };
 
     this.convertWeatherTypeToText = function (value) {
 
         switch (value) {
             case 1:
-                return "klart";
+                return 'klart';
             case 2:
-                return "mestadels klart";
+                return 'mestadels klart';
             case 3:
-                return "växlande molnighet";
+                return 'växlande molnighet';
             case 4:
-                return "halvklart";
+                return 'halvklart';
             case 5:
-                return "molnigt";
+                return 'molnigt';
             case 6:
-                return "mulet";
+                return 'mulet';
             case 7:
-                return "dimma";
+                return 'dimma';
             case 8:
-                return "regnskurar";
+                return 'regnskurar';
             case 9:
-                return "åskskurar";
+                return 'åskskurar';
             case 10:
-                return "byar av snöblandat regn";
+                return 'byar av snöblandat regn';
             case 11:
-                return "snöbyar";
+                return 'snöbyar';
             case 12:
-                return "regn";
+                return 'regn';
             case 13:
-                return "åska";
+                return 'åska';
             case 14:
-                return "snöblandat regn";
+                return 'snöblandat regn';
             case 15:
-                return "snöfall";
+                return 'snöfall';
             default:
-                return "";
+                return '';
         }
     };
 });

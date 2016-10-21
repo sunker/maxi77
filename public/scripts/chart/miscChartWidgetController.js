@@ -1,8 +1,8 @@
 'use strict';
-var chartModule = angular.module("chartModule");
+var chartModule = angular.module('chartModule');
 chartModule.controller('miscChartWidgetController', function ($scope, socket, geoService) {
-    $scope.speed = $scope.compassDirection = "-";
-    $scope.coordinates = { lat: "-", lng: "-" }
+    $scope.speed = $scope.compassDirection = '-';
+    $scope.coordinates = { lat: '-', lng: '-' };
 
     socket.on('coordinatesUpdated', function (data) {
         $scope.coordinates = geoService.formatCoordinate(data.coordinates);

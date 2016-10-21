@@ -113,7 +113,7 @@ journeySchema.statics = {
                 defer.reject(err);
             } else {
                 defer.resolve(journey);
-                console.log("Journey created");
+                console.log('Journey created');
             }
         });
 
@@ -122,7 +122,7 @@ journeySchema.statics = {
     getCurrentJourney: function () {
         var defer = Q.defer();
         this.find({
-            "stopped": false
+            'stopped': false
         }, function (err, journey) {
             if (err) {
                 console.log(err);

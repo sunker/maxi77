@@ -1,5 +1,5 @@
-var GeoService = require("../services/geoService");
-var WeatherService = require("../services/weatherService");
+var GeoService = require('../services/geoService');
+var WeatherService = require('../services/weatherService');
 const mongoose = require('mongoose');
 var Journey = mongoose.model('trip');
 

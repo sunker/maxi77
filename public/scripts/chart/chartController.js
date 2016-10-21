@@ -1,17 +1,17 @@
 'use strict';
-var chartModule = angular.module("chartModule");
+var chartModule = angular.module('chartModule');
 chartModule.controller('chartController', function ($scope, socket, chartService) {
     var coordinates;
     $scope.initialized = null;
 
     $scope.mapStyle = {
-        "height": $scope.mapHeight + "px"
-    }
+        'height': $scope.mapHeight + 'px'
+    };
 
     var timer = function () {
         setTimeout(function () {
             initializeMap();
-        }, 5000)
+        }, 5000);
     };
 
     var initializeMap = function () {
@@ -72,4 +72,4 @@ chartModule.controller('chartController', function ($scope, socket, chartService
         chartService.addRedMarker(coordinate);
         chartService.addRedMarker(coordinate);
     });
-}); 
+});

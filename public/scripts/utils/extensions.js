@@ -5,20 +5,20 @@ String.prototype.insertAt = function (index, string) {
 Date.prototype.toSwedishDay = function () {
   switch (this.getDay()) {
     case 1:
-      return "måndag";
+      return 'måndag';
     case 2:
-      return "tisdag";
+      return 'tisdag';
     case 3:
-      return "onsdag";
+      return 'onsdag';
     case 4:
-      return "torsdag";
+      return 'torsdag';
     case 5:
-      return "fredag";
+      return 'fredag';
     case 6:
-      return "lördag";
+      return 'lördag';
     case 7:
-      return "söndag";
+      return 'söndag';
     default:
-      return "";
+      return '';
   }
 };
