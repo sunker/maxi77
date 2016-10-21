@@ -5,7 +5,7 @@ var connectivityService = {};
 
 connectivityService.checkInternetConnection  = function () {
     var defer = q.defer();
-    dns.lookupService('8.8.8.8', 53, function (err, hostname, service) {
+    dns.lookupService('8.8.8.8', 53, function (err) {
         if(err){
             return defer.resolve(false);
         } else {

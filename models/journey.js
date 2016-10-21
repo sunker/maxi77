@@ -39,8 +39,6 @@ journeySchema.methods = {
     },
     addCoordinate: function (coordinate) {
         var defer = Q.defer();
-        var journey = this;
-
         this.coordinates.push({
             latitude: coordinate.lat,
             longitude: coordinate.lng,
@@ -48,7 +46,7 @@ journeySchema.methods = {
             is_MOB: coordinate.isMob
         });
 
-        this.save(function (err, test, test2) {
+        this.save(function (err, journey) {
             if (err) console.log(err);;
             defer.resolve(journey);
         });
@@ -109,7 +107,7 @@ journeySchema.statics = {
             coordinates: [startCoordinate]
         });
 
-        newJourney.save(function (err, journey, numAffected) {
+        newJourney.save(function (err, journey) {
             if (err) {
                 console.log(err);
                 defer.reject(err);

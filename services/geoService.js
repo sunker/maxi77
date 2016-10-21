@@ -2,7 +2,6 @@ var Q = require('q');
 var geolib = require('geolib');
 var fs = require('fs');
 var Bancroft = require('bancroft');
-var parsedJSON = require('../testcoordinates.json');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var instance;
@@ -27,10 +26,10 @@ var GeoService = function () {
       }
     });
 
-    bancroft.on('satellite', function (satellite) {
+    bancroft.on('satellite', function () {
     });
 
-    bancroft.on('disconnect', function (err) {
+    bancroft.on('disconnect', function () {
       console.log('GPIO disconnected');
     })
   };

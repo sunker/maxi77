@@ -19,7 +19,7 @@ var WeatherService = function () {
     this.getFakeForecasts = function () {
         var deferred = Q.defer();
 
-        fs.readFile('./SMHITestData.json', 'utf8', function (data1, data2, data3) {
+        fs.readFile('./SMHITestData.json', 'utf8', function (data1, data2) {
             var file = JSON.parse(data2.toString());
             return deferred.resolve(file);
         });
@@ -40,18 +40,14 @@ var WeatherService = function () {
                 var forecasts = response.getForecasts();
                 var result = [forecasts.length];
 
-                for (i = 0; i < forecasts.length; i++) {
+                for (var i = 0; i < forecasts.length; i++) {
                     result[i] = buildJson(forecasts[i]);
                 }
 
                 return deferred.resolve(result);
             },
-            function (error) {
-                // deferred.reject("Weather service down");
-                //While developing...use cached forecasts when SMHI/internet is down
-                var data = JSON.parse(fs.readFileSync('./SMHITestData.json', 'utf8').toString());
-
-                return deferred.resolve(data);
+            function () {
+                deferred.reject("Weather service down");
             }
         );
 
@@ -84,34 +80,6 @@ var WeatherService = function () {
             }
         });
 
-    };
-
-    var forecastsForLatAndLong = function () {
-        var deferred = Q.defer();
-        //stockholm coordinates
-        var lat = 59;
-        var long = 18;
-        SMHI.getForecastForLatAndLong(lat, long).then(
-            function (response) {
-                var forecasts = response.getForecasts();
-                var result = [forecasts.length];
-
-                for (i = 0; i < forecasts.length; i++) {
-                    result[i] = buildJson(forecasts[i]);
-                }
-
-                return deferred.resolve(result);
-            },
-            function (error) {
-                // deferred.reject("Weather service down");
-                //While developing...use cached forecasts when SMHI/internet is down
-                var data = JSON.parse(fs.readFileSync('./SMHITestData.json', 'utf8').toString());
-
-                return deferred.resolve(data);
-            }
-        );
-
-        return deferred.promise;
     };
 
     var buildJson = function (forecast) {
