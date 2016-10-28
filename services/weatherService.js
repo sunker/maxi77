@@ -37,15 +37,11 @@ const WeatherService = function () {
         }
         SMHI.getForecastForLatAndLong(coordinate.lat.toFixed(6), coordinate.lng.toFixed(6)).then(
             (response) => {
-                const forecasts = response.getForecasts();
-                const result = [forecasts.length];
-
+                const result = [];
+                response.getForecasts().forEach((forecast) => {
+                    result.push(buildJson(forecast));
+                });
                 
-
-                for (let i = 0; i < forecasts.length; i++) {
-                    result[i] = buildJson(forecasts[i]);
-                }
-
                 return deferred.resolve(result);
             },
             () => {

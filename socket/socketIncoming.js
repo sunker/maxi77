@@ -1,32 +1,32 @@
-var WeatherService = require('../services/weatherService'),
+const WeatherService = require('../services/weatherService'),
   mongoose = require('mongoose'),
   Journey = mongoose.model('trip');
 
-module.exports = function (io) {
-  io.on('connection', function (socket) {
+module.exports = (io) => {
+  io.on('connection', (socket) => {
     console.log('a user connected');
-    var weahterService = WeatherService.getInstance();
+    const weahterService = WeatherService.getInstance();
 
-    socket.on('disconnect', function () {
+    socket.on('disconnect', () => {
       console.log('user disconnected');
     });
 
-    socket.on('getWeatherForecast', function (coordinate) {
-      weahterService.getForecasts(coordinate).then(function (forecasts) {
+    socket.on('getWeatherForecast', (coordinate) => {
+      weahterService.getForecasts(coordinate).then((forecasts) => {
         io.sockets.emit('forecastUpdated', forecasts);
-      }, function (error) {
+      }, (error) => {
         io.sockets.emit('forecastUpdatedFailed', error);
       });
     });
 
-    socket.on('createJourney', function (coordinates) {
-      Journey.create(coordinates.coordinates).then(function (data) {
+    socket.on('createJourney', (coordinates) => {
+      Journey.create(coordinates.coordinates).then((data) => {
         io.sockets.emit('journeyCreated', data);
       });
     });
 
-    socket.on('journeyCoordinatesUpdated', function (newCoordinate) {
-      Journey.getCurrentJourney().then(function (data) {
+    socket.on('journeyCoordinatesUpdated', (newCoordinate) => {
+      Journey.getCurrentJourney().then((data) => {
         if (data) {
           newCoordinate.isMob = false;
           data.addCoordinate(newCoordinate);
@@ -34,8 +34,8 @@ module.exports = function (io) {
       });
     });
 
-    socket.on('manOverBoard', function (newCoordinate) {
-      Journey.getCurrentJourney().then(function (journey) {
+    socket.on('manOverBoard', (newCoordinate) => {
+      Journey.getCurrentJourney().then((journey) => {
         if (journey) {
           socket.broadcast.emit('manOverBoard', newCoordinate);
           newCoordinate.isMob = true;
@@ -44,25 +44,25 @@ module.exports = function (io) {
       });
     });
 
-    socket.on('journeyZoomLevelChanged', function (zoomLevel) {
-      Journey.getCurrentJourney().then(function (journey) {
+    socket.on('journeyZoomLevelChanged', (zoomLevel) => {
+      Journey.getCurrentJourney().then((journey) => {
         if (journey) {
           journey.updateZoomLevel(zoomLevel);
         }
       });
     });
 
-    socket.on('getCurrentJourney', function () {
-      Journey.getCurrentJourney().then(function (data) {
+    socket.on('getCurrentJourney', () => {
+      Journey.getCurrentJourney().then((data) => {
         socket.emit('currentJourneyLoaded', {
           journey: data
         });
       });
     });
 
-    socket.on('stopJourney', function (journey) {
-      Journey.getById(journey.id).then(function (journeyModel) {
-        journeyModel.stop().then(function (data) {
+    socket.on('stopJourney', (journey) => {
+      Journey.getById(journey.id).then((journeyModel) => {
+        journeyModel.stop().then((data) => {
           io.sockets.emit('journeyStopped', data);
         });
       });

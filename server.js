@@ -1,16 +1,17 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var path = require('path');
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1/Maxi77', function (err) {
+const express = require('express'),
+    bodyParser = require('body-parser'),
+    path = require('path'),
+    app = express(),
+    http = require('http').Server(app),
+    io = require('socket.io')(http),
+    mongoose = require('mongoose');
+
+mongoose.connect('mongodb://127.0.0.1/Maxi77', (err) => {
     if (err) console.log(err);
     else console.log('Connected to database');
 });
 
-var testMode = process.argv.slice(2)[0] === 'test';
+const testMode = process.argv.slice(2)[0] === 'test';
 if (testMode) {
     console.log('Running app in testmode');
 } else {
