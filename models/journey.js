@@ -1,8 +1,8 @@
-var mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     Q = require('q');
 
-var journeySchema = new Schema({
+const journeySchema = new Schema({
     id: {
         type: Schema.ObjectId
     },
@@ -15,7 +15,7 @@ var journeySchema = new Schema({
 });
 
 // journeySchema.pre('save', true, function(next, done){
-//     var currentDate = new Date();
+//     const currentDate = new Date();
 //     this.created_at = currentDate;
 
 //     if (!this.created_at)
@@ -26,8 +26,8 @@ var journeySchema = new Schema({
 
 journeySchema.methods = {
     stop: function () {
-        var defer = Q.defer();
-        var journey = this;
+        const defer = Q.defer();
+        const journey = this;
         this.stopped = true;
         this.save(function (err) {
             if (err) console.log(err);;
@@ -38,7 +38,7 @@ journeySchema.methods = {
         return defer.promise;
     },
     addCoordinate: function (coordinate) {
-        var defer = Q.defer();
+        const defer = Q.defer();
         this.coordinates.push({
             latitude: coordinate.lat,
             longitude: coordinate.lng,
@@ -54,8 +54,8 @@ journeySchema.methods = {
         return defer.promise;
     },
     updateDistance: function (meters) {
-        var defer = Q.defer();
-        var journey = this;
+        const defer = Q.defer();
+        const journey = this;
         this.distance = meters;
         this.save(function (err) {
             if (err) console.log(err);
@@ -65,7 +65,7 @@ journeySchema.methods = {
         return defer.promise;
     },
     updateZoomLevel: function (zoomLevel) {
-        var defer = Q.defer();
+        const defer = Q.defer();
         this.zoom_level = zoomLevel;
         this.save(function (err, journey) {
             if (err) console.log(err);
@@ -78,7 +78,7 @@ journeySchema.methods = {
 
 journeySchema.statics = {
     getById: function (journeyId) {
-        var defer = Q.defer();
+        const defer = Q.defer();
         Journey.findById(journeyId, function (err, journey) {
             if (err) {
                 defer.reject(err);
@@ -90,16 +90,16 @@ journeySchema.statics = {
         return defer.promise;
     },
     create: function (startCoordinates) {
-        var defer = Q.defer();
+        const defer = Q.defer();
 
-        var startCoordinate = {
+        const startCoordinate = {
             latitude: startCoordinates.lat,
             longitude: startCoordinates.lng,
             timestamp: startCoordinates.timestamp,
             is_MOB: false
         };
 
-        var newJourney = Journey({
+        const newJourney = Journey({
             created_at: new Date(),
             stopped: false,
             distance: 0.00,
@@ -120,7 +120,7 @@ journeySchema.statics = {
         return defer.promise;
     },
     getCurrentJourney: function () {
-        var defer = Q.defer();
+        const defer = Q.defer();
         this.find({
             'stopped': false
         }, function (err, journey) {
@@ -129,7 +129,7 @@ journeySchema.statics = {
                 defer.reject(err);
             } else {
                 if (journey.length !== 0) {
-                    var currentJourney = journey[0];
+                    const currentJourney = journey[0];
                     defer.resolve(currentJourney);
                 } else {
                     defer.resolve(journey.length === 0 ? null : journey[0]);
@@ -141,6 +141,6 @@ journeySchema.statics = {
     }
 };
 
-var Journey = mongoose.model('trip', journeySchema);
+const Journey = mongoose.model('trip', journeySchema);
 
 module.exports = Journey;

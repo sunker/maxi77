@@ -1,14 +1,14 @@
-var Q = require('q'),
+const Q = require('q'),
   geolib = require('geolib'),
   fs = require('fs'),
   Bancroft = require('bancroft'),
   util = require('util'),
-  EventEmitter = require('events').EventEmitter,
-  instance;
+  EventEmitter = require('events').EventEmitter;
+let instance;
 
-var GeoService = function () {
-  var self = this,
-    currentCoord = {
+const GeoService = function () {
+  const self = this;
+  let currentCoord = {
       lat: 0,
       lng: 0,
       timestamp: 0
@@ -17,14 +17,14 @@ var GeoService = function () {
     coordinates,
     timestamp;
 
-  this.startGPSDListener = function () {
-    var bancroft = new Bancroft();
+  this.startGPSDListener = () => {
+    const bancroft = new Bancroft();
 
-    bancroft.on('connect', function () {
+    bancroft.on('connect', () => {
       console.log('GPIO connected');
     });
 
-    bancroft.on('location', function (location) {
+    bancroft.on('location', (location) => {
       if (isRealMovement(location)) {
         self.emit('gpsChanged', {
           lng: location.longitude,
@@ -34,21 +34,21 @@ var GeoService = function () {
       }
     });
 
-    bancroft.on('satellite', function () {});
+    bancroft.on('satellite', () => {});
 
-    bancroft.on('disconnect', function () {
+    bancroft.on('disconnect', () => {
       console.log('GPIO disconnected');
     });
   };
 
-  this.getNextCoordinateFromTestData = function () {
-    var defer = Q.defer();
+  this.getNextCoordinateFromTestData = () => {
+    const defer = Q.defer();
     if (!coordinates) {
       coordinates = JSON.parse(fs.readFileSync('./testcoordinates.json', 'utf8').toString());
     }
 
-    if (counter == 472) counter = 0;
-    var coords = coordinates.gpx.wpt[counter];
+    if (counter === 472) counter = 0;
+    const coords = coordinates.gpx.wpt[counter];
     counter++;
     if (!timestamp) {
       timestamp = new Date();
@@ -65,15 +65,15 @@ var GeoService = function () {
     return defer.promise;
   };
 
-  this.getCurrentCoordinate = function () {
+  this.getCurrentCoordinate = () => {
     return currentCoord.lat === 0 && currentCoord.lng === 0 ? null : currentCoord;
   };
 
-  this.getJourneyDistance = function (array) {
+  this.getJourneyDistance = (array) => {
     if (array.length < 2) return 0.00;
 
     return geolib.getPathLength(
-      array.map(function (x) {
+      array.map((x) => {
         return {
           'latitude': x.latitude,
           'longitude': x.longitude
@@ -82,9 +82,9 @@ var GeoService = function () {
     );
   };
 
-  var isRealMovement = function (location) {
+  let isRealMovement = (location) => {
     if (location.latitude && location.longitude && location.speed) {
-      var distance = geolib.getDistance({
+      const distance = geolib.getDistance({
         latitude: currentCoord.lat,
         longitude: currentCoord.lng
       }, {
@@ -94,7 +94,7 @@ var GeoService = function () {
 
       //Only bother if the movement was larger than one meter
       if (distance > 1) {
-        var newCoord = {
+        const newCoord = {
           lng: location.longitude,
           lat: location.latitude,
           timestamp: location.timestamp

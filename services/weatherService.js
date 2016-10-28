@@ -1,34 +1,34 @@
-var SMHI = require('smhi-node'),
+const SMHI = require('smhi-node'),
     Q = require('q'),
     fs = require('fs'),
     util = require('util'),
     EventEmitter = require('events').EventEmitter,
-    connection = require('./connectivityService'),
-    instance;
+    connection = require('./connectivityService');
+let instance;
 
-var WeatherService = function () {
-    var self = this;
+const WeatherService = function () {
+    const self = this;
 
-    this.startPollingForForecasts = function (coordinate, allowFakeForecasts) {
+    this.startPollingForForecasts = (coordinate, allowFakeForecasts) => {
         updateAndEmit(coordinate, allowFakeForecasts);
-        setInterval(function () {
+        setInterval(() => {
             updateAndEmit(coordinate);
         }, 15000);
     };
 
-    this.getFakeForecasts = function () {
-        var deferred = Q.defer();
+    this.getFakeForecasts = () => {
+        const deferred = Q.defer();
 
-        fs.readFile('./SMHITestData.json', 'utf8', function (data1, data2) {
-            var file = JSON.parse(data2.toString());
+        fs.readFile('./SMHITestData.json', 'utf8', (data1, data2) => {
+            const file = JSON.parse(data2.toString());
             return deferred.resolve(file);
         });
 
         return deferred.promise;
     };
 
-    this.getForecasts = function (coordinate) {
-        var deferred = Q.defer();
+    this.getForecasts = (coordinate) => {
+        const deferred = Q.defer();
         if (coordinate === null) {
             coordinate = {
                 lat: 59,
@@ -36,17 +36,19 @@ var WeatherService = function () {
             }; // Sthml coordinate
         }
         SMHI.getForecastForLatAndLong(coordinate.lat.toFixed(6), coordinate.lng.toFixed(6)).then(
-            function (response) {
-                var forecasts = response.getForecasts();
-                var result = [forecasts.length];
+            (response) => {
+                const forecasts = response.getForecasts();
+                const result = [forecasts.length];
 
-                for (var i = 0; i < forecasts.length; i++) {
+                
+
+                for (let i = 0; i < forecasts.length; i++) {
                     result[i] = buildJson(forecasts[i]);
                 }
 
                 return deferred.resolve(result);
             },
-            function () {
+            () => {
                 deferred.reject('Weather service down');
             }
         );
@@ -54,26 +56,26 @@ var WeatherService = function () {
         return deferred.promise;
     };
 
-    var fakeForecasts;
-    var updateAndEmit = function (coordinate, allowFakeForecasts) {
+    let fakeForecasts;
+    let updateAndEmit = (coordinate, allowFakeForecasts) => {
         fakeForecasts = allowFakeForecasts;
-        connection.checkInternetConnection().then(function (isConnected) {
+        connection.checkInternetConnection().then((isConnected) => {
             if (!isConnected && fakeForecasts) {
                 self.getFakeForecasts().then(
-                    function (success) {
+                    (success) => {
                         self.emit('weatherForecastUpdated', success);
                     },
-                    function (fail) {
+                    (fail) => {
                         //Replace this with error when in production...
                         self.emit('forecastUpdatedFailed', fail);
                         console.log('Could not load SMHI data. Sending cashed data');
                     });
             } else {
                 self.getForecasts(coordinate).then(
-                    function (success) {
+                    (success) => {
                         self.emit('weatherForecastUpdated', success);
                     },
-                    function (fail) {
+                    (fail) => {
                         self.emit('forecastUpdatedFailed', fail);
                         console.log('Could not load SMHI data. Sending cashed data');
                     });
@@ -82,7 +84,7 @@ var WeatherService = function () {
 
     };
 
-    var buildJson = function (forecast) {
+    let buildJson = (forecast) => {
         return {
             temperature: forecast.getTemperature(),
             meanSeanLevel: forecast.getMeanSeaLevel(),
@@ -101,7 +103,7 @@ var WeatherService = function () {
         };
     };
 
-    var getSwedishPrecipitationType = function (precipitationCategory) {
+    let getSwedishPrecipitationType = (precipitationCategory) => {
 
         switch (precipitationCategory.values[0]) {
             case 1:
@@ -125,7 +127,7 @@ var WeatherService = function () {
 util.inherits(WeatherService, EventEmitter);
 
 module.exports = {
-    getInstance: function () {
+    getInstance: () => {
         return instance || (instance = new WeatherService());
     }
 };

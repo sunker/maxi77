@@ -1,15 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var weatherService = require("../../services/weatherService");
-// latitude = 58.59, // Stockholm
-// longitude = 16.18; 
-	
+const express = require('express');
+const router = express.Router();
+const weatherService = require('../../services/weatherService');
+
 router.get('/getforecasts', function (req, res) {
-  var params = JSON.parse(req.query.parameters);
   weatherService.getForecasts().then(function (response) {
     res.json(response);
   },
-  function (error) {
+  function () {
     res.status(500).send('Weatherservice is down');
   });
 });
