@@ -143,4 +143,6 @@ fbody {
     width: 100px;
     height: 100px; }
   .responsive-text {
-    font-size: 0.8em !important; } }
+    font-size: 0.8em !important; }
+  .chart-zoom-buttons {
+    display: none !important; } }
