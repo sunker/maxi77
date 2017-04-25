@@ -10,7 +10,7 @@ module.exports = (io) => {
     //Server events
     geoService.on('gpsChanged', (coords) => {
         io.sockets.emit('coordinatesUpdated', { coordinates: coords });
-        console.log(coords);
+        // console.log(coords);
         Journey.getCurrentJourney().then((journey) => {
             if (journey) {
                 coords.isMob = false;

@@ -41,7 +41,7 @@ const WeatherService = function () {
                 response.getForecasts().forEach((forecast) => {
                     result.push(buildJson(forecast));
                 });
-                
+
                 return deferred.resolve(result);
             },
             () => {
@@ -57,6 +57,7 @@ const WeatherService = function () {
         fakeForecasts = allowFakeForecasts;
         connection.checkInternetConnection().then((isConnected) => {
             if (!isConnected && fakeForecasts) {
+                console.log('No internet connection. Using fake forecasts');
                 self.getFakeForecasts().then(
                     (success) => {
                         self.emit('weatherForecastUpdated', success);

@@ -3,7 +3,9 @@ chartModule.controller('journeyController', function ($scope, chartService, sock
     $scope.displayZoom = false;
     $scope.distanceSeamiles = '-';
     var currentCoordinate;
-
+    var height = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight);
+    $scope.mapHeight = (height > 800 ? 0.75 * height : 0.63 * height);
+    console.log($scope.innerHeight)
     $scope.loadingJourney = true;
 
     $scope.$on('mapInitialized', function () {
