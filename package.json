@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bancroft": "0.0.13",
     "body-parser": "^1.15.2",
     "bower": "^1.7.9",
     "express": "^4.14.0",
