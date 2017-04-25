@@ -33,17 +33,6 @@ require('./services/bootstrapper.js')(testMode);
 require('./socket/socketIncoming.js')(io);
 require('./socket/socketOutgoing.js')(io);
 
-var ngrok = require('ngrok');
-ngrok.connect({
-    proto: 'http', // http|tcp|tls 
-    addr: 8080, // port or network address 
-    // auth: 'user:pwd', // http basic authentication for tunnel 
-    //subdomain: 'maxi77', // reserved tunnel name https://alex.ngrok.io 
-    // authtoken: '12345', // your authtoken from ngrok.com 
-    region: 'eu' // one of ngrok regions (us, eu, au, ap), defaults to us 
-}, function (err, url) {
-
-});
 var tunnel;
 var startTunnel = () => {
     tunnel = localtunnel(port, {
